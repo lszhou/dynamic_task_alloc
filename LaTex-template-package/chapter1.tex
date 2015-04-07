@@ -1,0 +1,176 @@
+%--------------------CHAPTER 1-----------------------------
+\chapter{Introduction}
+In this chapter, we will introduce the task allocation problem as well as its dynamic version and survey the past work related to it.
+\section{The Task Allocation Problem}
+Task allocation problem, also called do-all problem, is already a foundational problem in distributing computing domain. During the last two decades, significant research was dedicated to studying the task allocation problem in various models of computation, including message passing, shared memory, etc. under specific assumption about the asynchrony and failures.
+
+In this thesis, we consider the dynamic and shared memory version of the task allocation problem. The dynamic task allocation via asynchronous shared memory problem could be described as follows:
+
+\emph{p processes must cooperatively perform a set of tasks in the presence of adversity. The tasks are injected by the adversary dynamically over time.}
+
+\section{Related Work}
+The task allocation via shared memory was firstly discussed by Kanellakis and Shavartsman[1]. In their paper about PRAM algorithm, they gave a robust parallel solution to the task allocation problem. The data structures they used are four full binary trees and tasks are abstracted as registers in an array. Each cell of the array is initialized with 0, and when it is turned to be 1 implies the abstracted task is performed successfully.
+
+Up to now, there have been many research results focus on the topic. ..
+
+Dan Alistarh and Michael, etc.
+
+However, the above papers about the task allocation problem all focus on the static version, or called one-shot version, where the tasks are available at the beginning, and the execution is done when all these tasks are performed successfully. Dan Alistarh and Michael, etc. considered the dynamic version of task allocation problem, i.e. given p asynchronous processes that cooperate to perform tasks while the tasks are not available but inserted dynamically by the adversary during the execution. In that paper, they gave the first asynchronous shared memory algorithm for the dynamic task allocation, and proved that their algorithm is optimal within logarithmic factors. The main idea is to use a full binary full tree, called To-do tree which is inherited from their last paper, to guide the processes to insert the tasks at random empty memory locations and to pick newly inserted tasks to perform at random.
+
+
+\section{Statement of Results}
+In this thesis, we will introduce a randomized adaptive To-do tree algorithm which is similar to that presented by Dan Alistarh and Michael, etc. in their paper […]. The performance of our algorithm depends on the input sequence of tasks but not a fixed value. It has no constraint on the number of tasks presented in the to-do tree. Additionally, our algorithm implemented by the compare-and-swap registers directly which makes the complexity of our algorithm to be quadratic.
+
+In chapter 2, we will formally define the dynamic task allocation problem again and describe out adaptive To-do tree algorithm.
+
+In chapter 3, we will give a framework for the performance analysis of our algorithm.
+
+In chapter 4, we summarize our results, relate them to past work and discuss the open questions that arise from our work.
+
+%--------------------CHAPTER 2-----------------------------
+\chapter{The Model and Problem Statement}
+In this chapter, we will formally describe the system model we are working in and introduce the adaptive To-do tree algorithm, a randomized algorithm that could help us solve the dynamic asynchronous task allocation problem better.
+
+\section{Standard Model}
+The computation model we work in is the standard asynchronous shared memory mode with p processes 1, 2… p, where up to p-1 processes may fail by crashing. The processes communicate with each other via the shared registered, which they could perform read, write and compare-and-swap (CAS) operations. Each process has a unique identifier i which is from an unbounded namespace and has a local random number generator to perform coin flip operations.
+
+The mode we discuss is under the control of a strong adaptive adversary. At any point of time, it can see the entire history (all coin flip operations and the returned values). Depending on such history, it decides which processes take the next step. i.e. At any point of time, the adversary knows exactly which step each process will be executing next.
+
+\section{Problem Statement}
+(问题的本质， 困难在哪) Dynamic asynchronous task allocation is the problem in which the p processes cooperatively execute tasks and the task are inserted into the data structure dynamically during the executing.
+
+[What is task] For simplicity, the tasks are still abstracted and associated with shared registers. If a process changes the value of certain register from 0 to 1 successfully, it means the task associated with this register is performed; if a process changes the value of certain register from 1 to 0, it means the task is inserted successfully and associated with that register. Additionally, we assume each task has a unique identifier l>=0. One simple implementation of such task identifier uniqueness is to assign each task with an identifier in the form (id, count), where id the id of the process to which the task is assigned and count is the value of a local per-process counter, which is incremented on each newly inserted task.
+
+[Complexity Metric] The complexity measure we use is the total number of operations (i.e. read, write, and CAS) that processes take during an execution.\\
+
+\section{The Dynamic Adaptive To-Do Tree}
+[some concepts and definition, e.g. tree, counts, surplus, space]
+
+[Intro and detailed explanation of DoTask and InsertTask]
+
+
+\begin{algorithm}
+\caption{DoTask()}               %标题
+\label{alg1}                         %标记算法，方便在其它地方引用
+\begin{algorithmic}[1]
+\WHILE {(true)}
+   \STATE $v \leftarrow root$\\
+   \IF {($v.surplus() \leq 0$)}
+   \RETURN $\perp$
+   \ENDIF \\
+   \vspace{3mm}
+   /* Descent */
+   \WHILE {$v$ is not a leaf}
+       \STATE $(x_L, y_L) \leftarrow v.left.read()$\\
+       \STATE $(x_R, y_R) \leftarrow v.right.read()$\\
+       \STATE $s_L \leftarrow min(x_L-y_L, 2^{height(v)})$ \\
+       \STATE $s_R \leftarrow min(x_R-y_R, 2^{height(v)})$ \\
+       \STATE $r \leftarrow random(0,1)$
+       \IF {($(s_L+s_R)=0$)}
+           \STATE Mark-up($v$)
+       \ELSIF {($r<s_L/(s_L+s_R)$)}
+           \STATE $v \leftarrow v.left$
+       \ELSE
+           \STATE $v \leftarrow v.rght$
+       \ENDIF
+   \ENDWHILE
+   \vspace{3mm}\\
+   /* $v$ is a leaf */
+   \STATE $(x,y) \leftarrow v.read()$
+   \STATE $(flag, l)$ $\leftarrow$ $v$.TryTask(task$[y+1]$)
+   \STATE $v$.CAS$((x, y), (x, y+1))$    // Update Insertion Count
+   \STATE $v \leftarrow v.parent$
+   \STATE Mark-up($v$)
+   \IF {$flag$ = success}
+       \RETURN $l$
+   \ENDIF
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Insert(task $l$)}               %标题
+\label{alg2}                         %标记算法，方便在其它地方引用
+\begin{algorithmic}[1]
+\WHILE {(true)}
+   \STATE $v \leftarrow root$\\
+   \vspace{3mm}
+   /* Descent */
+   \WHILE {($v$ is not a leaf)}
+       \STATE $(x_L, y_L) \leftarrow v.left.read()$\\
+       \STATE $(x_R, y_R) \leftarrow v.right.read()$\\
+       \STATE $s_L \leftarrow min(x_L-y_L, 2^{height(v)})$ \\
+       \STATE $s_R \leftarrow min(x_R-y_R, 2^{height(v)})$ \\
+       \STATE $r \leftarrow random(0,1)$
+       \IF {($(s_L+s_R) = 0$)}
+           \STATE Mark-up($v$)
+       \ELSIF {($r < s_L/(s_L + s_R)$)}
+           \STATE $v \leftarrow v.left$
+       \ELSE
+           \STATE $v \leftarrow v.rght$
+       \ENDIF
+   \ENDWHILE
+   \vspace{3mm}\\
+   /* $v$ is a leaf */
+   \STATE $(x,y) \leftarrow v.read()$
+   \STATE $flag$ $\leftarrow$ $v$.PutTask(task$[x+1]$, $l$)
+   \STATE $v$.CAS$((x,y), (x+1,y))$ // Update Insertion Count
+   \STATE $v \leftarrow v.parent$
+   \STATE Mark-up($v$)
+   \IF {($flag$ = success)}
+       \RETURN $success$
+   \ENDIF
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Mark-up($v$)}               %标题
+\label{alg3}                         %标记算法，方便在其它地方引用
+\begin{algorithmic}[1]
+\IF{($v$ is not Null)}
+    \FOR {($i=0; i<2; i++$)}
+    \STATE $(x, y) \leftarrow v.read()$
+    \STATE $(x_L, y_L) \leftarrow v.left.read()$
+    \STATE $(x_R, y_R) \leftarrow v.right.read()$
+    \STATE $v$.CAS( $(x,y), (max(x, x_L+y_L), max(y, x_R+y_R)$ )\\
+    \ENDFOR
+\ENDIF
+\end{algorithmic}
+\end{algorithm}
+%--------------------CHAPTER 3-----------------------------
+\chapter{Analysis}
+\section{Linearizability}
+The standard correctness condition for shared memory algorithm is Linearizability [M. Herlihy and J. M. Wing. Linearizability: A correctness condition for concurrent objects. ACM Transactions on Programming Languages and Systems, 12(3):463-492, 1990.] which was firstly raised by M. Herlihy and J. M. Wing in 1990. An implementation is linearizable if for every execution, there is a total order of all completed operations and a subset of the uncompleted operations in the execution that satisfies the sequential specifications of the object and is consistent with the real-time order of these operations. The basic rule behind Linearizability is that every concurrent history is equivalent to some sequential history. If one method call proceeds another, then the other one mush have taken effect before the later one call. By contrast, if two method calls overlap, then we are free to order them in any convenient way.
+
+The usual way to show a concurrent object implementation is linearizable is to identify for each method a linearization point where the method take effect.
+
+In the following subsection, we will obtain the Linearizability of our dynamic task allocation object by showing that, for each method, the linearization point is the time when this method is counted at the root of the adaptive To-do tree. With the help of the linearization point, we could thus find a total order which verifies (1) validity, each task that is performed successfully must have been inserted before, (2) uniqueness, each task is inserted and performed exactly once.
+
+Now we define a DoTask or InsertTask is counted at a node by noticing that each successful operation can be associated with a unique index of the task array at the leaf corresponding to the task it removed or inserted.
+
+An operation (DoTask or InsertTask) is counted at a leaf at the point when some process updates the count corresponding to the operation type with a value that is at least the index of the task array slot the operation deals with.
+
+Now we define an operation is counted at an arbitrary inner node v. We could linearize all operations that update the remove count (or insert count) of v with the same value y (or x). Only the first updating in in the sequential order counts the corresponding DoTask (or InsertTask) operation. Namely, a DoTask operation is counted at an inner node z at the point as soon as the updating via CAS counting the DoTask is linearized. Symmetrically, a InsertTask operation is counted at an inner node z at the point as soon as the updating via CAS counting the InsertTask is linearized. Please note that, the operation updating the counts of v is not necessary performed by the operation that performs that task at the leaf. i.e, suppose process p inserts task l into the task array at certain leaf, but the operation that counts such InsertTask at the inner node z could be a different process q.
+
+Now we claim, under the above definitions, the point when each method is counted at the root of the dynamic To-do tree is its linearization point.
+
+\begin{lem}
+The dynamic task allocation object in figure 1 is linearizable.
+\end{lem}
+\begin{proof}
+To prove this lemma, we should prove for any execution of the algorithm, the total order on the completed operations given by the linearization point verifies the uniqueness and validity.
+
+The uniqueness is obvious. When multiple processes are calling TryTask (l) to perform a CAS from the 0 to 1 on the memory location, only one will receive success and the index l of the task, all the other competitor process will get failure. Certain task is performed successfully means the value of corresponding memory location is turned to 1. The following process will never repeatedly turn it be to 0 and turn 0 to 1 which is guaranteed by the our semantics of task insertion and removing.
+
+Now we prove the validity, i.e. each task that is performed successfully must have been inserted before. We should prove the insertion operation of a task is always counted at the root before the removal operation for that task. To prove this result holds for the root, we now prove it by induction from the leaf. At the leaf, this holds because if and only if the insertion count of certain newly inserted task l has been incremented (line 19, method 2) then the following removal operation could read that (line 20 , method 1) and know the available task l and then try to perform it. In another word, suppose the task l is inserted but the insertion count is not incremented, then the following removal operation has no way to know the newly inserted task, perform it and increment the removal count.
+\end{proof}
+\section{Performance}
+\subsection{DoTask Analysis}
+\subsection{InsertTask Analysis}
+\section{Competitive Analysis}
+%--------------------CHAPTER 1-----------------------------
+\chapter{Conclusions}
+\section{Contributions}
+\section{Future Work}
+
