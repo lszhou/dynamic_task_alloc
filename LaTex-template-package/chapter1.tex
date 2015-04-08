@@ -45,7 +45,7 @@ The mode we discuss is under the control of a strong adaptive adversary. At any 
 
 \section{The Dynamic Adaptive To-Do Tree}
 [some concepts and definition, e.g. tree, counts, surplus, space]
-
+[Double Compare and Swap]
 [Intro and detailed explanation of DoTask and InsertTask]
 
 
@@ -133,7 +133,7 @@ The mode we discuss is under the control of a strong adaptive adversary. At any 
     \STATE $(x, y) \leftarrow v.read()$
     \STATE $(x_L, y_L) \leftarrow v.left.read()$
     \STATE $(x_R, y_R) \leftarrow v.right.read()$
-    \STATE $v$.CAS( $(x,y), (max(x, x_L+y_L), max(y, x_R+y_R)$ )\\
+    \STATE $v$.CAS$((x,y), (max(x, x_L + x_R), max(y, y_L + y_R))$\\
     \ENDFOR
 \ENDIF
 \end{algorithmic}
@@ -149,21 +149,47 @@ In the following subsection, we will obtain the Linearizability of our dynamic t
 
 Now we define a DoTask or InsertTask is counted at a node by noticing that each successful operation can be associated with a unique index of the task array at the leaf corresponding to the task it removed or inserted.
 
-An operation (DoTask or InsertTask) is counted at a leaf at the point when some process updates the count corresponding to the operation type with a value that is at least the index of the task array slot the operation deals with.
+An operation (DoTask or InsertTask) is counted at a leaf at the point when some process updates the count corresponding to the operation type with the index of the task array slot the operation deals with.
 
-Now we define an operation is counted at an arbitrary inner node v. We could linearize all operations that update the remove count (or insert count) of v with the same value y (or x). Only the first updating in in the sequential order counts the corresponding DoTask (or InsertTask) operation. Namely, a DoTask operation is counted at an inner node z at the point as soon as the updating via CAS counting the DoTask is linearized. Symmetrically, a InsertTask operation is counted at an inner node z at the point as soon as the updating via CAS counting the InsertTask is linearized. Please note that, the operation updating the counts of v is not necessary performed by the operation that performs that task at the leaf. i.e, suppose process p inserts task l into the task array at certain leaf, but the operation that counts such InsertTask at the inner node z could be a different process q.
-
-Now we claim, under the above definitions, the point when each method is counted at the root of the dynamic To-do tree is its linearization point.
+Now we define an operation is counted at an arbitrary inner node $v$. We could linearize all operations that update the removal count (or insertion count) of $v$ with the same value $y$ (or $x$). Only the first updating operation in in the sequential order counts the corresponding DoTask (or InsertTask) operation. Namely, a DoTask operation is counted at an inner node $v$ at the point as soon as the updating operation that counts the DoTask is linearized. Symmetrically, a InsertTask operation is counted at an inner node $v$ at the point as soon as the updating operation that counts the InsertTask is linearized. Please note that, the operation updating the counts of $v$ is not necessary performed by the operation that performs that task at the leaf. i.e, suppose process $p$ inserts task $l$ into the task array at certain leaf, but the operation that counts such InsertTask at the node $v$ could be a different process $q$.
 
 \begin{lem}
-The dynamic task allocation object in figure 1 is linearizable.
+Each complete DoTask or InsertTask operation $op$ will finally be counted at each node. 
 \end{lem}
 \begin{proof}
-To prove this lemma, we should prove for any execution of the algorithm, the total order on the completed operations given by the linearization point verifies the uniqueness and validity.
+[Sketch] This is ensured by the repetition of double compare and swap operation during the execution of mark-up($v$). 
+\end{proof}
 
-The uniqueness is obvious. When multiple processes are calling TryTask (l) to perform a CAS from the 0 to 1 on the memory location, only one will receive success and the index l of the task, all the other competitor process will get failure. Certain task is performed successfully means the value of corresponding memory location is turned to 1. The following process will never repeatedly turn it be to 0 and turn 0 to 1 which is guaranteed by the our semantics of task insertion and removing.
+\begin{lem}
+The point $t_H(op)$ when $op$ is counted at the root must be between $inv_H(op)$ and $rsp_H(op)$.
+\end{lem}
+\begin{proof}
+The fact $t_H(op) > inv_H(op)$ is needless to prove. Without loss of generality, suppose process $p$ executs $op$ and $op$ is a DoTask operation which has performed some task successfully at the leaf. When it walks back to root and executes Mark-up(root), there will be two cases:
 
-Now we prove the validity, i.e. each task that is performed successfully must have been inserted before. We should prove the insertion operation of a task is always counted at the root before the removal operation for that task. To prove this result holds for the root, we now prove it by induction from the leaf. At the leaf, this holds because if and only if the insertion count of certain newly inserted task l has been incremented (line 19, method 2) then the following removal operation could read that (line 20 , method 1) and know the available task l and then try to perform it. In another word, suppose the task l is inserted but the insertion count is not incremented, then the following removal operation has no way to know the newly inserted task, perform it and increment the removal count.
+Case 1:  It increments the removal count successfully via CAS (line 6, method 3) at point $\tau$. If it is the first one in the linearization order of all operations updating the removal count with the same value, then $t_H(op) = \tau$, therefore $t_H(op) < rsp_H(op)$. Otherwise, we could let $t_H(op) = \tau'$, where $\tau'$ is the first one in the linearization order updated the removal count of root. Obviously, $\tau' < \tau$, therefore $t_H(op) < rsp_H(op)$.
+
+Case 2: It fails to increment the removal count. The compare and swap operation of $p$ fails if and only if the value of the insertion and/or removal counts are/is updated at a point before $\tau$, suppose it is $\tau'$. Here are two subcases. 
+
+Subcase 2.1: If the removal count is incremented at $\tau'$, it means the DoTask operation has already been counted by another process. Thus, $t_H(op) \leq \tau' < rsp_H(op)$. 
+
+Subcase 2.2: If it is not the removal count but the insertion count that is updated at $\tau'$. We notice that the CAS operation (line 6, method 3) will be repeated by $p$, during the second iteration, if the CAS of $p$ succeed at $\tau''$, then we could deduce that $t_H(op) \leq \tau''$, therefore  $t_H(op) < rsp_H(op)$. If it fails again at point $\tau''$ , then there must be another process updated the counts of root again. This time, the counts of the children will be noticed and the DoTask operation will propagate to the root. We could deduce $t_H(op) < \tau''$. Thus,  $t_H(op) < rsp_H(op)$ as well.
+\end{proof}
+
+Under the above definitions and properties, we claim the point $t_H(op)$ when $op$ is counted at the root is the linearization point of operation $op$.
+
+\begin{lem}
+The dynamic task allocation object in the above figure is linearizable.
+\end{lem}
+\begin{proof}
+Consider an arbitrary history $H$ containing DoTask and InsertTask operations. We should prove for any execution of our algorithm, the total order given by the linearization point is verifies the uniqueness and validity. If $H$ is not complete, then we let all processes that have not finished their operations continue to take steps in an arbitrary order until all operations are completed. Every operation will finally be done is ensured by our computation model and the randomness of our algorithm. This way we obtain a completion $H'$ of $H$ and it suffices to prove $H'$ is linearizable. Thus, to prove this lemma, we should prove the total order obtained by sorting the operations by their $t_H(op)$ values is valid.
+
+\texttt{The uniqueness is obvious. When multiple processes are calling TryTask($l$) at the memory location, only one of them will receive success and the index $l$ of the task, all the other competitor processes will get failure. Task $l$ is performed successfully as long as the value of corresponding memory location is turned to 1. The following process will never repeatedly turn it be to 0 and turn 0 to 1 which is guaranteed by the our semantics of task insertion and removing.}
+
+Now we prove the validity, i.e. each task that is performed successfully must have been inserted before. We should prove the insertion operation of a task is always counted at the root before the removal operation. To prove this result holds for the root, we now prove it by induction from the leaf.
+
+At the leaf, this holds because if and only if the insertion count of newly inserted task $l$ has been incremented (line 19, method 2) then the following removal operation could read that (line 20, method 1) to know the available task $l$ at the leaf and then try to perform it. In another word, suppose the task $l$ is inserted but the insertion count is not incremented (i.e. insertion has not been counted yet), then the following removal operation has no way to know the available task $l$, perform it and increment the removal count. Thus, the removal will not be counted.
+
+For an arbitrary inner node $v$, we suppose, by the induction step and lemma 1, the result holds for children $v.left$ and $v.right$. We could notice that any process updates the insertion count and removal count as an atomic operation (line 6, method 3). If some remove operation has been counted at node $v$, then the corresponding insert operation for that task must have been counted at $v$ simultaneously by the double compare-and-swap operation. Apply this to the root, then validity condition holds.
 \end{proof}
 \section{Performance}
 \subsection{DoTask Analysis}

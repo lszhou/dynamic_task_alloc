@@ -1,21 +1,21 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=pdflatex 2014.3.14)  6 APR 2015 22:35
+This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=pdflatex 2014.3.14)  8 APR 2015 13:33
 entering extended mode
 **ucalgthes1_root_0.tex
 
-(C:\Users\lszhou\Desktop\Dynamic.Task.Allocation\LaTex-template-package\ucalgth
-es1_root_0.tex
+(F:\Dynamic.Task.Allocation\dynamic_task_alloc\LaTex-template-package\ucalgthes
+1_root_0.tex
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman, ngerman, german-x-2009-06-19, ngerman-x-2009-06-19, french, loaded.
 
-(C:\Users\lszhou\Desktop\Dynamic.Task.Allocation\LaTex-template-package\ucalgth
-es1.cls
+(F:\Dynamic.Task.Allocation\dynamic_task_alloc\LaTex-template-package\ucalgthes
+1.cls
 Document Class: ucalgthes1 1998/03/01 v1.0 University of Calgary Thesis Class
 
-(C:\Users\lszhou\Desktop\Dynamic.Task.Allocation\LaTex-template-package\doubles
-pace.sty)
-(C:\Users\lszhou\Desktop\Dynamic.Task.Allocation\LaTex-template-package\thes12.
-clo)
+(F:\Dynamic.Task.Allocation\dynamic_task_alloc\LaTex-template-package\doublespa
+ce.sty)
+(F:\Dynamic.Task.Allocation\dynamic_task_alloc\LaTex-template-package\thes12.cl
+o)
 \descriptionmargin=\dimen102
 \signwidth=\skip41
 \c@part=\count79
@@ -28,8 +28,8 @@ clo)
 \c@figure=\count86
 \c@table=\count87
 
-(C:\Users\lszhou\Desktop\Dynamic.Task.Allocation\LaTex-template-package\thesist
-itlepage.sty)) (C:\CTEX\MiKTeX\tex\latex\algorithms\algorithm.sty
+(F:\Dynamic.Task.Allocation\dynamic_task_alloc\LaTex-template-package\thesistit
+lepage.sty)) (C:\CTEX\MiKTeX\tex\latex\algorithms\algorithm.sty
 Package: algorithm 2009/08/24 v0.1 Document Style `algorithm' - floating enviro
 nment
 
@@ -217,12 +217,12 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 3
 )
 \Hy@SectionHShift=\skip47
 )
-(C:\Users\lszhou\Desktop\Dynamic.Task.Allocation\LaTex-template-package\ucalgth
-es1_root_0.aux
-(C:\Users\lszhou\Desktop\Dynamic.Task.Allocation\LaTex-template-package\chapter
-1.aux)
-(C:\Users\lszhou\Desktop\Dynamic.Task.Allocation\LaTex-template-package\appendi
-x1.aux))
+(F:\Dynamic.Task.Allocation\dynamic_task_alloc\LaTex-template-package\ucalgthes
+1_root_0.aux
+(F:\Dynamic.Task.Allocation\dynamic_task_alloc\LaTex-template-package\chapter1.
+aux)
+(F:\Dynamic.Task.Allocation\dynamic_task_alloc\LaTex-template-package\appendix1
+.aux))
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 31.
 LaTeX Font Info:    ... okay on input line 31.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 31.
@@ -294,10 +294,10 @@ Package: gettitlestring 2009/12/18 v1.3 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 31.
 LaTeX Info: Redefining \pageref on input line 31.
 
-(C:\Users\lszhou\Desktop\Dynamic.Task.Allocation\LaTex-template-package\ucalgth
-es1_root_0.out)
-(C:\Users\lszhou\Desktop\Dynamic.Task.Allocation\LaTex-template-package\ucalgth
-es1_root_0.out)
+(F:\Dynamic.Task.Allocation\dynamic_task_alloc\LaTex-template-package\ucalgthes
+1_root_0.out)
+(F:\Dynamic.Task.Allocation\dynamic_task_alloc\LaTex-template-package\ucalgthes
+1_root_0.out)
 \@outlinefile=\write3
 \AtBeginShipoutBox=\box28
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 32.
@@ -317,8 +317,8 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 [2
 
 ]
-(C:\Users\lszhou\Desktop\Dynamic.Task.Allocation\LaTex-template-package\ucalgth
-es1_root_0.toc
+(F:\Dynamic.Task.Allocation\dynamic_task_alloc\LaTex-template-package\ucalgthes
+1_root_0.toc
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <12> on input line 1.
 LaTeX Font Info:    External font `cmex10' loaded for size
@@ -330,26 +330,26 @@ LaTeX Font Info:    External font `cmex10' loaded for size
  [3
 
 ]
-(C:\Users\lszhou\Desktop\Dynamic.Task.Allocation\LaTex-template-package\ucalgth
-es1_root_0.lot)
+(F:\Dynamic.Task.Allocation\dynamic_task_alloc\LaTex-template-package\ucalgthes
+1_root_0.lot)
 \tf@lot=\write5
  [4
 
 ]
-(C:\Users\lszhou\Desktop\Dynamic.Task.Allocation\LaTex-template-package\ucalgth
-es1_root_0.lof)
+(F:\Dynamic.Task.Allocation\dynamic_task_alloc\LaTex-template-package\ucalgthes
+1_root_0.lof)
 \tf@lof=\write6
  [5
 
 ]
-(C:\Users\lszhou\Desktop\Dynamic.Task.Allocation\LaTex-template-package\symbols
-.tex) [6
+(F:\Dynamic.Task.Allocation\dynamic_task_alloc\LaTex-template-package\symbols.t
+ex) [6
 
 
 
 ]
-(C:\Users\lszhou\Desktop\Dynamic.Task.Allocation\LaTex-template-package\chapter
-1.tex
+(F:\Dynamic.Task.Allocation\dynamic_task_alloc\LaTex-template-package\chapter1.
+tex
 Chapter \bf {1}.
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
 been already used, duplicate ignored
@@ -402,15 +402,45 @@ put line 53.
 Chapter \bf {3}.
 [7
 
-] [8] [9]
+] [8]
+Overfull \hbox (2.40889pt too wide) in paragraph at lines 186--187
+[]\OT1/cmtt/m/n/12 The uniqueness is obvious. When multiple processes are calli
+ng TryTask($\OML/cmm/m/it/12 l$\OT1/cmtt/m/n/12 )
+ []
+
+
+Overfull \hbox (3.30908pt too wide) in paragraph at lines 186--187
+\OT1/cmtt/m/n/12 at the memory location, only one of them will receive success 
+and the index $\OML/cmm/m/it/12 l$
+ []
+
+
+Overfull \hbox (58.88411pt too wide) in paragraph at lines 186--187
+\OT1/cmtt/m/n/12 of the task, all the other competitor processes will get failu
+re. Task $\OML/cmm/m/it/12 l$ \OT1/cmtt/m/n/12 is performed
+ []
+
+
+Overfull \hbox (18.07022pt too wide) in paragraph at lines 186--187
+\OT1/cmtt/m/n/12 successfully as long as the value of corresponding memory loca
+tion is turned to
+ []
+
+
+Overfull \hbox (5.72021pt too wide) in paragraph at lines 186--187
+\OT1/cmtt/m/n/12 1. The following process will never repeatedly turn it be to 0
+ and turn 0 to
+ []
+
+[9] [10] [11]
 Chapter \bf {4}.
-) [10
+) [12
 
 ]
-(C:\Users\lszhou\Desktop\Dynamic.Task.Allocation\LaTex-template-package\appendi
-x1.tex
+(F:\Dynamic.Task.Allocation\dynamic_task_alloc\LaTex-template-package\appendix1
+.tex
 \bf {Appendix} \bf {A}.
-) [11
+) [13
 
 
 
@@ -418,33 +448,35 @@ x1.tex
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 77.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 77.
 
-(C:\Users\lszhou\Desktop\Dynamic.Task.Allocation\LaTex-template-package\ucalgth
-es1_root_0.aux
-(C:\Users\lszhou\Desktop\Dynamic.Task.Allocation\LaTex-template-package\chapter
-1.aux)
-(C:\Users\lszhou\Desktop\Dynamic.Task.Allocation\LaTex-template-package\appendi
-x1.aux))
+(F:\Dynamic.Task.Allocation\dynamic_task_alloc\LaTex-template-package\ucalgthes
+1_root_0.aux
+(F:\Dynamic.Task.Allocation\dynamic_task_alloc\LaTex-template-package\chapter1.
+aux)
+(F:\Dynamic.Task.Allocation\dynamic_task_alloc\LaTex-template-package\appendix1
+.aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 77.
 Package rerunfilecheck Info: File `ucalgthes1_root_0.out' has not changed.
 (rerunfilecheck)             Checksum: 81A56BBE0A0E5B160AE01561E0FA7C9B;1430.
  ) 
 Here is how much of TeX's memory you used:
- 4688 strings out of 495285
- 71226 string characters out of 3181587
+ 4694 strings out of 495285
+ 71193 string characters out of 3181587
  150283 words of memory out of 3000000
- 7694 multiletter control sequences out of 15000+200000
- 7934 words of font info for 28 fonts, out of 3000000 for 9000
+ 7695 multiletter control sequences out of 15000+200000
+ 8103 words of font info for 29 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
- 31i,5n,30p,978b,593s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 31i,5n,30p,978b,595s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/CTEX/MiKTeX/fon
 ts/type1/public/amsfonts/cm/cmmi12.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfo
 nts/cm/cmmi8.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/C
 TEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/CTEX/MiKTeX/fonts/type1
 /public/amsfonts/cm/cmr8.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cms
-y10.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.pfb>
-Output written on ucalgthes1_root_0.pdf (18 pages, 147900 bytes).
+y10.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/CTEX/MiKTe
+X/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/CTEX/MiKTeX/fonts/type1/public/
+amsfonts/cm/cmtt12.pfb>
+Output written on ucalgthes1_root_0.pdf (20 pages, 171499 bytes).
 PDF statistics:
- 326 PDF objects out of 1000 (max. 8388607)
- 111 named destinations out of 1000 (max. 500000)
+ 346 PDF objects out of 1000 (max. 8388607)
+ 115 named destinations out of 1000 (max. 500000)
  193 words of extra memory for PDF output out of 10000 (max. 10000000)
 
