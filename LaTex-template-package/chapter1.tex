@@ -139,11 +139,61 @@ The mode we discuss is under the control of a strong adaptive adversary. At any 
 \end{algorithmic}
 \end{algorithm}
 %--------------------CHAPTER 3-----------------------------
+\theoremstyle{definition}
 \chapter{Analysis}
 \section{Linearizability}
-The standard correctness condition for shared memory algorithm is Linearizability [M. Herlihy and J. M. Wing. Linearizability: A correctness condition for concurrent objects. ACM Transactions on Programming Languages and Systems, 12(3):463-492, 1990.] which was firstly raised by M. Herlihy and J. M. Wing in 1990. An implementation is linearizable if for every execution, there is a total order of all completed operations and a subset of the uncompleted operations in the execution that satisfies the sequential specifications of the object and is consistent with the real-time order of these operations. The basic rule behind Linearizability is that every concurrent history is equivalent to some sequential history. If one method call proceeds another, then the other one mush have taken effect before the later one call. By contrast, if two method calls overlap, then we are free to order them in any convenient way.
+The standard correctness condition for shared memory algorithm is linearizability which was introduced by M. Herlihy and J. M. Wing in 1990. The intuition of linearizability is the real-time behavior of method calls must be preserved, i.e. If one method call precedes another, then the earlier call must have taken effect before the later one. By contrast, if two method calls overlap, the we are free to order them in any convenient way since the order is ambiguous. Informally, a concurrent object is linearizable if each method call appears to take effect instantaneously at some moment between that its invocation and response. In the next section, we will first build the formal definition and terminology for linearizability, then prove our concurrent dynamic task allocation object is linearizable.
 
-The usual way to show a concurrent object implementation is linearizable is to identify for each method a linearization point where the method take effect.
+\subsection{Definitions and Terminology}
+%An implementation is linearizable if for every execution, there is a total order of all completed operations and a subset of the uncompleted operations in the execution that satisfies the sequential specifications of the object and is consistent with the real-time order of these operations. The basic rule behind Linearizability is that every concurrent history is equivalent to some sequential history. If one method call proceeds another, then the other one mush have taken effect before the later one call. By contrast, if two method calls overlap, then we are free to order them in any convenient way.
+
+\begin{definition}{\textbf{History}.}
+A history $H$, used to model an execution of a concurrent object, is a finite sequence of method invocation and response event.
+\end{definition}
+
+In the following discussion, we use $inv_H(op)$ to denote the position of the invocation of operation $op$ in history $H$ and similarly we use $rep_H(op)$ to denote the position of the corresponding response of operation $op$ in history $H$. For each operation $op$, it is not necessary to have a matching response. In this case, we denote it as $rsp_H(op) = \infty$.
+
+\begin{definition}{\textbf{Sequential History}.}
+A history is sequential if the first event of $H$ is an invocation, and each invocation, except possibly the last one, is immediately followed by a corresponding response.
+\end{definition}
+
+It is obvious the sequential history is actually a total order over all operations in $H$.
+
+\begin{definition}{\textbf{Sequential Specification}.}
+A sequential specification $S_{obj}$ for an object $obj$ is just a set of sequential histories for that object.
+\end{definition}
+
+\begin{definition}{\textbf{Object Subhistory}.}
+An object subhistory $H|obj$ of history $H$ is the subsequence of all events in $H$ whose object names are $obj$.
+\end{definition}
+
+\begin{definition}{\textbf{Valid Sequential Specification}.}
+A sequential history $S$ is valid (or legal) if each object subhistory is legal for that object, i.e, if for each object $obj$, $H|obj \in S_{obj}$
+\end{definition}
+
+Let $H$ be a complete history. With each operation $op$ in a history $H$ we could thus associate a time interval $I_H(op) = [inv(op), rsp(op)]$. 
+
+With the above definitions, we could now define linearization as follows:
+
+\begin{definition}{\textbf{Linearization}.}
+A history $H$ linearizes to a sequential history $S$, if and only if $S$ satisfies the following properties: (1) $S$ and $H$ have the same operations; (2) $S$ is valid; (3) there is a mapping from each time interval $I_H(op)$ to a time point $t_H(op) \in I_H(op)$, such that the history is sequential obtained by sorting the operations by their $t_H(op)$.
+\end{definition}
+
+
+\begin{definition}{\textbf{Linearization Point}.}
+The linearization point for each operation $op$ is $t_H(op)$ which satisfies the property (3) in the above definition.  
+\end{definition}
+
+Since we have defined the linearizability for a history $H$, we could now define linearizable object.
+
+\begin{definition}{\textbf{Linearizable Object}.}
+A concurrent object is linearizable, if every history $H$, obtained by multiple processes executing shared memory operations on that object, is linearizable.
+\end{definition}
+
+Through the above definition, we know that one way to show a concurrent object implementation is linearizable is to identify for each method a linearization point, and prove that the sequential history obtained by sorting the operations according to their linearization point satisfies the sequential specification.
+
+
+
 
 In the following subsection, we will obtain the Linearizability of our dynamic task allocation object by showing that, for each method, the linearization point is the time when this method is counted at the root of the adaptive To-do tree. With the help of the linearization point, we could thus find a total order which verifies (1) validity, each task that is performed successfully must have been inserted before, (2) uniqueness, each task is inserted and performed exactly once.
 
@@ -154,10 +204,10 @@ An operation (DoTask or InsertTask) is counted at a leaf at the point when some 
 Now we define an operation is counted at an arbitrary inner node $v$. We could linearize all operations that update the removal count (or insertion count) of $v$ with the same value $y$ (or $x$). Only the first updating operation in in the sequential order counts the corresponding DoTask (or InsertTask) operation. Namely, a DoTask operation is counted at an inner node $v$ at the point as soon as the updating operation that counts the DoTask is linearized. Symmetrically, a InsertTask operation is counted at an inner node $v$ at the point as soon as the updating operation that counts the InsertTask is linearized. Please note that, the operation updating the counts of $v$ is not necessary performed by the operation that performs that task at the leaf. i.e, suppose process $p$ inserts task $l$ into the task array at certain leaf, but the operation that counts such InsertTask at the node $v$ could be a different process $q$.
 
 \begin{lem}
-Each complete DoTask or InsertTask operation $op$ will finally be counted at each node. 
+Each complete DoTask or InsertTask operation $op$ will finally be counted at each node.
 \end{lem}
 \begin{proof}
-[Sketch] This is ensured by the repetition of double compare and swap operation during the execution of mark-up($v$). 
+[Sketch] This is ensured by the repetition of double compare and swap operation during the execution of mark-up($v$).
 \end{proof}
 
 \begin{lem}
@@ -168,9 +218,9 @@ The fact $t_H(op) > inv_H(op)$ is needless to prove. Without loss of generality,
 
 Case 1:  It increments the removal count successfully via CAS (line 6, method 3) at point $\tau$. If it is the first one in the linearization order of all operations updating the removal count with the same value, then $t_H(op) = \tau$, therefore $t_H(op) < rsp_H(op)$. Otherwise, we could let $t_H(op) = \tau'$, where $\tau'$ is the first one in the linearization order updated the removal count of root. Obviously, $\tau' < \tau$, therefore $t_H(op) < rsp_H(op)$.
 
-Case 2: It fails to increment the removal count. The compare and swap operation of $p$ fails if and only if the value of the insertion and/or removal counts are/is updated at a point before $\tau$, suppose it is $\tau'$. Here are two subcases. 
+Case 2: It fails to increment the removal count. The compare and swap operation of $p$ fails if and only if the value of the insertion and/or removal counts are/is updated at a point before $\tau$, suppose it is $\tau'$. Here are two subcases.
 
-Subcase 2.1: If the removal count is incremented at $\tau'$, it means the DoTask operation has already been counted by another process. Thus, $t_H(op) \leq \tau' < rsp_H(op)$. 
+Subcase 2.1: If the removal count is incremented at $\tau'$, it means the DoTask operation has already been counted by another process. Thus, $t_H(op) \leq \tau' < rsp_H(op)$.
 
 Subcase 2.2: If it is not the removal count but the insertion count that is updated at $\tau'$. We notice that the CAS operation (line 6, method 3) will be repeated by $p$, during the second iteration, if the CAS of $p$ succeed at $\tau''$, then we could deduce that $t_H(op) \leq \tau''$, therefore  $t_H(op) < rsp_H(op)$. If it fails again at point $\tau''$ , then there must be another process updated the counts of root again. This time, the counts of the children will be noticed and the DoTask operation will propagate to the root. We could deduce $t_H(op) < \tau''$. Thus,  $t_H(op) < rsp_H(op)$ as well.
 \end{proof}
