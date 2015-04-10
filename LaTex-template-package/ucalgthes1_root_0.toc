@@ -15,11 +15,11 @@
 \contentsline {chapter}{\numberline {3}Analysis}{7}{chapter.3}
 \contentsline {section}{\numberline {3.1}Linearizability}{7}{section.3.1}
 \contentsline {subsection}{\numberline {3.1.1}Definitions and Terminology}{7}{subsection.3.1.1}
-\contentsline {section}{\numberline {3.2}Performance}{12}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}DoTask Analysis}{12}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}InsertTask Analysis}{12}{subsection.3.2.2}
-\contentsline {section}{\numberline {3.3}Competitive Analysis}{12}{section.3.3}
-\contentsline {chapter}{\numberline {4}Conclusions}{13}{chapter.4}
-\contentsline {section}{\numberline {4.1}Contributions}{13}{section.4.1}
-\contentsline {section}{\numberline {4.2}Future Work}{13}{section.4.2}
-\contentsline {chapter}{\numberline {A}First Appendix}{14}{appendix.A}
+\contentsline {section}{\numberline {3.2}Performance}{13}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}DoTask Analysis}{13}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}InsertTask Analysis}{13}{subsection.3.2.2}
+\contentsline {section}{\numberline {3.3}Competitive Analysis}{13}{section.3.3}
+\contentsline {chapter}{\numberline {4}Conclusions}{14}{chapter.4}
+\contentsline {section}{\numberline {4.1}Contributions}{14}{section.4.1}
+\contentsline {section}{\numberline {4.2}Future Work}{14}{section.4.2}
+\contentsline {chapter}{\numberline {A}First Appendix}{15}{appendix.A}

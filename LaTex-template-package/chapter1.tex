@@ -148,56 +148,69 @@ The standard correctness condition for shared memory algorithm is linearizabilit
 %An implementation is linearizable if for every execution, there is a total order of all completed operations and a subset of the uncompleted operations in the execution that satisfies the sequential specifications of the object and is consistent with the real-time order of these operations. The basic rule behind Linearizability is that every concurrent history is equivalent to some sequential history. If one method call proceeds another, then the other one mush have taken effect before the later one call. By contrast, if two method calls overlap, then we are free to order them in any convenient way.
 
 \begin{definition}{\textbf{History}.}
-A history $H$, used to model an execution of a concurrent object, is a finite sequence of method invocation and response event.
+A history  (or execution) $H$, obtained by processes executing shared memory operations on concurrent objects, is a finite sequence of method invocation and response events.
 \end{definition}
 
-In the following discussion, we use $inv_H(op)$ to denote the position of the invocation of operation $op$ in history $H$ and similarly we use $rep_H(op)$ to denote the position of the corresponding response of operation $op$ in history $H$. For each operation $op$, it is not necessary to have a matching response. In this case, we denote it as $rsp_H(op) = \infty$.
+A history $H$ could be related to many concurrent objects. When we consider the concurrency behavior of a specific object, we should focus on the subhistory of that object which is defined as follows:
+
+\begin{definition}{\textbf{Subhistory}.}
+The subhistory $H|obj$ of history $H$ is the subsequence of all invocation and response events in $H$ whose object names are $obj$.
+\end{definition}
+
+If a history $H$ we consider is related to only one object $obj$, then the subhistory $H_{obj}$ is right the history $H$. Thus, in the following discussion, when we discuss the concurrency behavior of a specific objet $obj$, the history $H$ and the subhistory $H_{obj}$  have no difference.
+
+We use $inv_H(op)$ to denote the position of the invocation of operation $op$ in history $H$. Similarly we use $rep_H(op)$ to denote the position of the corresponding response of $op$ in $H$. Actually, for each operation $op$, it is not necessary to have a matching response. In this case, we call the operation $op$ is pending and denote it as $rsp_H(op) = \infty$. Otherwise, we call the operation is complete in $H$. 
+
+\begin{definition}{\textbf{Complete/Imcomplete History}.}
+A history is complete if all its operation are complete. A completion of an incomplete history $H$ is an extension $H'$ of $H$, such that $H'$ contains exactly the same operations as $H$ but the responses are added for the pending operations in $H$.
+\end{definition}
+
+Let $H$ be a complete history. With each operation $op$ in $H$ we could associate a time interval $I_H(op) = [inv(op), rsp(op)]$. Similarity, for an uncomplete history, we denote the interval with respect to the pending operation $op$ by $I_H(op) = [inv(op), \infty]$.
 
 \begin{definition}{\textbf{Sequential History}.}
-A history is sequential if the first event of $H$ is an invocation, and each invocation, except possibly the last one, is immediately followed by a corresponding response.
+A history is sequential if the first event in the history is an invocation, and each invocation, except possibly the last one, is immediately followed by a corresponding response.
 \end{definition}
 
-It is obvious the sequential history is actually a total order over all operations in $H$.
+If a history is sequential then we denote it as $S$ in order to distinguish it with non-sequential or uncertain history $H$. It is obvious a sequential history is a total order over all operations. 
 
 \begin{definition}{\textbf{Sequential Specification}.}
-A sequential specification $S_{obj}$ for an object $obj$ is just a set of sequential histories for that object.
+The sequential specification $S_{obj}$ for a concurrent object $obj$ is a set of sequential histories for $obj$.  
 \end{definition}
 
-\begin{definition}{\textbf{Object Subhistory}.}
-An object subhistory $H|obj$ of history $H$ is the subsequence of all events in $H$ whose object names are $obj$.
-\end{definition}
+A sequential history $S$ satisfies the sequential specification of object $obj$ means $S$ is contained in the above sequential history set $S_{obj}$, i.e, $S \in S_{obj}$.
 
-\begin{definition}{\textbf{Valid Sequential Specification}.}
-A sequential history $S$ is valid (or legal) if each object subhistory is legal for that object, i.e, if for each object $obj$, $H|obj \in S_{obj}$
+\begin{definition}{\textbf{Valid Sequential History}.}
+A sequential history $S$ of object $obj$ is valid (sometimes also called legal) if it satisfies the sequential specification of $obj$
 \end{definition}
-
-Let $H$ be a complete history. With each operation $op$ in a history $H$ we could thus associate a time interval $I_H(op) = [inv(op), rsp(op)]$. 
 
 With the above definitions, we could now define linearization as follows:
 
 \begin{definition}{\textbf{Linearization}.}
-A history $H$ linearizes to a sequential history $S$, if and only if $S$ satisfies the following properties: (1) $S$ and $H$ have the same operations; (2) $S$ is valid; (3) there is a mapping from each time interval $I_H(op)$ to a time point $t_H(op) \in I_H(op)$, such that the history is sequential obtained by sorting the operations by their $t_H(op)$.
+A history $H$ linearizes to a sequential history $S$, if and only if $S$ satisfies the following conditions: (1) $S$ and $H$ have the same operations, (2) sequential history $S$ is valid, and (3) there is a mapping from each time interval $I_H(op)$ to a time point $t_H(op)$, $t_H(op) \in I_H(op)$, such that the sequential history $S$ could be obtained by sorting the operations in $H$ by their $t_H(op)$.
 \end{definition}
 
+In another word, a history $H$ is linearizable if and only if we could find a such a sequential history $S$ which satisfies the above three conditions.
 
 \begin{definition}{\textbf{Linearization Point}.}
-The linearization point for each operation $op$ is $t_H(op)$ which satisfies the property (3) in the above definition.  
+For each operation $op$, we call the time point $t_H(op)$ described in the above definition the linearization point of operation $op$.
 \end{definition}
-
-Since we have defined the linearizability for a history $H$, we could now define linearizable object.
 
 \begin{definition}{\textbf{Linearizable Object}.}
-A concurrent object is linearizable, if every history $H$, obtained by multiple processes executing shared memory operations on that object, is linearizable.
+A concurrent object is linearizable if every history $H$ of that object is linearizable.
 \end{definition}
 
-Through the above definition, we know that one way to show a concurrent object implementation is linearizable is to identify for each method a linearization point, and prove that the sequential history obtained by sorting the operations according to their linearization point satisfies the sequential specification.
+In the following subsections, we will prove our concurrent dynamic task allocation object is linearizable. Through the above definitions, we know that one way to show an object $obj$ is linearizable is to prove its arbitrary history $H$ is linearizable. Specifically, that is to identify for each DoTask or InsertTask operation $op$ (i.e, interval $I_H(op)$) in $H$ a linearization point, and prove that the sequential history obtained by sorting these operations according to their linearization points satisfies the sequential specification of $obj$.
 
 
 
+%=========================================================================================================================
+%===================================================== I am here! ==========================================================
+%===========================================================================================================================
 
-In the following subsection, we will obtain the Linearizability of our dynamic task allocation object by showing that, for each method, the linearization point is the time when this method is counted at the root of the adaptive To-do tree. With the help of the linearization point, we could thus find a total order which verifies (1) validity, each task that is performed successfully must have been inserted before, (2) uniqueness, each task is inserted and performed exactly once.
+We could notice that each DoTask or InsertTask operation can be associated with a unique index of the task array at the leaf corresponding to the task it removed or inserted.
 
-Now we define a DoTask or InsertTask is counted at a node by noticing that each successful operation can be associated with a unique index of the task array at the leaf corresponding to the task it removed or inserted.
+
+To identify the linearization point for each operation, we firstly need to define the concept that a DoTask or InsertTask operation is counted at a node.
 
 An operation (DoTask or InsertTask) is counted at a leaf at the point when some process updates the count corresponding to the operation type with the index of the task array slot the operation deals with.
 
