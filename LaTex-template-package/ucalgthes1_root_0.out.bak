@@ -13,13 +13,14 @@
 \BOOKMARK [1][-]{section.2.2}{Problem Statement}{chapter.2}% 13
 \BOOKMARK [1][-]{section.2.3}{The Dynamic Adaptive To-Do Tree}{chapter.2}% 14
 \BOOKMARK [0][-]{chapter.3}{Analysis}{}% 15
-\BOOKMARK [1][-]{section.3.1}{Linearizability}{chapter.3}% 16
+\BOOKMARK [1][-]{section.3.1}{Correctness}{chapter.3}% 16
 \BOOKMARK [2][-]{subsection.3.1.1}{Definitions and Terminology}{section.3.1}% 17
-\BOOKMARK [1][-]{section.3.2}{Performance}{chapter.3}% 18
-\BOOKMARK [2][-]{subsection.3.2.1}{DoTask Analysis}{section.3.2}% 19
-\BOOKMARK [2][-]{subsection.3.2.2}{InsertTask Analysis}{section.3.2}% 20
-\BOOKMARK [1][-]{section.3.3}{Competitive Analysis}{chapter.3}% 21
-\BOOKMARK [0][-]{chapter.4}{Conclusions}{}% 22
-\BOOKMARK [1][-]{section.4.1}{Contributions}{chapter.4}% 23
-\BOOKMARK [1][-]{section.4.2}{Future Work}{chapter.4}% 24
-\BOOKMARK [0][-]{appendix.A}{First Appendix}{}% 25
+\BOOKMARK [2][-]{subsection.3.1.2}{Analysis and Proofs}{section.3.1}% 18
+\BOOKMARK [1][-]{section.3.2}{Performance}{chapter.3}% 19
+\BOOKMARK [2][-]{subsection.3.2.1}{DoTask Analysis}{section.3.2}% 20
+\BOOKMARK [2][-]{subsection.3.2.2}{InsertTask Analysis}{section.3.2}% 21
+\BOOKMARK [1][-]{section.3.3}{Competitive Analysis}{chapter.3}% 22
+\BOOKMARK [0][-]{chapter.4}{Conclusions}{}% 23
+\BOOKMARK [1][-]{section.4.1}{Contributions}{chapter.4}% 24
+\BOOKMARK [1][-]{section.4.2}{Future Work}{chapter.4}% 25
+\BOOKMARK [0][-]{appendix.A}{First Appendix}{}% 26
