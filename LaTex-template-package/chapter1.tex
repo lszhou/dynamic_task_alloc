@@ -43,6 +43,8 @@ The mode we discuss is under the control of a strong adaptive adversary. At any 
 
 [Complexity Metric] The complexity measure we use is the total number of operations (i.e. read, write, and CAS) that processes take during an execution.\\
 
+Define an InsertTask operation is successful if it has inserted a task into the task array. Similarly, a DoTask operation is successful if it has performed a task at a leaf. A complete InsertTask or DoTask operation must be a successful operation, but not vice versa.
+
 \section{The Dynamic Adaptive To-Do Tree}
 [some concepts and definition, e.g. tree, counts, surplus, space]
 [Double Compare and Swap]
@@ -151,10 +153,10 @@ The standard correctness condition for shared memory algorithm is linearizabilit
 A history  (or execution) $H$, obtained by processes executing shared memory operations on concurrent objects, is a finite sequence of method invocation and response events.
 \end{definition}
 
-A history $H$ could be related to many concurrent objects. When we consider the concurrency behavior of a specific object, we should focus on the subhistory of that object which is defined as follows:
+A history $H$ may be related to several concurrent objects. When we consider the concurrency behavior of a specific object, we should focus on the subhistory of that object which is defined as follows:
 
 \begin{definition}{\textbf{Subhistory}.}
-The subhistory $H|obj$ of history $H$ is the subsequence of all invocation and response events in $H$ whose object names are $obj$.
+The subhistory $H|obj$ of history $H$ is the subsequence of all invocation and response events in $H$ whose object names are all $obj$.
 \end{definition}
 
 If a history $H$ we consider is related to only one object $obj$, then the subhistory $H_{obj}$ is right the history $H$. Thus, in the following discussion, when we discuss the concurrency behavior of a specific objet $obj$, the history $H$ and the subhistory $H_{obj}$  have no difference.
@@ -162,25 +164,25 @@ If a history $H$ we consider is related to only one object $obj$, then the subhi
 We use $inv_H(op)$ to denote the position of the invocation of operation $op$ in history $H$. Similarly we use $rep_H(op)$ to denote the position of the corresponding response of $op$ in $H$. Actually, for each operation $op$, it is not necessary to have a matching response. In this case, we call the operation $op$ is pending and denote it as $rsp_H(op) = \infty$. Otherwise, we call the operation is complete in $H$.
 
 \begin{definition}{\textbf{Complete/Imcomplete History}.}
-A history is complete if all its operation are complete. A completion of an incomplete history $H$ is an extension $H'$ of $H$, such that $H'$ contains exactly the same operations as $H$ but the responses are added for the pending operations in $H$.
+A history is complete if all its operations are complete. A completion of an incomplete history $H$ is an extension $H'$ of $H$, such that $H'$ contains exactly the same operations as $H$ but the responses are added for the pending operations in $H$.
 \end{definition}
 
-Let $H$ be a complete history. With each operation $op$ in $H$ we could associate a time interval $I_H(op) = [inv(op), rsp(op)]$. Similarity, for an uncomplete history, we denote the interval with respect to the pending operation $op$ by $I_H(op) = [inv(op), \infty]$.
+Let $H$ be a complete history. With each operation $op$ in $H$ we could associate a time interval $I_H(op) = [inv(op), rsp(op)]$. Similarly, for an uncomplete history, we denote the interval with respect to the pending operation $op$ by $I_H(op) = [inv(op), \infty]$.
 
 \begin{definition}{\textbf{Sequential History}.}
 A history is sequential if the first event in the history is an invocation, and each invocation, except possibly the last one, is immediately followed by a corresponding response.
 \end{definition}
 
-If a history is sequential then we denote it as $S$ in order to distinguish it with non-sequential or uncertain history $H$. It is obvious a sequential history is a total order over all operations.
+It is obvious that a sequential history is a total order over all operations. In order to distinguish with the history $H$ we defined in definition 1, we use $S$ to denote a sequential history.
 
 \begin{definition}{\textbf{Sequential Specification}.}
-The sequential specification $S_{obj}$ for a concurrent object $obj$ is a set of sequential histories for $obj$.
+The sequential specification $S_{obj}$ for a concurrent object $obj$ is the set of all possible sequential histories for $obj$.
 \end{definition}
 
-A sequential history $S$ satisfies the sequential specification of object $obj$ means $S$ is contained in the above sequential history set $S_{obj}$, i.e, $S \in S_{obj}$.
+We say a sequential history $S$ satisfies the sequential specification of object $obj$ means $S$ is contained in the above sequential history set $S_{obj}$, i.e, $S \in S_{obj}$.
 
 \begin{definition}{\textbf{Valid Sequential History}.}
-A sequential history $S$ of object $obj$ is valid (sometimes also called legal) if it satisfies the sequential specification of $obj$
+A sequential history $S$ of object $obj$ is valid (sometimes also called legal) if it satisfies the sequential specification of $obj$.
 \end{definition}
 
 With the above definitions, we could now define linearization as follows:
@@ -192,43 +194,46 @@ A history $H$ linearizes to a sequential history $S$, if and only if $S$ satisfi
 In another word, a history $H$ is linearizable if and only if we could find a such a sequential history $S$ which satisfies the above three conditions.
 
 \begin{definition}{\textbf{Linearization Point}.}
-For each operation $op$, we call the time point $t_H(op)$ described in the above definition the linearization point of operation $op$.
+For each operation $op$ in history $H$, we call the time point $t_H(op)$ described in the above definition the linearization point of $op$.
 \end{definition}
 
 \begin{definition}{\textbf{Linearizable Object}.}
 A concurrent object is linearizable if every history $H$ of that object is linearizable.
 \end{definition}
 
-In the following subsection, we will prove our concurrent dynamic task allocation object shown in Figure 1 is linearizable. 
+In the following subsection, we will prove our concurrent dynamic task allocation object shown in Figure 1 is linearizable.
 
-%=========================================================================================================================
-%===================================================== I am here! ==========================================================
-%===========================================================================================================================
+
 
 \subsection{Analysis and Proofs}
 
-Through the definitions in subsection 3.1.1, we know that one way to show a concurrent object $obj$ is linearizable is to prove its arbitrary history $H$ is linearizable. Specifically, to obtain the linearizability of $obj$, we need to identify for each DoTask or InsertTask operation $op$ (i.e, interval $I_H(op)$) in $H$ a linearization point, and prove that the sequential history obtained by sorting these operations according to their linearization points satisfies the sequential specification of $obj$.
+Through the definitions in subsection 3.1.1, one way to show a concurrent object $obj$ is linearizable is to prove its arbitrary history $H$ is linearizable. Specifically, to obtain the linearizability of $obj$, we need to identify for each DoTask or InsertTask operation $op$ (i.e, interval $I_H(op)$) in $H$ a linearization point, and prove that the sequential history $S$ obtained by sorting these operations according to their linearization points satisfies the sequential specification of $obj$.
 
-We notice that each complete DoTask or InsertTask operation can be associated with a unique index of the task array corresponding to the task it removed or inserted. The insertion count and removal count are monotonically increasing. Thus, we could associate the node counts with operations which have been propagated to that node. Next, we are going to define ``an operation is counted at a node" to formalize the operation propagation. 
+We notice that each complete DoTask or InsertTask operation can be associated with a unique task array slot with respect to the task it removed or inserted. Additionally, the removal count and insertion count are both monotonically increasing. Thus, we could associate the node counts with operations which have been propagated to that node. Next, we are going to define ``an operation is counted at a node" recursively to formalize the operation propagation.
 
-The DoTask operation is counted at a leaf when some process updates the removal count with the index of the task array slot its successful PutTask operation deals with. The definition for InsertTask is symmetric.
+A DoTask operation is counted at a leaf when the removal count at the leaf is updated with the index of the task array slot where the successfully performed task is located. The definition for InsertTask operation is symmetric.
 
-Now we define a DoTask operation is counted at an arbitrary inner node $v$ and counting a InsertTask is symmetric as well. 
+Now we define a DoTask operation is counted at an arbitrary inner node $v$ and counting a InsertTask is symmetric as well.
 
-Recall that we use linearizable CAS operation to update the inner node counts, we could therefore linearize all such operations that update the removal count of $v$ with the same value $y$. For all these operations, only the first one in the linearization order counts the corresponding DoTask operation. In another word, a DoTask operation is counted at an inner node $v$ as soon as the updating operation that counts the DoTask is linearized. 
-Please note that, the update counting the DoTask at node $v$ is not necessary performed by the DoTask operation itself, i.e, suppose process $p$ is executes a DoTask operation and has successfully performed task $l$ at certain leaf. Then the operation that counts this DoTask at node $v$ could be a different process $q$ if $q$ updates the removal count first in the linearization order. 
+Recall that the removal count of $v$ is always updated though CAS operation (line 6, method 3). Notice that there could be more than one operations updating the count with the same value. We could therefore linearize all these operations that update the removal count of $v$ with the same value $y$. For all these operations, only the first one in the linearization order counts the corresponding DoTask operation. In another word, a DoTask operation is counted at an inner node $v$ as soon as the updating operation that counts the DoTask is linearized. Based this definition, no operation will be counted twice at a node.
 
-Given the above concepts and properties, we could prove the following results:
+Please note that, the update counting the DoTask at node $v$ is not necessary performed by the DoTask operation itself, i.e, suppose process $p$ is executes a DoTask operation and has successfully performed task $l$ at certain leaf. Then the operation that counts this DoTask at node $v$ could be a different process $q$ if $q$ updates the removal count first in the linearization order.
+
+Given the above concepts and properties, we could prove the following result:
 
 \begin{lem}
-All complete DoTask or InsertTask operations $op$ will finally be counted at each node.
+Let $v$ be a tree node, \\
+(1) If $(x, y)$ is the result by calling $v.read( )$, then there exists a set of $x$ successful InsertTask operations and a set of $y$ successful DoTask operation that have been counted at node $v$ by the end of the execution of $v.read( )$.\\
+\noindent (2) If there are $x$ DoTask operations that have been counted at $v$ before the execution of $v.read( )$, then the removal count value returned by $v.read( )$ is not less than $x$.
 \end{lem}
 \begin{proof}
-[Sketch] This is ensured by the repetition of double compare and swap operation during the execution of mark-up($v$).
+%[Sketch] This is ensured by the repetition of double compare and swap operation during the execution of mark-up($v$).
 \end{proof}
 
+
+
 \begin{lem}
-The point $t_H(op)$ when $op$ is counted at the root must be between $inv_H(op)$ and $rsp_H(op)$.
+Consider a history $H$ and an arbitrary operation $op$ in $H$, let $t_H(op)$ be the point when the operation $op$ is counted at the root, then $t_H(op)$ is between $inv_H(op)$ and $rsp_H(op)$.
 \end{lem}
 \begin{proof}
 The fact $t_H(op) > inv_H(op)$ is needless to prove. Without loss of generality, suppose process $p$ executs $op$ and $op$ is a DoTask operation which has performed some task successfully at the leaf. When it walks back to root and executes Mark-up(root), there will be two cases:
