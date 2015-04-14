@@ -1,14 +1,14 @@
 %--------------------CHAPTER 1-----------------------------
 \chapter{Introduction}
 In this chapter, we will introduce the task allocation problem as well as its dynamic version and survey the past work related to it.
-\section{The Task Allocation Problem}
-Task allocation problem, also called do-all problem, is already a foundational problem in distributing computing domain. During the last two decades, significant research was dedicated to studying the task allocation problem in various models of computation, including message passing, shared memory, etc. under specific assumption about the asynchrony and failures.
+\section{The Dynamic Task Allocation Problem}
+Task allocation problem, also called do-all problem, is already a foundational topic in distributing computing. During the last two decades, significant research was dedicated to studying the task allocation problem in various models of computation, including message passing, shared memory, etc. under specific assumption about the asynchrony and failures.
 
-In this thesis, we consider the dynamic and shared memory version of the task allocation problem. The dynamic task allocation via asynchronous shared memory problem could be described as follows:
+In this thesis, we consider the dynamic version of the task allocation problem via randomized asynchronous shared memory. The dynamic version could be described as follows:
 
-\emph{p processes must cooperatively perform a set of tasks in the presence of adversity. The tasks are injected by the adversary dynamically over time.}
+\emph{p processes cooperatively perform a set of tasks in the presence of adversity and the tasks are injected dynamically by the adversary during the execution.}
 
-\section{Related Work}
+\section{Related Work [Not complete yet!]}
 The task allocation via shared memory was firstly discussed by Kanellakis and Shavartsman[1]. In their paper about PRAM algorithm, they gave a robust parallel solution to the task allocation problem. The data structures they used are four full binary trees and tasks are abstracted as registers in an array. Each cell of the array is initialized with 0, and when it is turned to be 1 implies the abstracted task is performed successfully.
 
 Up to now, there have been many research results focus on the topic. ..
@@ -28,24 +28,30 @@ In chapter 3, we will give a framework for the performance analysis of our algor
 In chapter 4, we summarize our results, relate them to past work and discuss the open questions that arise from our work.
 
 %--------------------CHAPTER 2-----------------------------
-\chapter{The Model and Problem Statement}
+\chapter{The Computation Model and Algorithms}
 In this chapter, we will formally describe the system model we are working in and introduce the adaptive To-do tree algorithm, a randomized algorithm that could help us solve the dynamic asynchronous task allocation problem better.
 
-\section{Standard Model}
-The computation model we work in is the standard asynchronous shared memory mode with p processes 1, 2… p, where up to p-1 processes may fail by crashing. The processes communicate with each other via the shared registered, which they could perform read, write and compare-and-swap (CAS) operations. Each process has a unique identifier i which is from an unbounded namespace and has a local random number generator to perform coin flip operations.
+\section{Computation Model}
+The computation model we consider is the standard asynchronous shared memory mode with $p$ processes $1, 2, ..., p$, where up to $p-1$ processes may fail by crashing. The processes communicate with each other via the shared registers which support read and double compare-and-swap (DCAS) synchronization operations. Each process has a unique identifier $i$ which is from an unbounded namespace and has a local random number generator to perform coin flip operations. 
+
+A DCAS operation is a CAS performed atomically on two memory locations.
 
 The mode we discuss is under the control of a strong adaptive adversary. At any point of time, it can see the entire history (all coin flip operations and the returned values). Depending on such history, it decides which processes take the next step. i.e. At any point of time, the adversary knows exactly which step each process will be executing next.
 
-\section{Problem Statement}
-(问题的本质， 困难在哪) Dynamic asynchronous task allocation is the problem in which the p processes cooperatively execute tasks and the task are inserted into the data structure dynamically during the executing.
+\section{Problem Statement [Not complete yet!]}
+Dynamic asynchronous task allocation is the problem in which the p processes cooperatively execute tasks and the task are inserted into the data structure dynamically during the executing.
 
 [What is task] For simplicity, the tasks are still abstracted and associated with shared registers. If a process changes the value of certain register from 0 to 1 successfully, it means the task associated with this register is performed; if a process changes the value of certain register from 1 to 0, it means the task is inserted successfully and associated with that register. Additionally, we assume each task has a unique identifier l>=0. One simple implementation of such task identifier uniqueness is to assign each task with an identifier in the form (id, count), where id the id of the process to which the task is assigned and count is the value of a local per-process counter, which is incremented on each newly inserted task.
 
-[Complexity Metric] The complexity measure we use is the total number of operations (i.e. read, write, and CAS) that processes take during an execution.\\
-
 Define an InsertTask operation is successful if it has inserted a task into the task array. Similarly, a DoTask operation is successful if it has performed a task at a leaf. A complete InsertTask or DoTask operation must be a successful operation, but not vice versa.
 
-\section{The Dynamic Adaptive To-Do Tree}
+\subsection*{Complexity Metric}
+The complexity measure we use is the total number of shared memory operations that processes take during an execution. Here the operations include compare and swap, read and write.
+
+\subsection*{Sequential Specification}
+
+
+\section{The Adaptive To-Do Tree}
 [some concepts and definition, e.g. tree, counts, surplus, space]
 [Double Compare and Swap]
 [Intro and detailed explanation of DoTask and InsertTask]
