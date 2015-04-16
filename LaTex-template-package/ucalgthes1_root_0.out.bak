@@ -5,13 +5,13 @@
 \BOOKMARK [0][-]{chapter*.8}{List of Figures}{}% 5
 \BOOKMARK [0][-]{chapter*.10}{List of Symbols}{}% 6
 \BOOKMARK [0][-]{chapter.1}{Introduction}{}% 7
-\BOOKMARK [1][-]{section.1.1}{The Task Allocation Problem}{chapter.1}% 8
-\BOOKMARK [1][-]{section.1.2}{Related Work}{chapter.1}% 9
+\BOOKMARK [1][-]{section.1.1}{The Dynamic Task Allocation Problem}{chapter.1}% 8
+\BOOKMARK [1][-]{section.1.2}{Related Work [Not complete yet!]}{chapter.1}% 9
 \BOOKMARK [1][-]{section.1.3}{Statement of Results}{chapter.1}% 10
-\BOOKMARK [0][-]{chapter.2}{The Model and Problem Statement}{}% 11
-\BOOKMARK [1][-]{section.2.1}{Standard Model}{chapter.2}% 12
-\BOOKMARK [1][-]{section.2.2}{Problem Statement}{chapter.2}% 13
-\BOOKMARK [1][-]{section.2.3}{The Dynamic Adaptive To-Do Tree}{chapter.2}% 14
+\BOOKMARK [0][-]{chapter.2}{The Computation Model and Algorithms}{}% 11
+\BOOKMARK [1][-]{section.2.1}{Computation Model}{chapter.2}% 12
+\BOOKMARK [1][-]{section.2.2}{Problem Statement [Not complete yet!]}{chapter.2}% 13
+\BOOKMARK [1][-]{section.2.3}{The Adaptive To-Do Tree}{chapter.2}% 14
 \BOOKMARK [0][-]{chapter.3}{Analysis}{}% 15
 \BOOKMARK [1][-]{section.3.1}{Correctness}{chapter.3}% 16
 \BOOKMARK [2][-]{subsection.3.1.1}{Definitions and Terminology}{section.3.1}% 17

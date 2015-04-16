@@ -8,55 +8,68 @@ In this thesis, we consider the dynamic version of the task allocation problem v
 
 \emph{p processes cooperatively perform a set of tasks in the presence of adversity and the tasks are injected dynamically by the adversary during the execution.}
 
-\section{Related Work [Not complete yet!]}
-The task allocation via shared memory was firstly discussed by Kanellakis and Shavartsman[1]. In their paper about PRAM algorithm, they gave a robust parallel solution to the task allocation problem. The data structures they used are four full binary trees and tasks are abstracted as registers in an array. Each cell of the array is initialized with 0, and when it is turned to be 1 implies the abstracted task is performed successfully.
-
-Up to now, there have been many research results focus on the topic. ..
-
-Dan Alistarh and Michael, etc.
-
-However, the above papers about the task allocation problem all focus on the static version, or called one-shot version, where the tasks are available at the beginning, and the execution is done when all these tasks are performed successfully. Dan Alistarh and Michael, etc. considered the dynamic version of task allocation problem, i.e. given p asynchronous processes that cooperate to perform tasks while the tasks are not available but inserted dynamically by the adversary during the execution. In that paper, they gave the first asynchronous shared memory algorithm for the dynamic task allocation, and proved that their algorithm is optimal within logarithmic factors. The main idea is to use a full binary full tree, called To-do tree which is inherited from their last paper, to guide the processes to insert the tasks at random empty memory locations and to pick newly inserted tasks to perform at random.
+\section{Related Work}
+%The task allocation via shared memory was firstly discussed by Kanellakis and Shavartsman[1]. In their paper about PRAM algorithm, they gave a robust parallel solution to the task allocation problem. The data structures they used are four full binary trees and tasks are abstracted as registers in an array. Each cell of the array is initialized with 0, and when it is turned to be 1 implies the abstracted task is performed successfully.
+%
+%Up to now, there have been many research results focus on the topic. ..
+%
+%Dan Alistarh and Michael, etc.
+%
+%However, the above papers about the task allocation problem all focus on the static version, or called one-shot version, where the tasks are available at the beginning, and the execution is done when all these tasks are performed successfully. Dan Alistarh and Michael, etc. considered the dynamic version of task allocation problem, i.e. given p asynchronous processes that cooperate to perform tasks while the tasks are not available but inserted dynamically by the adversary during the execution. In that paper, they gave the first asynchronous shared memory algorithm for the dynamic task allocation, and proved that their algorithm is optimal within logarithmic factors. The main idea is to use a full binary full tree, called To-do tree which is inherited from their last paper, to guide the processes to insert the tasks at random empty memory locations and to pick newly inserted tasks to perform at random.
 
 
 \section{Statement of Results}
-In this thesis, we will introduce a randomized adaptive To-do tree algorithm which is similar to that presented by Dan Alistarh and Michael, etc. in their paper […]. The performance of our algorithm depends on the input sequence of tasks but not a fixed value. It has no constraint on the number of tasks presented in the to-do tree. Additionally, our algorithm implemented by the compare-and-swap registers directly which makes the complexity of our algorithm to be quadratic.
-
-In chapter 2, we will formally define the dynamic task allocation problem again and describe out adaptive To-do tree algorithm.
-
-In chapter 3, we will give a framework for the performance analysis of our algorithm.
-
-In chapter 4, we summarize our results, relate them to past work and discuss the open questions that arise from our work.
+%To solve the dynamic task allocation problem, we implement the dynamic task allocation type by a concurrent data structure called adaptive To-do tree. The dynamic inserted tasks are stored in the shared-memory bit array at the leaves. Multiple processes could get access to the bit array to perform and insert a task via the randomized DoTask and InsertTask operations supported by the To-do tree.
+%
+%In this thesis, we will introduce a randomized adaptive To-do tree algorithm which is similar to that presented by Dan Alistarh and Michael, etc. in their paper […]. The performance of our algorithm depends on the input sequence of tasks but not a fixed value. It has no constraint on the number of tasks presented in the to-do tree. Additionally, our algorithm implemented by the compare-and-swap registers directly which makes the complexity of our algorithm to be quadratic.
+%
+%In chapter 2, we will formally define the dynamic task allocation problem again and describe out adaptive To-do tree algorithm.
+%
+%In chapter 3, we will give a framework for the performance analysis of our algorithm.
+%
+%In chapter 4, we summarize our results, relate them to past work and discuss the open questions that arise from our work.
 
 %--------------------CHAPTER 2-----------------------------
 \chapter{The Computation Model and Algorithms}
-In this chapter, we will formally describe the system model we are working in and introduce the adaptive To-do tree algorithm, a randomized algorithm that could help us solve the dynamic asynchronous task allocation problem better.
+In this chapter, we will formally describe the system model we are working in and introduce our dynamic task allocation project.
 
 \section{Computation Model}
-The computation model we consider is the standard asynchronous shared memory mode with $p$ processes $1, 2, ..., p$, where up to $p-1$ processes may fail by crashing. The processes communicate with each other via the shared registers which support read and double compare-and-swap (DCAS) synchronization operations. Each process has a unique identifier $i$ which is from an unbounded namespace and has a local random number generator to perform coin flip operations. 
+The computation model we consider is the standard asynchronous shared memory mode with $p$ processes $1, 2, ..., p$, where up to $p-1$ processes may fail by crashing. The processes communicate with each other via the shared double-compare-swap (DCAS) registers. Each process executes its program by taking steps which are defined to be the executions of all local computations followed by an operation on a shared register.
 
-A DCAS operation is a CAS performed atomically on two memory locations.
+A DCAS register $v$ is a shared memory object stores a pair of two values from some set and support two atomic synchronization operations $v.read()$ and $v.DCAS((x,y), (a, b))$. Operation $v.read()$ returns the two values of the register and leaves their content unchanged. Operation $v.DCAS((x,y), (a, b))$ is an extension of the compare-and-swap (CAS) operation on two memory locations. A $v.DCAS((x,y), (a, b))$ takes two memory locations and writes new values into them only if they match pre-supplied ``expected" values $(x, y)$, i.e, if current values of $v$ are exactly $(x, y)$, then the operation $v.DCAS((x,y), (a, b))$ succeeds, and the values of $v$ are changed to be $(a, b)$ and $true$ is returned. Otherwise, the operation fails, the current values of $v$ remain unchanged and $false$ is returned.
 
-The mode we discuss is under the control of a strong adaptive adversary. At any point of time, it can see the entire history (all coin flip operations and the returned values). Depending on such history, it decides which processes take the next step. i.e. At any point of time, the adversary knows exactly which step each process will be executing next.
+Each process has a unique identifier $i$ which is from an unbounded namespace has a local random number generator to perform coin flip operations. In the following pseudocode, we use $random(0, 1)$ to return a value distributed uniformly at random from the set $(o, 1)$.
 
-\section{Problem Statement [Not complete yet!]}
-Dynamic asynchronous task allocation is the problem in which the p processes cooperatively execute tasks and the task are inserted into the data structure dynamically during the executing.
+In addition, the mode we discuss is under the control of a strong adaptive adversary. At any point of time, it can see the entire history (all coin flip operations and the returned values). Depending on such history, it decides which processes take the next step. i.e. At any point of time, the adversary knows exactly which step each process will be executing next.
 
-[What is task] For simplicity, the tasks are still abstracted and associated with shared registers. If a process changes the value of certain register from 0 to 1 successfully, it means the task associated with this register is performed; if a process changes the value of certain register from 1 to 0, it means the task is inserted successfully and associated with that register. Additionally, we assume each task has a unique identifier l>=0. One simple implementation of such task identifier uniqueness is to assign each task with an identifier in the form (id, count), where id the id of the process to which the task is assigned and count is the value of a local per-process counter, which is incremented on each newly inserted task.
-
-Define an InsertTask operation is successful if it has inserted a task into the task array. Similarly, a DoTask operation is successful if it has performed a task at a leaf. A complete InsertTask or DoTask operation must be a successful operation, but not vice versa.
+\section{Problem Statement}
+.......
+%Dynamic asynchronous task allocation is the problem in which the p processes cooperatively execute tasks and the task are inserted into the data structure dynamically during the executing.
+%
+%For simplicity, the tasks are still abstracted and associated with shared registers. If a process changes the value of certain register from 0 to 1 successfully, it means the task associated with this register is performed; if a process changes the value of certain register from 1 to 0, it means the task is inserted successfully and associated with that register. Additionally, we assume each task has a unique identifier l>=0. One simple implementation of such task identifier uniqueness is to assign each task with an identifier in the form (id, count), where id the id of the process to which the task is assigned and count is the value of a local per-process counter, which is incremented on each newly inserted task.
+%
+%Define an InsertTask operation is successful if it has inserted a task into the task array. Similarly, a DoTask operation is successful if it has performed a task at a leaf. A complete InsertTask or DoTask operation must be a successful operation, but not vice versa.
 
 \subsection*{Complexity Metric}
 The complexity measure we use is the total number of shared memory operations that processes take during an execution. Here the operations include compare and swap, read and write.
 
 \subsection*{Sequential Specification}
+A shared object is an instance of a type, which supports some set of operations and satisfies the sequential specification. Type $dynamic\_task\_alloc$ supports two operation $DoTask()$ and $InsertTask(task$ $l)$. The $DoTask$ operation performs a new task and returns the index of that task. If there is no available task currently, then it returns $\perp$. The $InsertTask(task$ $l)$ operation insert the task $l$ to be performed and return $success$ if $l$ is inserted successfully.
+
+The sequential specification of type $dynamic\_task\_alloc$ is presented as follows:\\
+\noindent $\bullet$ Validity: If a $DoTask($ $)$ returns $l$, then before that, there was a $InsertTask(task$ $l)$.\\
+\noindent $\bullet$ Uniqueness: For each task $l$, only one $InsertTask(task$ $l)$ returns $success$ and only one $DoTask($ $)$ returns $l$.\\
+\noindent $\bullet$ Fairness: Every inserted task $l$ will finally be performed.
+
+
 
 
 \section{The Adaptive To-Do Tree}
-[some concepts and definition, e.g. tree, counts, surplus, space]
-[Double Compare and Swap]
-[Intro and detailed explanation of DoTask and InsertTask]
+%[some concepts and definition, e.g. tree, counts, surplus, space]
+%[Double Compare and Swap]
+%[Intro and detailed explanation of DoTask and InsertTask]
 
-
+............
 \begin{algorithm}
 \caption{DoTask()}               %标题
 \label{alg1}                         %标记算法，方便在其它地方引用
@@ -86,7 +99,7 @@ The complexity measure we use is the total number of shared memory operations th
    /* $v$ is a leaf */
    \STATE $(x,y) \leftarrow v.read()$
    \STATE $(flag, l)$ $\leftarrow$ $v$.TryTask(task$[y+1]$)
-   \STATE $v$.CAS$((x, y), (x, y+1))$    // Update Insertion Count
+   \STATE $v$.DCAS$((x, y), (x, y+1))$    // Update Insertion Count
    \STATE $v \leftarrow v.parent$
    \STATE Mark-up($v$)
    \IF {$flag$ = success}
@@ -122,7 +135,7 @@ The complexity measure we use is the total number of shared memory operations th
    /* $v$ is a leaf */
    \STATE $(x,y) \leftarrow v.read()$
    \STATE $flag$ $\leftarrow$ $v$.PutTask(task$[x+1]$, $l$)
-   \STATE $v$.CAS$((x,y), (x+1,y))$ // Update Insertion Count
+   \STATE $v$.DCAS$((x,y), (x+1,y))$ // Update Insertion Count
    \STATE $v \leftarrow v.parent$
    \STATE Mark-up($v$)
    \IF {($flag$ = success)}
@@ -141,7 +154,7 @@ The complexity measure we use is the total number of shared memory operations th
     \STATE $(x, y) \leftarrow v.read()$
     \STATE $(x_L, y_L) \leftarrow v.left.read()$
     \STATE $(x_R, y_R) \leftarrow v.right.read()$
-    \STATE $v$.CAS$((x,y), (max(x, x_L + x_R), max(y, y_L + y_R))$\\
+    \STATE $v$.DCAS$((x,y), (max(x, x_L + x_R), max(y, y_L + y_R))$\\
     \ENDFOR
 \ENDIF
 \end{algorithmic}
@@ -242,9 +255,9 @@ Let $v$ be a tree node, \\
 Consider a history $H$ and an arbitrary operation $op$ in $H$, let $t_H(op)$ be the point when the operation $op$ is counted at the root, then $t_H(op)$ is between $inv_H(op)$ and $rsp_H(op)$.
 \end{lem}
 \begin{proof}
-The fact $t_H(op) > inv_H(op)$ is needless to prove. Without loss of generality, suppose process $p$ executs $op$ and $op$ is a DoTask operation which has performed some task successfully at the leaf. When it walks back to root and executes Mark-up(root), there will be two cases:
+The fact $t_H(op) > inv_H(op)$ is needless to prove. Without loss of generality, suppose process $p$ executs $op$ and $op$ is a DoTask operation which has performed some task successfully at the leaf. When it walks back to the $root$ and executes Mark-up($root$), there will be two cases:
 
-Case 1:  It increments the removal count successfully via CAS (line 6, method 3) at point $\tau$. If it is the first one in the linearization order of all operations updating the removal count with the same value, then $t_H(op) = \tau$, therefore $t_H(op) < rsp_H(op)$. Otherwise, we could let $t_H(op) = \tau'$, where $\tau'$ is the first one in the linearization order updated the removal count of root. Obviously, $\tau' < \tau$, therefore $t_H(op) < rsp_H(op)$.
+Case 1:  It increments the removal count of $root$ successfully via DCAS (line 6, method 3) at point $\tau$. If it is the first one in the linearization order of all updates of the removal count with the same value, then $t_H(op) = \tau$, therefore $t_H(op) < rsp_H(op)$. Otherwise, we could let $t_H(op) = \tau'$, where $\tau'$ is the first one in the linearization order updated the removal count of root. Because only if the task has been performed then the removal count of root could be updated. Thus, $\tau' < \tau$, therefore $t_H(op) < rsp_H(op)$.
 
 Case 2: It fails to increment the removal count. The compare and swap operation of $p$ fails if and only if the value of the insertion and/or removal counts are/is updated at a point before $\tau$, suppose it is $\tau'$. Here are two subcases.
 
