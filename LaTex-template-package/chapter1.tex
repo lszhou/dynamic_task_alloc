@@ -31,17 +31,17 @@ In this thesis, we consider the dynamic version of the task allocation problem v
 
 %--------------------CHAPTER 2-----------------------------
 \chapter{The Computation Model and Algorithms}
-In this chapter, we will formally describe the system model we are working in and introduce our dynamic task allocation project.
+In this chapter, we will formally describe the system model we are working in and introduce our dynamic task allocation object.
 
-\section{Computation Model}
-The computation model we consider is the standard asynchronous shared memory mode with $p$ processes $1, 2, ..., p$, where up to $p-1$ processes may fail by crashing. The processes communicate with each other via the shared double-compare-swap (DCAS) registers. Each process executes its program by taking steps which are defined to be the executions of all local computations followed by an operation on a shared register.
+\section{Computational Model}
+The computational model we consider is the standard asynchronous shared memory model with $n$ processes $1, 2, ..., n$, where up to $n-1$ processes may fail by crashing. The processes communicate with each other via shared compare-and-swap objects. Each process executes its program by taking steps which are defined to be the executions of all local computations followed by an operation on a shared register.
 
-A DCAS register $v$ is a shared memory object stores a pair of two values from some set and support two atomic synchronization operations $v.read()$ and $v.DCAS((x,y), (a, b))$. Operation $v.read()$ returns the two values of the register and leaves their content unchanged. Operation $v.DCAS((x,y), (a, b))$ is an extension of the compare-and-swap (CAS) operation on two memory locations. A $v.DCAS((x,y), (a, b))$ takes two memory locations and writes new values into them only if they match pre-supplied ``expected" values $(x, y)$, i.e, if current values of $v$ are exactly $(x, y)$, then the operation $v.DCAS((x,y), (a, b))$ succeeds, and the values of $v$ are changed to be $(a, b)$ and $true$ is returned. Otherwise, the operation fails, the current values of $v$ remain unchanged and $false$ is returned.
+A CAS object $v$ is a shared memory object stores a value from some set and supports two atomic synchronization operations $v.read()$ and $v.CAS((x,y), (a, b))$. Operation $v.read()$ returns the current value of the object and leaves the value unchanged. A $v.CAS((x,y), (a, b))$ takes the memory locations and writes new value into it only if it matches pre-supplied ``expected" values $(x, y)$, i.e, if current value of $v$ are exactly $(x, y)$, then the operation $v.CAS((x,y), (a, b))$ succeeds, and the value of $v$ is changed to be $(a, b)$ and $true$ is returned. Otherwise, the operation fails, the current value of $v$ remains unchanged and $false$ is returned.
 
-Each process has a unique identifier $i$ which is from an unbounded namespace has a local random number generator to perform coin flip operations. In the following pseudocode, we use $random(0, 1)$ to return a value distributed uniformly at random from the set $(o, 1)$.
+Each process has a unique identifier $i$ which is from an unbounded namespace and has a local random number generator to perform coin flip operations. In the following discussion, we use $random(s)$ to return a value distributed uniformly at random from the set $\{0, 1, 2,..., s-1\}$.
 
-In addition, the mode we discuss is under the control of a strong adaptive adversary. At any point of time, it can see the entire history (all coin flip operations and the returned values). Depending on such history, it decides which processes take the next step. i.e. At any point of time, the adversary knows exactly which step each process will be executing next.
-
+We analyze the algorithm under the assumption of a strong adaptive adversary. At any point of time, it can see the entire history and know the states of all processes.
+Base on such history, it decides which process takes the next step.
 \section{Problem Statement}
 .......
 %Dynamic asynchronous task allocation is the problem in which the p processes cooperatively execute tasks and the task are inserted into the data structure dynamically during the executing.
@@ -51,17 +51,16 @@ In addition, the mode we discuss is under the control of a strong adaptive adver
 %Define an InsertTask operation is successful if it has inserted a task into the task array. Similarly, a DoTask operation is successful if it has performed a task at a leaf. A complete InsertTask or DoTask operation must be a successful operation, but not vice versa.
 
 \subsection*{Complexity Metric}
-The complexity measure we use is the total number of shared memory operations that processes take during an execution. Here the operations include compare and swap, read and write.
+The complexity measure we use is the total number of shared memory operations that processes take during an execution. Here the operations include compare-and-swap, read and write.
 
-\subsection*{Sequential Specification}
-A shared object is an instance of a type, which supports some set of operations and satisfies the sequential specification. Type $dynamic\_task\_alloc$ supports two operation $DoTask()$ and $InsertTask(task$ $l)$. The $DoTask$ operation performs a new task and returns the index of that task. If there is no available task currently, then it returns $\perp$. The $InsertTask(task$ $l)$ operation insert the task $l$ to be performed and return $success$ if $l$ is inserted successfully.
+\subsection*{Specification}
+A type is defined by the operations it supports and their sequential specification. An object is an implementation of a type. Our type $dynamic\_task\_alloc$ supports two operation $DoTask()$ and $InsertTask( \ell )$, where $\ell$ is a task identifier. The $DoTask$ operation performs an available task and returns the index of that task. If there is no available task, then it returns $\perp$. The $InsertTask( \ell )$ operation insert the task $\ell$ to be performed and returns $success$ if $\ell$ has been inserted successfully.
 
-The sequential specification of type $dynamic\_task\_alloc$ is presented as follows:\\
-\noindent $\bullet$ Validity: If a $DoTask($ $)$ returns $l$, then before that, there was a $InsertTask(task$ $l)$.\\
-\noindent $\bullet$ Uniqueness: For each task $l$, only one $InsertTask(task$ $l)$ returns $success$ and only one $DoTask($ $)$ returns $l$.\\
-\noindent $\bullet$ Fairness: Every inserted task $l$ will finally be performed.
+The sequential specification of the type $dynamic\_task\_alloc$ is presented as follows:\\
+\noindent $\bullet$ Validity: If a $DoTask($ $)$ returns $\ell$, then before that, an $InsertTask( \ell )$ was executed and returned success\\
+\noindent $\bullet$ Uniqueness: For each task $\ell$, at most one $InsertTask( \ell )$ returns $success$ and at most one $DoTask($ $)$ returns $\ell$.
 
-
+For the implementations, we would like every inserted task $\ell$ will finally be performed which is a desired progress property of implementations of type $dynamic\_task\_alloc$.
 
 
 \section{The Adaptive To-Do Tree}
@@ -99,18 +98,18 @@ The sequential specification of type $dynamic\_task\_alloc$ is presented as foll
    /* $v$ is a leaf */
    \STATE $(x,y) \leftarrow v.read()$
    \STATE $(flag, l)$ $\leftarrow$ $v$.TryTask(task$[y+1]$)
-   \STATE $v$.DCAS$((x, y), (x, y+1))$    // Update Insertion Count
+   \STATE $v$.CAS$((x, y), (x, y+1))$    // Update Insertion Count
    \STATE $v \leftarrow v.parent$
    \STATE Mark-up($v$)
    \IF {$flag$ = success}
-       \RETURN $l$
+       \RETURN $\ell$
    \ENDIF
 \ENDWHILE
 \end{algorithmic}
 \end{algorithm}
 
 \begin{algorithm}
-\caption{Insert(task $l$)}               %标题
+\caption{Insert(task $\ell$)}               %标题
 \label{alg2}                         %标记算法，方便在其它地方引用
 \begin{algorithmic}[1]
 \WHILE {(true)}
@@ -134,8 +133,8 @@ The sequential specification of type $dynamic\_task\_alloc$ is presented as foll
    \vspace{3mm}\\
    /* $v$ is a leaf */
    \STATE $(x,y) \leftarrow v.read()$
-   \STATE $flag$ $\leftarrow$ $v$.PutTask(task$[x+1]$, $l$)
-   \STATE $v$.DCAS$((x,y), (x+1,y))$ // Update Insertion Count
+   \STATE $flag$ $\leftarrow$ $v$.PutTask(task$[x+1]$, $\ell$)
+   \STATE $v$.CAS$((x,y), (x+1,y))$ // Update Insertion Count
    \STATE $v \leftarrow v.parent$
    \STATE Mark-up($v$)
    \IF {($flag$ = success)}
@@ -154,7 +153,7 @@ The sequential specification of type $dynamic\_task\_alloc$ is presented as foll
     \STATE $(x, y) \leftarrow v.read()$
     \STATE $(x_L, y_L) \leftarrow v.left.read()$
     \STATE $(x_R, y_R) \leftarrow v.right.read()$
-    \STATE $v$.DCAS$((x,y), (max(x, x_L + x_R), max(y, y_L + y_R))$\\
+    \STATE $v$.CAS$((x,y), (max(x, x_L + x_R), max(y, y_L + y_R))$\\
     \ENDFOR
 \ENDIF
 \end{algorithmic}
@@ -163,7 +162,9 @@ The sequential specification of type $dynamic\_task\_alloc$ is presented as foll
 \theoremstyle{definition}
 \chapter{Analysis}
 \section{Correctness}
-The standard correctness condition for shared memory algorithm is linearizability which was introduced by M. Herlihy and J. M. Wing in 1990. The intuition of linearizability is the real-time behavior of method calls must be preserved, i.e. If one method call precedes another, then the earlier call must have taken effect before the later one. By contrast, if two method calls overlap, the we are free to order them in any convenient way since the order is ambiguous. Informally, a concurrent object is linearizable if each method call appears to take effect instantaneously at some moment between that its invocation and response. In the next section, we will first build the formal definition and terminology for linearizability, then prove our concurrent dynamic task allocation object is linearizable.
+The standard correctness condition for shared memory algorithms is linearizability, which was introduced by Herlihy and Wing in 1990. The intuition of linearizability is that real-time behavior of method calls must be preserved, i.e, if one method call precedes another, then the earlier call must have taken effect before the later one. By contrast, if two method calls overlap, we are free to order them in any convenient way since the order is ambiguous. Informally, a concurrent object is linearizable if each method call appears to take effect instantaneously at some moment between its invocation and response.
+
+In the next section, we will first build the formal definition and terminology for linearizability, and then prove that our concurrent dynamic task allocation object is linearizable.
 
 \subsection{Definitions and Terminology}
 %An implementation is linearizable if for every execution, there is a total order of all completed operations and a subset of the uncompleted operations in the execution that satisfies the sequential specifications of the object and is consistent with the real-time order of these operations. The basic rule behind Linearizability is that every concurrent history is equivalent to some sequential history. If one method call proceeds another, then the other one mush have taken effect before the later one call. By contrast, if two method calls overlap, then we are free to order them in any convenient way.
@@ -174,11 +175,11 @@ A history  (or execution) $H$, obtained by processes executing shared memory ope
 
 A history $H$ may be related to several concurrent objects. When we consider the concurrency behavior of a specific object, we should focus on the subhistory of that object which is defined as follows:
 
-\begin{definition}{\textbf{Subhistory}.}
-The subhistory $H|obj$ of history $H$ is the subsequence of all invocation and response events in $H$ whose object names are all $obj$.
+\begin{definition}
+$H|obj$ of history $H$ is the subsequence of all invocation and response events in $H$ whose object names are all $obj$.
 \end{definition}
 
-If a history $H$ we consider is related to only one object $obj$, then the subhistory $H_{obj}$ is right the history $H$. Thus, in the following discussion, when we discuss the concurrency behavior of a specific objet $obj$, the history $H$ and the subhistory $H_{obj}$  have no difference.
+If all invocation and response events in a history $H$ have the same object name $obj$, then the $H|obj = H$. Thus, in the following discussion, when we discuss the concurrency behavior of a specific objet $obj$, the history $H$ and $H|obj$ are the same.
 
 We use $inv_H(op)$ to denote the position of the invocation of operation $op$ in history $H$. Similarly we use $rep_H(op)$ to denote the position of the corresponding response of $op$ in $H$. Actually, for each operation $op$, it is not necessary to have a matching response. In this case, we call the operation $op$ is pending and denote it as $rsp_H(op) = \infty$. Otherwise, we call the operation is complete in $H$.
 
@@ -192,78 +193,76 @@ Let $H$ be a complete history. With each operation $op$ in $H$ we could associat
 A history is sequential if the first event in the history is an invocation, and each invocation, except possibly the last one, is immediately followed by a corresponding response.
 \end{definition}
 
-It is obvious that a sequential history is a total order over all operations. In order to distinguish with the history $H$ we defined in definition 1, we use $S$ to denote a sequential history.
+It is obvious that a sequential history defines a total order over all operations.
 
 \begin{definition}{\textbf{Sequential Specification}.}
-The sequential specification $S_{obj}$ for a concurrent object $obj$ is the set of all possible sequential histories for $obj$.
+The sequential specification $S_{obj}$ for a concurrent object $obj$ is a set of sequential histories on $obj$.
 \end{definition}
 
-We say a sequential history $S$ satisfies the sequential specification of object $obj$ means $S$ is contained in the above sequential history set $S_{obj}$, i.e, $S \in S_{obj}$.
+We say a sequential history $S$ satisfies the sequential specification $S_{obj}$ of object $obj$, it means $S \in S_{obj}$. A sequential history $S$ of object $obj$ is valid (sometimes also called legal) if it satisfies the sequential specification of $obj$.
 
-\begin{definition}{\textbf{Valid Sequential History}.}
-A sequential history $S$ of object $obj$ is valid (sometimes also called legal) if it satisfies the sequential specification of $obj$.
-\end{definition}
 
 With the above definitions, we could now define linearization as follows:
 
 \begin{definition}{\textbf{Linearization}.}
-A history $H$ linearizes to a sequential history $S$, if and only if $S$ satisfies the following conditions: (1) $S$ and $H$ have the same operations, (2) sequential history $S$ is valid, and (3) there is a mapping from each time interval $I_H(op)$ to a time point $t_H(op)$, $t_H(op) \in I_H(op)$, such that the sequential history $S$ could be obtained by sorting the operations in $H$ by their $t_H(op)$.
+A history $H$ linearizes to a sequential history $S$, if and only if $S$ satisfies the following conditions: (1) $S$ and the completion of $H$ have the same operations, (2) sequential history $S$ is valid, and (3) there is a mapping from each time interval $I_H(op)$ to a time point $t_H(op) \in I_H(op)$, such that the sequential history $S$ could be obtained by sorting the operations in $H$ by their $t_H(op)$ values.
 \end{definition}
 
-In another word, a history $H$ is linearizable if and only if we could find a such a sequential history $S$ which satisfies the above three conditions.
+A history is linearizable if and only if there exists a sequential history $S$ that linearizes $H$. In this case, $S$ is called linearization of $H$.
 
-\begin{definition}{\textbf{Linearization Point}.}
-For each operation $op$ in history $H$, we call the time point $t_H(op)$ described in the above definition the linearization point of $op$.
-\end{definition}
+We choose one linearization of $H$ and this linearization defines $t_H(op)$. For each operation $op$ in history $H$, we call the point $t_H(op)$ linearization point of $op$.
 
 \begin{definition}{\textbf{Linearizable Object}.}
 A concurrent object is linearizable if every history $H$ of that object is linearizable.
 \end{definition}
 
-In the following subsection, we will prove our concurrent dynamic task allocation object shown in Figure 1 is linearizable.
+In the following subsection, we will prove that the concurrent dynamic task allocation object shown in Figure 1 is linearizable.
 
 
 
 \subsection{Analysis and Proofs}
 
-Through the definitions in subsection 3.1.1, one way to show a concurrent object $obj$ is linearizable is to prove its arbitrary history $H$ is linearizable. Specifically, to obtain the linearizability of $obj$, we need to identify for each DoTask or InsertTask operation $op$ (i.e, interval $I_H(op)$) in $H$ a linearization point, and prove that the sequential history $S$ obtained by sorting these operations according to their linearization points satisfies the sequential specification of $obj$.
+By the definitions in Subsection 3.1.1, one way to show a concurrent object $obj$ is linearizable is to prove every history $H$ of $obj$ is linearizable. Thus, we need to identify for each DoTask and InsertTask operation $op$ (i.e, interval $I_H(op)$) in $H$ a linearization point $t_H(op)$, and prove that the sequential history $S$ obtained by sorting these operations according to their $t_H(op)$ satisfies the sequential specification  $S_{obj}$  of $obj$.
 
-We notice that each complete DoTask or InsertTask operation can be associated with a unique task array slot with respect to the task it removed or inserted. Additionally, the removal count and insertion count are both monotonically increasing. Thus, we could associate the node counts with operations which have been propagated to that node. Next, we are going to define ``an operation is counted at a node" recursively to formalize the operation propagation.
+We notice that each complete DoTask or InsertTask operation can be associated with a unique task array slot based on the task it removed or inserted. Additionally, the removal and insertion count are both monotonically increasing. Thus, we could associate the node counts with operations which have been propagated to that node.
 
-A DoTask operation is counted at a leaf when the removal count at the leaf is updated with the index of the task array slot where the successfully performed task is located. The definition for InsertTask operation is symmetric.
+Now we define ``an operation is counted at a node" recursively to formalize the operation propagation.
 
-Now we define a DoTask operation is counted at an arbitrary inner node $v$ and counting a InsertTask is symmetric as well.
+A DoTask operation is counted at leaf $v$ when the removal count of $v$ is updated with the index of the task array slot where the performed task is located. Symmetrically, an InsertTask operation is counted at $v$ when the insertion count of $v$ is updated with the index of the task array slot where the inserted task is located.
 
-Recall that the removal count of $v$ is always updated though CAS operation (line 6, method 3). Notice that there could be more than one operations updating the count with the same value. We could therefore linearize all these operations that update the removal count of $v$ with the same value $y$. For all these operations, only the first one in the linearization order counts the corresponding DoTask operation. In another word, a DoTask operation is counted at an inner node $v$ as soon as the updating operation that counts the DoTask is linearized. Based this definition, no operation will be counted twice at a node.
+Now we only define DoTask operation is counted at an inner node $v$ because counting an InsertTask operation is symmetric as well.
 
-Please note that, the update counting the DoTask at node $v$ is not necessary performed by the DoTask operation itself, i.e, suppose process $p$ is executes a DoTask operation and has successfully performed task $l$ at certain leaf. Then the operation that counts this DoTask at node $v$ could be a different process $q$ if $q$ updates the removal count first in the linearization order.
+Recall that the removal count of $v$ is updated though CAS operation (line 6, method 3). Actually there could be more than one operations updating the count with the same value. We linearize all such CAS operations, which update the removal count of $v$ with the same value $y$. We say for all these operations, only the first one in the linearization order counts the corresponding DoTask operation. In another word, a DoTask operation is counted at an inner node $v$ as soon as the CAS updating operation that counts the DoTask is linearized. Based this definition, no operation will be counted twice at a node.
+
+Please note that, the CAS operation counting the DoTask at node $v$ is not necessary performed by the DoTask operation itself, i.e, suppose process $p$ executes a DoTask operation and has successfully performed task $\ell$ at certain leaf. Then the CAS operation counting this $p.DoTask()$ at node $v$ could be a different process $q$ as long as $q$ updates the removal count first in the linearization order.
 
 Given the above concepts and properties, we could prove the following result:
 
 \begin{lem}
 Let $v$ be a tree node, \\
-(1) If $(x, y)$ is the result by calling $v.read( )$, then there exists a set of $x$ successful InsertTask operations and a set of $y$ successful DoTask operation that have been counted at node $v$ by the end of the execution of $v.read( )$.\\
+(1) If $(x, y)$ is the return value of $v.read( )$, then there exists a set of $x$ InsertTask operations and a set of $y$ DoTask operation that have been counted at node $v$ by the end of the execution of $v.read( )$.\\
 \noindent (2) If there are $x$ DoTask operations that have been counted at $v$ before the execution of $v.read( )$, then the removal count value returned by $v.read( )$ is not less than $x$.
 \end{lem}
 \begin{proof}
+TBD
 %[Sketch] This is ensured by the repetition of double compare and swap operation during the execution of mark-up($v$).
 \end{proof}
 
 
 
 \begin{lem}
-Consider a history $H$ and an arbitrary operation $op$ in $H$, let $t_H(op)$ be the point when the operation $op$ is counted at the root, then $t_H(op)$ is between $inv_H(op)$ and $rsp_H(op)$.
+Consider a history $H$ and an arbitrary operation $op$ in $H$, let $t_H(op)$ be the point when $op$ is counted at the root, then $t_H(op)$ is between $inv_H(op)$ and $rsp_H(op)$.
 \end{lem}
 \begin{proof}
-The fact $t_H(op) > inv_H(op)$ is needless to prove. Without loss of generality, suppose process $p$ executs $op$ and $op$ is a DoTask operation which has performed some task successfully at the leaf. When it walks back to the $root$ and executes Mark-up($root$), there will be two cases:
+Without loss of generality, suppose process $p$ executes DoTask operation $op$ which has performed task $\ell$ successfully at the leaf. When it reaches the $root$ and executes Mark-up($root$), there will be two cases:
 
-Case 1:  It increments the removal count of $root$ successfully via DCAS (line 6, method 3) at point $\tau$. If it is the first one in the linearization order of all updates of the removal count with the same value, then $t_H(op) = \tau$, therefore $t_H(op) < rsp_H(op)$. Otherwise, we could let $t_H(op) = \tau'$, where $\tau'$ is the first one in the linearization order updated the removal count of root. Because only if the task has been performed then the removal count of root could be updated. Thus, $\tau' < \tau$, therefore $t_H(op) < rsp_H(op)$.
+Case 1:  It increments the removal count of $root$ successfully via CAS (line 6, method 3) at point $\tau$. If it is the first one in the linearization order of all CAS operation updating of the removal count with the same value, then $t_H(op) = \tau$, therefore $inv_H(op) < t_H(op) < rsp_H(op)$. Otherwise, we could let $t_H(op) = \tau'$, where $\tau'$ is the time when the first CAS operation in the linearization order updated the removal count. Thus $t_H(op) < \tau < rsp_H(op)$, Because only if the task has been performed then the removal count of root could be updated. so $t_H(op) > inv_H(op)$. Therefore, in this case, $inv_H(op) < t_H(op) < rsp_H(op)$ holds.
 
-Case 2: It fails to increment the removal count. The compare and swap operation of $p$ fails if and only if the value of the insertion and/or removal counts are/is updated at a point before $\tau$, suppose it is $\tau'$. Here are two subcases.
+Case 2: It fails to increment the removal count. The CAS operation of $p$ fails if and only if the value of the counts were updated by another process at a point before $\tau$, suppose it is $\tau'$. Please note that, we say the counts were updated, it means the removal count or the insertion count was updated because the two counts are stored in one memory location. Thus, there are two subcases.
 
-Subcase 2.1: If the removal count is incremented at $\tau'$, it means the DoTask operation has already been counted by another process. Thus, $t_H(op) \leq \tau' < rsp_H(op)$.
+Subcase 2.1: If it is the removal count that was incremented at $\tau'$, it means the DoTask operation has already been counted by another process. Thus, $t_H(op) \leq \tau' < rsp_H(op)$.
 
-Subcase 2.2: If it is not the removal count but the insertion count that is updated at $\tau'$. We notice that the CAS operation (line 6, method 3) will be repeated by $p$, during the second iteration, if the CAS of $p$ succeed at $\tau''$, then we could deduce that $t_H(op) \leq \tau''$, therefore  $t_H(op) < rsp_H(op)$. If it fails again at point $\tau''$ , then there must be another process updated the counts of root again. This time, the counts of the children will be noticed and the DoTask operation will propagate to the root. We could deduce $t_H(op) < \tau''$. Thus,  $t_H(op) < rsp_H(op)$ as well.
+Subcase 2.2: If it is not the removal count but the insertion count that was updated at $\tau'$. We notice that the CAS operation (line 6, method 3) will be repeated by $p$, during the second iteration, if the CAS of $p$ succeed at $\tau''$, then we could deduce that $t_H(op) \leq \tau''$, therefore  $t_H(op) < rsp_H(op)$. If it fails again at point $\tau''$ , then there must be another process updated the counts of root again. This time, the counts of the children will be noticed and the DoTask operation will propagate to the root. We could deduce $t_H(op) < \tau''$. Thus,  $t_H(op) < rsp_H(op)$ as well.
 \end{proof}
 
 Under the above definitions and properties, we claim the point $t_H(op)$ when $op$ is counted at the root is the linearization point of operation $op$.
@@ -274,11 +273,11 @@ The dynamic task allocation object in the above figure is linearizable.
 \begin{proof}
 Consider an arbitrary history $H$ containing DoTask and InsertTask operations. We should prove for any execution of our algorithm, the total order given by the linearization point is verifies the uniqueness and validity. If $H$ is not complete, then we let all processes that have not finished their operations continue to take steps in an arbitrary order until all operations are completed. Every operation will finally be done is ensured by our computation model and the randomness of our algorithm. This way we obtain a completion $H'$ of $H$ and it suffices to prove $H'$ is linearizable. Thus, to prove this lemma, we should prove the total order obtained by sorting the operations by their $t_H(op)$ values is valid.
 
-\texttt{The uniqueness is obvious. When multiple processes are calling TryTask($l$) at the memory location, only one of them will receive success and the index $l$ of the task, all the other competitor processes will get failure. Task $l$ is performed successfully as long as the value of corresponding memory location is turned to 1. The following process will never repeatedly turn it be to 0 and turn 0 to 1 which is guaranteed by the our semantics of task insertion and removing.}
+\texttt{The uniqueness is obvious. When multiple processes are calling TryTask($\ell$) at the memory location, only one of them will receive success and the index $\ell$ of the task, all the other competitor processes will get failure. Task $\ell$ is performed successfully as long as the value of corresponding memory location is turned to 1. The following process will never repeatedly turn it be to 0 and turn 0 to 1 which is guaranteed by the our semantics of task insertion and removing.}
 
 Now we prove the validity, i.e. each task that is performed successfully must have been inserted before. We should prove the insertion operation of a task is always counted at the root before the removal operation. To prove this result holds for the root, we now prove it by induction from the leaf.
 
-At the leaf, this holds because if and only if the insertion count of newly inserted task $l$ has been incremented (line 19, method 2) then the following removal operation could read that (line 20, method 1) to know the available task $l$ at the leaf and then try to perform it. In another word, suppose the task $l$ is inserted but the insertion count is not incremented (i.e. insertion has not been counted yet), then the following removal operation has no way to know the available task $l$, perform it and increment the removal count. Thus, the removal will not be counted.
+At the leaf, this holds because if and only if the insertion count of newly inserted task $\ell$ has been incremented (line 19, method 2) then the following removal operation could read that (line 20, method 1) to know the available task $\ell$ at the leaf and then try to perform it. In another word, suppose the task $\ell$ is inserted but the insertion count is not incremented (i.e. insertion has not been counted yet), then the following removal operation has no way to know the available task $\ell$, perform it and increment the removal count. Thus, the removal will not be counted.
 
 For an arbitrary inner node $v$, we suppose, by the induction step and lemma 1, the result holds for children $v.left$ and $v.right$. We could notice that any process updates the insertion count and removal count as an atomic operation (line 6, method 3). If some remove operation has been counted at node $v$, then the corresponding insert operation for that task must have been counted at $v$ simultaneously by the double compare-and-swap operation. Apply this to the root, then validity condition holds.
 \end{proof}
