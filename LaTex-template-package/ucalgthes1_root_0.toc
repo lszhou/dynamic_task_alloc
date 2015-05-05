@@ -11,7 +11,7 @@
 \contentsline {chapter}{\numberline {2}The Computation Model and Algorithms}{2}{chapter.2}
 \contentsline {section}{\numberline {2.1}Computational Model}{2}{section.2.1}
 \contentsline {section}{\numberline {2.2}Problem Statement}{3}{section.2.2}
-\contentsline {section}{\numberline {2.3}The Adaptive To-Do Tree}{4}{section.2.3}
+\contentsline {section}{\numberline {2.3}The Adaptive To-Do Tree}{3}{section.2.3}
 \contentsline {chapter}{\numberline {3}Analysis}{6}{chapter.3}
 \contentsline {section}{\numberline {3.1}Correctness}{6}{section.3.1}
 \contentsline {subsection}{\numberline {3.1.1}Definitions and Terminology}{6}{subsection.3.1.1}

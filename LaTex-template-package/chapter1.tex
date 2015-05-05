@@ -50,15 +50,16 @@ Base on such history, it decides which process takes the next step.
 %
 %Define an InsertTask operation is successful if it has inserted a task into the task array. Similarly, a DoTask operation is successful if it has performed a task at a leaf. A complete InsertTask or DoTask operation must be a successful operation, but not vice versa.
 
-\subsection*{Complexity Metric}
-The complexity measure we use is the total number of shared memory operations that processes take during an execution. Here the operations include compare-and-swap, read and write.
+%\subsection*{Complexity Metric}
+%The complexity measure we use is the total number of shared memory operations that processes take during an execution. Here the operations include compare-and-swap, read and write.
 
 \subsection*{Specification}
-A type is defined by the operations it supports and their sequential specification. An object is an implementation of a type. Our type $dynamic\_task\_alloc$ supports two operation $DoTask()$ and $InsertTask( \ell )$, where $\ell$ is a task identifier. The $DoTask$ operation performs an available task and returns the index of that task. If there is no available task, then it returns $\perp$. The $InsertTask( \ell )$ operation insert the task $\ell$ to be performed and returns $success$ if $\ell$ has been inserted successfully.
+A type is defined by the operations it supports and their sequential specification. An object is an implementation of a type.
 
-The sequential specification of the type $dynamic\_task\_alloc$ is presented as follows:\\
-\noindent $\bullet$ Validity: If a $DoTask($ $)$ returns $\ell$, then before that, an $InsertTask( \ell )$ was executed and returned success\\
-\noindent $\bullet$ Uniqueness: For each task $\ell$, at most one $InsertTask( \ell )$ returns $success$ and at most one $DoTask($ $)$ returns $\ell$.
+Type $dynamic\_task\_alloc$ supports two operation $DoTask($ $)$ and $InsertTask( \ell )$, where $\ell$ is a task identifier. The $DoTask($ $)$ operation performs an available task and returns the index of that task. If there is no available task, then it returns $\perp$. The $InsertTask( \ell )$ operation insert the task $\ell$ to be performed and returns $success$ if $\ell$ has been inserted successfully.
+
+The sequential specification of the type $dynamic\_task\_alloc$ is presented as follows: (1) (Validity) If a $DoTask($ $)$ returns $\ell$, then before that, an $InsertTask( \ell )$ was executed and returned success\\
+(2) (Uniqueness) For each task $\ell$, at most one $InsertTask( \ell )$ returns $success$ and at most one $DoTask($ $)$ returns $\ell$.
 
 For the implementations, we would like every inserted task $\ell$ will finally be performed which is a desired progress property of implementations of type $dynamic\_task\_alloc$.
 
