@@ -1,7 +1,7 @@
 %--------------------CHAPTER 1-----------------------------
 \chapter{Introduction}
 In this chapter, we will introduce the task allocation problem as well as its dynamic version and survey the past work related to it.
-\section{The Dynamic Task Allocation Problem}
+
 Task allocation problem, also called do-all problem, is already a foundational topic in distributing computing. During the last two decades, significant research was dedicated to studying the task allocation problem in various models of computation, including message passing, shared memory, etc. under specific assumption about the asynchrony and failures.
 
 In this thesis, we consider the dynamic version of the task allocation problem via randomized asynchronous shared memory. The dynamic version could be described as follows:
@@ -30,46 +30,42 @@ In this thesis, we consider the dynamic version of the task allocation problem v
 %In chapter 4, we summarize our results, relate them to past work and discuss the open questions that arise from our work.
 
 %--------------------CHAPTER 2-----------------------------
-\chapter{The Computation Model and Algorithms}
+\chapter{The Computational Model and Problem Statement}
 In this chapter, we will formally describe the system model we are working in and introduce our dynamic task allocation object.
 
 \section{Computational Model}
-The computational model we consider is the standard asynchronous shared memory model with $n$ processes $1, 2, ..., n$, where up to $n-1$ processes may fail by crashing. The processes communicate with each other via shared compare-and-swap objects. Each process executes its program by taking steps which are defined to be the executions of all local computations followed by an operation on a shared register.
+The computational model we consider is the standard asynchronous shared memory model with $n$ processes.  Every process executes its program by
+taking steps and up to $n-1$ processes may fail by crashing. A step is defined to be the execution of all local computations
+followed by an operation on a shared object. In this thesis, we consider the system that supports atomic compare-and-swap (CAS) object.
 
-A CAS object $v$ is a shared memory object stores a value from some set and supports two atomic synchronization operations $v.read()$ and $v.CAS((x,y), (a, b))$. Operation $v.read()$ returns the current value of the object and leaves the value unchanged. A $v.CAS((x,y), (a, b))$ takes the memory locations and writes new value into it only if it matches pre-supplied ``expected" values $(x, y)$, i.e, if current value of $v$ are exactly $(x, y)$, then the operation $v.CAS((x,y), (a, b))$ succeeds, and the value of $v$ is changed to be $(a, b)$ and $true$ is returned. Otherwise, the operation fails, the current value of $v$ remains unchanged and $false$ is returned.
+A CAS object $v$ is a shared memory object stores a value from some set and supports two atomic synchronization operations $v.read()$ and $v.CAS((x,y), (a, b))$. Operation $v.read()$ returns the current value of the object and leaves the value unchanged. A $v.CAS((x,y), (a, b))$ takes the memory locations and writes new value into it only if it matches pre-supplied ``expected" values $(x, y)$, i.e, if current value of $v$ are exactly $(x, y)$, then the operation $v.CAS((x,y), (a, b))$ succeeds, and the value of $v$ is changed to be $(a, b)$ and $true$ is returned. Otherwise, the operation fails, and the current value of $v$ remains unchanged and $false$ is returned.
 
-Each process has a unique identifier $i$ which is from an unbounded namespace and has a local random number generator to perform coin flip operations. In the following discussion, we use $random(s)$ to return a value distributed uniformly at random from the set $\{0, 1, 2,..., s-1\}$.
+In addition, each process has a unique identifier $i$ which is from an unbounded namespace.  A process can execute local coin flip operations that returns an integer value distributed uniformly at random from an arbitrary finite set of integers. In the following discussion, we use $random(s)$ to return a value distributed uniformly at random from the set $\{0, 1, 2,..., s-1\}$. We analyze our algorithm under the assumption of a strong adaptive adversary. At any point of time, it can see the entire history and know the states of all processes. Base on such history, it decides which process takes the next step.
 
-We analyze the algorithm under the assumption of a strong adaptive adversary. At any point of time, it can see the entire history and know the states of all processes.
-Base on such history, it decides which process takes the next step.
 \section{Problem Statement}
-.......
-%Dynamic asynchronous task allocation is the problem in which the p processes cooperatively execute tasks and the task are inserted into the data structure dynamically during the executing.
-%
-%For simplicity, the tasks are still abstracted and associated with shared registers. If a process changes the value of certain register from 0 to 1 successfully, it means the task associated with this register is performed; if a process changes the value of certain register from 1 to 0, it means the task is inserted successfully and associated with that register. Additionally, we assume each task has a unique identifier l>=0. One simple implementation of such task identifier uniqueness is to assign each task with an identifier in the form (id, count), where id the id of the process to which the task is assigned and count is the value of a local per-process counter, which is incremented on each newly inserted task.
-%
-%Define an InsertTask operation is successful if it has inserted a task into the task array. Similarly, a DoTask operation is successful if it has performed a task at a leaf. A complete InsertTask or DoTask operation must be a successful operation, but not vice versa.
 
-%\subsection*{Complexity Metric}
-%The complexity measure we use is the total number of shared memory operations that processes take during an execution. Here the operations include compare-and-swap, read and write.
+Dynamic task allocation is the problem in which $n$ processes perform a set of tasks cooperatively and the tasks are inserted dynamically by the adversary during the execution.
 
-\subsection*{Specification}
-A type is defined by the operations it supports and their sequential specification. An object is an implementation of a type.
+In theoretical computer science, a concurrent object has a $name$ and a $type$. A $type$ is defined by (1) a set of possible values for objects of that type, (2) a finite set of operations through which the objects of that type could be manipulated, (3) a sequential specification describing, for each operation, the condition under which that operation can be invoked, and the effect produced after the operation was executed.
 
-Type $dynamic\_task\_alloc$ supports two operation $DoTask($ $)$ and $InsertTask( \ell )$, where $\ell$ is a task identifier. The $DoTask($ $)$ operation performs an available task and returns the index of that task. If there is no available task, then it returns $\perp$. The $InsertTask( \ell )$ operation insert the task $\ell$ to be performed and returns $success$ if $\ell$ has been inserted successfully.
+Our dynamic task allocation type $DTA$ supports two operations, i.e, $DoTask($ $)$ and $InsertTask( \ell )$, where $\ell$ is a task identifier which is unique for each task. The input of the system is a string of $DoTask($ $)$ and $InsertTask( \ell )$ operations to be executed. When a process completes its current operation, it is assigned the next operation in the string.
 
-The sequential specification of the type $dynamic\_task\_alloc$ is presented as follows: (1) (Validity) If a $DoTask($ $)$ returns $\ell$, then before that, an $InsertTask( \ell )$ was executed and returned success\\
-(2) (Uniqueness) For each task $\ell$, at most one $InsertTask( \ell )$ returns $success$ and at most one $DoTask($ $)$ returns $\ell$.
+We formalize the notion of type $DTA$ by specifying the above two operations. For clarity, we define the concepts that a task is inserted and performed. We say a task $\ell$ is inserted if it is associated to a shared memory location $M$. we assume that there exists a atomic operation $PutTask(M,\ell)$, and a process could associate task $\ell$ with memory location $M$ by calling $PutTask(M,\ell)$. It returns $success$ if the the task $l$ has already been associated with the location, and returns $failure$ if the location was already associated with another task. Similarly, We assume there exists an atomic operation $TryTask(M)$, and the task $\ell$ associated with memory location $M$ could be performed atomically by a process by calling $TryTask(M)$. Out of several processes calling $TryTask(M)$, only one receives $success$ and the index $\ell$ of that task, while all the others receive $failure$. This assumption guarantees that only one process could actually perform task $l$, i.e, task $l$ could be performed at most once during the executing.
 
-For the implementations, we would like every inserted task $\ell$ will finally be performed which is a desired progress property of implementations of type $dynamic\_task\_alloc$.
+A task is $done$ if its index has been returned by a process after a $DoTask($ $)$ call. A task is $available$ if it has been inserted but not done yet.
 
+Operation $DoTask($ $)$ performs an available task associated to memory location $M$ by calling $TryTask(M)$.  $DoTask($ $)$ performs a task and returns its index $l$ if and only its $TryTask(M)$ operation returns $success$. If there is no available task, then operation $DoTask($ $)$ returns $\perp$.
 
-\section{The Adaptive To-Do Tree}
-%[some concepts and definition, e.g. tree, counts, surplus, space]
-%[Double Compare and Swap]
-%[Intro and detailed explanation of DoTask and InsertTask]
+The $InsertTask( \ell )$ operation inserts task $\ell$ by calling $InsertTask(M, \ell)$, where $M$ is the memory location task $\ell$ will be associated to. The $InsertTask( \ell )$ operation inserts a task successfully and returns $success$ if and only if its $InsertTask(M, \ell)$ returns $success$.
 
-............
+The type $DTA$ is required to satisfy: $Validity$: If a $DoTask($ $)$ returns $\ell$, then before that, an $InsertTask( \ell )$ was executed and returned success. $Uniqueness$: For each task $\ell$, at most one $DoTask($ $)$ returns $\ell$, i.e, each task is performed at most once.
+
+In addition, the property that every inserted task is eventually done is also a desired progress property of the implementation of type $DTA$.
+
+\chapter{The Adaptive To-Do Tree}
+
+\emph{Some description here.}
+
 \begin{algorithm}
 \caption{DoTask()}               %标题
 \label{alg1}                         %标记算法，方便在其它地方引用
