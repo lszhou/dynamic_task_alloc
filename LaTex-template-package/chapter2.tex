@@ -1,0 +1,184 @@
+
+%--------------------CHAPTER 2-----------------------------
+\chapter{Computational Model and Definitions}
+In this chapter, we will formally describe the computational model and give the definitions.
+
+\section{Computational Model}
+The computational model we consider is the standard asynchronous shared memory model with $n$ processes, each process has a unique identifier $i \in {1,...,n}$. The set of processes is denoted $\{p_1, p_2,...,p_n\}$.
+
+Each process executes its program by taking steps until it has reached a special state where it takes no further action. A step is defined to be the execution of shared memory operation on shared objects and receive corresponding response. Up to $n-1$ processes may fail by crashing.
+
+In this thesis, we consider the system that supports atomic compare-and-swap (CAS) object. A CAS object $v$ is a shared memory object stores a value from some set and supports two atomic synchronization operations $v.read()$ and $v.CAS(x,y)$. Operation $v.read()$ returns the current value of $v$ and leaves the value unchanged. A $v.CAS(x,y)$ operation writes new value into it only if it matches pre-supplied ``expected" value $x$, i.e, if current value of $v$ equals $x$, then operation $v.CAS(x,y)$ succeeds, and the value of $v$ is changed to be $y$ and $true$ is returned. Otherwise, the operation fails, and the current value of $v$ remains unchanged and $false$ is returned.
+
+A process can execute local coin flip operation that returns an integer value distributed uniformly at random from an arbitrary finite set of integers. In the following discussion, we use $random(s)$ to return a value which is distributed uniformly at random from set $\{0, 1, 2,..., s-1\}$. We analyze our algorithm under the assumption of a strong adaptive adversary. At any point of time, it can see the entire past history and know the states of all processes. Based on this information, it decides which process takes the next step.
+
+\section{Definitions}
+\theoremstyle{definition}
+
+\begin{definition}{\textbf{History}.}
+A history  (or execution) $H$, obtained by processes executing shared memory operations on concurrent objects, is a finite sequence of method invocation and response events.
+\end{definition}
+
+A history $H$ may be related to several concurrent objects. When we consider the concurrency behavior of a specific object, we should focus on the subhistory of that object which is defined as follows:
+
+\begin{definition}
+$H|obj$ of history $H$ is the subsequence of all invocation and response events in $H$ whose object names are all $obj$.
+\end{definition}
+
+If all invocation and response events in a history $H$ have the same object name $obj$, then the $H|obj = H$. Thus, in the following discussion, when we discuss the concurrency behavior of a specific objet $obj$, the history $H$ and $H|obj$ are the same.
+
+We use $inv_H(op)$ to denote the position of the invocation of operation $op$ in history $H$. Similarly we use $rep_H(op)$ to denote the position of the corresponding response of $op$ in $H$. Actually, for each operation $op$, it is not necessary to have a matching response. In this case, we call the operation $op$ is pending and denote it as $rsp_H(op) = \infty$. Otherwise, we call the operation is complete in $H$.
+
+\begin{definition}{\textbf{Complete/Imcomplete History}.}
+A history is complete if all its operations are complete. A completion of an incomplete history $H$ is an extension $H'$ of $H$, such that $H'$ contains exactly the same operations as $H$ but the responses are added for the pending operations in $H$.
+\end{definition}
+
+Let $H$ be a complete history. With each operation $op$ in $H$ we could associate a time interval $I_H(op) = [inv(op), rsp(op)]$. Similarly, for an uncomplete history, we denote the interval with respect to the pending operation $op$ by $I_H(op) = [inv(op), \infty]$.
+
+\begin{definition}{\textbf{Sequential History}.}
+A history is sequential if the first event in the history is an invocation, and each invocation, except possibly the last one, is immediately followed by a corresponding response.
+\end{definition}
+
+It is obvious that a sequential history defines a total order over all operations.
+
+\begin{definition}{\textbf{Sequential Specification}.}
+The sequential specification $S_{obj}$ for a concurrent object $obj$ is a set of sequential histories on $obj$.
+\end{definition}
+
+We say a sequential history $S$ satisfies the sequential specification $S_{obj}$ of object $obj$, it means $S \in S_{obj}$. A sequential history $S$ of object $obj$ is valid (sometimes also called legal) if it satisfies the sequential specification of $obj$.
+
+
+With the above definitions, we could now define linearization as follows:
+
+\begin{definition}{\textbf{Linearization}.}
+A history $H$ linearizes to a sequential history $S$, if and only if $S$ satisfies the following conditions: (1) $S$ and the completion of $H$ have the same operations, (2) sequential history $S$ is valid, and (3) there is a mapping from each time interval $I_H(op)$ to a time point $t_H(op) \in I_H(op)$, such that the sequential history $S$ could be obtained by sorting the operations in $H$ by their $t_H(op)$ values.
+\end{definition}
+
+A history is linearizable if and only if there exists a sequential history $S$ that linearizes $H$. In this case, $S$ is called linearization of $H$.
+
+We choose one linearization of $H$ and this linearization defines $t_H(op)$. For each operation $op$ in history $H$, we call the point $t_H(op)$ linearization point of $op$.
+
+\begin{definition}{\textbf{Linearizable Object}.}
+A concurrent object is linearizable if every history $H$ of that object is linearizable.
+\end{definition}
+
+In the following subsection, we will prove that the concurrent dynamic task allocation object shown in Figure 1 is linearizable.
+
+Every shared object has a $type$ $\tau$ which can be defined mathematically (\cite{birnbaum1969new}) as follows,
+$$\tau = (\mathcal{S}, s_{init},\mathcal{O},\mathcal{R} ,\delta )$$
+
+where $\mathcal{S}$ is a set of states, $s_{init} \in \mathcal{S}$ is the initial state, $\mathcal{O}$ is a set of operations , $\mathcal{R}$ is the set of responses, and $\delta :\mathcal{S} \times \mathcal{O} \to \mathcal{S} \times \mathcal{R}$ is a state transition mapping.
+
+Sequential specification of type $\tau$ describes, for each operation, the condition under which that operation can be invoked, and the effect produced after the operation was executed.
+
+Our dynamic task allocation type (DTA) supports two operations, $DoTask($ $)$ and $InsertTask( \ell )$, where $\ell$ is the task identifier that is unique for each task.
+
+Now we formalize the notion of type DTA by specifying the above two operations. We assume that there exists an atomic operation $PutTask(M,\ell)$, and a process associates task $\ell$ with memory location $M$ by calling $PutTask(M,\ell$). It returns $success$ if task $l$ is associated with location $M$, and returns $failure$ if location $M$ was already associated with another task. We say a task $\ell$ is inserted if it is associated to a shared memory location $M$.
+
+Similarly, we assume there exists an atomic operation $TryTask(M)$, and the task $\ell$ associated with memory location $M$ could be performed atomically by a process by calling $TryTask(M)$. Out of several processes calling $TryTask(M)$, only one receives $success$ and the index $\ell$ of that task, while all the others receive $failure$. This assumption guarantees that only one process will actually perform task $\ell$, i.e, each task $\ell$ can be performed at most once during the executing.
+
+A task is $done$ if its index has been returned by a process after calling $DoTask($ $)$.
+
+A task is $available$ at location $M$ if it has been inserted to $M$ and $success$ is returned by a process after calling $InsertTask(\ell)$, but is not done yet. A task is $available$, if it is $available$ at some memory location.
+
+The aim of operation $DoTask($ $)$ is to perform an available task on location $M$ by calling $TryTask(M)$. Every $DoTask($ $)$ may perform several $TryTask(M)$ operations. However, only one of them will succeed. Once one $TryTask(M)$ succeeds, there is no available task on $M$ and the task index $\ell$ will be returned by $DoTask($ $)$. Additionally, if there is no available task, then operation $DoTask($ $)$ returns $\perp$.
+
+The goal of $InsertTask( \ell )$ operation is to find a free memory location $M$ and insert task $\ell$ by calling $PutTask(M, \ell)$. Because $PutTask(M,\ell)$ will fail if location $M$ has been associated with another task, each $InsertTask( \ell )$ operation may perform several $PutTask(M, \ell)$ operations. But only one of them will succeed. Once one $TryTask(M)$ succeeds, then task $\ell$ is available on location $M$ and $success$ notification is returned by $InsertTask( \ell )$ operation.
+
+Type $DTA$ is required to satisfy: (\emph{Validity}) If a $DoTask($ $)$ operation returns $\ell$, then before that, an $InsertTask( \ell )$ was executed and returned $success$. (\emph{Uniqueness}) Each task is performed at most once, i.e, for each task $\ell$, at most one $DoTask($ $)$ operation returns $\ell$.
+
+In addition, the property that every inserted task is eventually done is also a desired progress property of the implementation of type $DTA$.
+
+\chapter{The Adaptive To-Do Tree}
+
+\emph{Some description here.}
+
+\begin{algorithm}
+\caption{DoTask()}               %标题
+\label{alg1}                         %标记算法，方便在其它地方引用
+\begin{algorithmic}[1]
+\WHILE {(true)}
+   \STATE $v \leftarrow root$\\
+   \IF {($v.surplus() \leq 0$)}
+   \RETURN $\perp$
+   \ENDIF \\
+   \vspace{3mm}
+   /* Descent */
+   \WHILE {$v$ is not a leaf}
+       \STATE $(x_L, y_L) \leftarrow v.left.read()$\\
+       \STATE $(x_R, y_R) \leftarrow v.right.read()$\\
+       \STATE $s_L \leftarrow min(x_L-y_L, 2^{height(v)})$ \\
+       \STATE $s_R \leftarrow min(x_R-y_R, 2^{height(v)})$ \\
+       \STATE $r \leftarrow random(0,1)$
+       \IF {($(s_L+s_R)=0$)}
+           \STATE Mark-up($v$)
+       \ELSIF {($r<s_L/(s_L+s_R)$)}
+           \STATE $v \leftarrow v.left$
+       \ELSE
+           \STATE $v \leftarrow v.rght$
+       \ENDIF
+   \ENDWHILE
+   \vspace{3mm}\\
+   /* $v$ is a leaf */
+   \STATE $(x,y) \leftarrow v.read()$
+   \STATE $(flag, l)$ $\leftarrow$ $v$.TryTask(task$[y+1]$)
+   \STATE $v$.CAS$((x, y), (x, y+1))$    // Update Insertion Count
+   \STATE $v \leftarrow v.parent$
+   \STATE Mark-up($v$)
+   \IF {$flag$ = success}
+       \RETURN $\ell$
+   \ENDIF
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Insert(task $\ell$)}               %标题
+\label{alg2}                         %标记算法，方便在其它地方引用
+\begin{algorithmic}[1]
+\WHILE {(true)}
+   \STATE $v \leftarrow root$\\
+   \vspace{3mm}
+   /* Descent */
+   \WHILE {($v$ is not a leaf)}
+       \STATE $(x_L, y_L) \leftarrow v.left.read()$\\
+       \STATE $(x_R, y_R) \leftarrow v.right.read()$\\
+       \STATE $s_L \leftarrow min(x_L-y_L, 2^{height(v)})$ \\
+       \STATE $s_R \leftarrow min(x_R-y_R, 2^{height(v)})$ \\
+       \STATE $r \leftarrow random(0,1)$
+       \IF {($(s_L+s_R) = 0$)}
+           \STATE Mark-up($v$)
+       \ELSIF {($r < s_L/(s_L + s_R)$)}
+           \STATE $v \leftarrow v.left$
+       \ELSE
+           \STATE $v \leftarrow v.rght$
+       \ENDIF
+   \ENDWHILE
+   \vspace{3mm}\\
+   /* $v$ is a leaf */
+   \STATE $(x,y) \leftarrow v.read()$
+   \STATE $flag$ $\leftarrow$ $v$.PutTask(task$[x+1]$, $\ell$)
+   \STATE $v$.CAS$((x,y), (x+1,y))$ // Update Insertion Count
+   \STATE $v \leftarrow v.parent$
+   \STATE Mark-up($v$)
+   \IF {($flag$ = success)}
+       \RETURN $success$
+   \ENDIF
+\ENDWHILE
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Mark-up($v$)}               %标题
+\label{alg3}                         %标记算法，方便在其它地方引用
+\begin{algorithmic}[1]
+\IF{($v$ is not Null)}
+    \FOR {($i=0; i<2; i++$)}
+    \STATE $(x, y) \leftarrow v.read()$
+    \STATE $(x_L, y_L) \leftarrow v.left.read()$
+    \STATE $(x_R, y_R) \leftarrow v.right.read()$
+    \STATE $v$.CAS$((x,y), (max(x, x_L + x_R), max(y, y_L + y_R))$\\
+    \ENDFOR
+\ENDIF
+\end{algorithmic}
+\end{algorithm}

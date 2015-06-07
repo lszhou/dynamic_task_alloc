@@ -1,25 +1,19 @@
-\BOOKMARK [0][-]{section*.1}{Abstract}{}% 1
-\BOOKMARK [0][-]{section*.2}{Acknowledgements}{}% 2
-\BOOKMARK [0][-]{chapter*.4}{Table of Contents}{}% 3
-\BOOKMARK [0][-]{chapter*.6}{List of Tables}{}% 4
-\BOOKMARK [0][-]{chapter*.8}{List of Figures}{}% 5
-\BOOKMARK [0][-]{chapter*.10}{List of Symbols}{}% 6
+\BOOKMARK [0][-]{section*.2}{Abstract}{}% 1
+\BOOKMARK [0][-]{section*.3}{Acknowledgements}{}% 2
+\BOOKMARK [0][-]{chapter*.5}{Table of Contents}{}% 3
+\BOOKMARK [0][-]{chapter*.7}{List of Tables}{}% 4
+\BOOKMARK [0][-]{chapter*.9}{List of Figures}{}% 5
+\BOOKMARK [0][-]{chapter*.11}{List of Symbols}{}% 6
 \BOOKMARK [0][-]{chapter.1}{Introduction}{}% 7
 \BOOKMARK [1][-]{section.1.1}{Related Work}{chapter.1}% 8
 \BOOKMARK [1][-]{section.1.2}{Statement of Results}{chapter.1}% 9
-\BOOKMARK [0][-]{chapter.2}{The Computational Model and Problem Statement}{}% 10
+\BOOKMARK [0][-]{chapter.2}{Computational Model and Definitions}{}% 10
 \BOOKMARK [1][-]{section.2.1}{Computational Model}{chapter.2}% 11
-\BOOKMARK [1][-]{section.2.2}{Problem Statement}{chapter.2}% 12
-\BOOKMARK [0][-]{chapter.3}{The Adaptive To-Do Tree}{}% 13
-\BOOKMARK [0][-]{chapter.4}{Analysis}{}% 14
-\BOOKMARK [1][-]{section.4.1}{Correctness}{chapter.4}% 15
-\BOOKMARK [2][-]{subsection.4.1.1}{Definitions and Terminology}{section.4.1}% 16
-\BOOKMARK [2][-]{subsection.4.1.2}{Analysis and Proofs}{section.4.1}% 17
-\BOOKMARK [1][-]{section.4.2}{Performance}{chapter.4}% 18
-\BOOKMARK [2][-]{subsection.4.2.1}{DoTask Analysis}{section.4.2}% 19
-\BOOKMARK [2][-]{subsection.4.2.2}{InsertTask Analysis}{section.4.2}% 20
-\BOOKMARK [1][-]{section.4.3}{Competitive Analysis}{chapter.4}% 21
-\BOOKMARK [0][-]{chapter.5}{Conclusions}{}% 22
-\BOOKMARK [1][-]{section.5.1}{Contributions}{chapter.5}% 23
-\BOOKMARK [1][-]{section.5.2}{Future Work}{chapter.5}% 24
-\BOOKMARK [0][-]{appendix.A}{First Appendix}{}% 25
+\BOOKMARK [1][-]{section.2.2}{Definitions}{chapter.2}% 12
+\BOOKMARK [2][-]{subsection.2.2.1}{Definitions and Terminology}{section.2.2}% 13
+\BOOKMARK [0][-]{chapter.3}{The Adaptive To-Do Tree}{}% 14
+\BOOKMARK [1][-]{section.3.1}{Correctness}{chapter.3}% 15
+\BOOKMARK [2][-]{subsection.3.1.1}{Analysis and Proofs}{section.3.1}% 16
+\BOOKMARK [1][-]{section.3.2}{Performance}{chapter.3}% 17
+\BOOKMARK [2][-]{subsection.3.2.1}{DoTask Analysis}{section.3.2}% 18
+\BOOKMARK [2][-]{subsection.3.2.2}{InsertTask Analysis}{section.3.2}% 19
