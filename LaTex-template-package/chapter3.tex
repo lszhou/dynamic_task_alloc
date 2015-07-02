@@ -1,116 +1,163 @@
 %--------------------CHAPTER 3-----------------------------
 \chapter{Dynamic Task Allocation Objects}
 
-Our dynamic task allocation type (DTA) supports two operations, $DoTask($ $)$ and $InsertTask( \ell )$, where $\ell$ is the task identifier that is unique for each task.
+Our dynamic task allocation type (DTA) supports two operations, \texttt{DoTask()} and \texttt{InsertTask(}$\ell$\texttt{)}, where $\ell$ is the task identifier that is unique for each task.
 
-Now we formalize the notion of type DTA by specifying the above two operations. We assume that there exists an atomic operation $PutTask(M,\ell)$, and a process associates task $\ell$ with memory location $M$ by calling $PutTask(M,\ell$). It returns $success$ if task $l$ is associated with location $M$, and returns $failure$ if location $M$ was already associated with another task. We say a task $\ell$ is inserted if it is associated to a shared memory location $M$.
+Now we formalize the notion of type DTA by specifying the above two operations. We assume that there exists an atomic operation \texttt{PutTask(}$M,\ell$\texttt{)}, and a process associates task $\ell$ with memory location $M$ by calling \texttt{PutTask(}$M,\ell$\texttt{)}. It returns $success$ if task $l$ is associated with location $M$, and returns $failure$ if location $M$ was already associated with another task. We say a task $\ell$ is inserted if it is associated to a shared memory location $M$.
 
-Similarly, we assume there exists an atomic operation $TryTask(M)$, and the task $\ell$ associated with memory location $M$ could be performed atomically by a process by calling $TryTask(M)$. Out of several processes calling $TryTask(M)$, only one receives $success$ and the index $\ell$ of that task, while all the others receive $failure$. This assumption guarantees that only one process will actually perform task $\ell$, i.e, each task $\ell$ can be performed at most once during the executing.
+Similarly, we assume there exists an atomic operation \texttt{TryTask(}$M$\texttt{)}, and the task $\ell$ associated with memory location $M$ could be performed atomically by a process by calling \texttt{TryTask(}$M$\texttt{)}. Out of several processes calling \texttt{TryTask(}$M$\texttt{)}, only one receives $success$ and the index $\ell$ of that task, while all the others receive $failure$. This assumption guarantees that only one process will actually perform task $\ell$, i.e, each task $\ell$ can be performed at most once during the executing.
 
-A task is $done$ if its index has been returned by a process after calling $DoTask($ $)$.
+A task is $done$ if its index has been returned by a process after calling \texttt{DoTask()}.
 
-A task is $available$ at location $M$ if it has been inserted to $M$ and $success$ is returned by a process after calling $InsertTask(\ell)$, but is not done yet. A task is $available$, if it is $available$ at some memory location.
+A task is $available$ at location $M$ if it has been inserted to $M$ and $success$ is returned by a process after calling \texttt{InsertTask(}$\ell$\texttt{)}, but is not done yet. A task is $available$, if it is $available$ at some memory location.
 
-The aim of operation $DoTask($ $)$ is to perform an available task on location $M$ by calling $TryTask(M)$. Every $DoTask($ $)$ may perform several $TryTask(M)$ operations. However, only one of them will succeed. Once one $TryTask(M)$ succeeds, there is no available task on $M$ and the task index $\ell$ will be returned by $DoTask($ $)$. Additionally, if there is no available task, then operation $DoTask($ $)$ returns $\perp$.
+The aim of operation \texttt{DoTask()} is to perform an available task on location $M$ by calling \texttt{TryTask(}$M$\texttt{)}. Every \texttt{DoTask()} may perform several \texttt{TryTask(}$M$\texttt{)} operations. However, only one of them will succeed. Once one \texttt{TryTask(}$M$\texttt{)} succeeds, there is no available task on $M$ and the task index $\ell$ will be returned by \texttt{DoTask()}. Additionally, if there is no available task, then operation \texttt{DoTask()} returns $\perp$.
 
-The goal of $InsertTask( \ell )$ operation is to find a free memory location $M$ and insert task $\ell$ by calling $PutTask(M, \ell)$. Because $PutTask(M,\ell)$ will fail if location $M$ has been associated with another task, each $InsertTask( \ell )$ operation may perform several $PutTask(M, \ell)$ operations. But only one of them will succeed. Once one $TryTask(M)$ succeeds, then task $\ell$ is available on location $M$ and $success$ notification is returned by $InsertTask( \ell )$ operation.
+The goal of \texttt{InsertTask(}$\ell$\texttt{)} operation is to find a free memory location $M$ and insert task $\ell$ by calling \texttt{PutTask(}$M,\ell$\texttt{)}. Because \texttt{PutTask(}$M,\ell$\texttt{)} will fail if location $M$ has been associated with another task, each \texttt{InsertTask(}$\ell$\texttt{)} operation may perform several \texttt{PutTask(}$M,\ell$\texttt{)} operations. But only one of them will succeed. Once one \texttt{TryTask(}$M$\texttt{)} succeeds, then task $\ell$ is available on location $M$ and $success$ notification is returned by \texttt{InsertTask(}$\ell$\texttt{)} operation.
 
-Type $DTA$ is required to satisfy: (\emph{Validity}) If a $DoTask($ $)$ operation returns $\ell$, then before that, an $InsertTask( \ell )$ was executed and returned $success$. (\emph{Uniqueness}) Each task is performed at most once, i.e, for each task $\ell$, at most one $DoTask($ $)$ operation returns $\ell$.
+Type $DTA$ is required to satisfy: (\emph{Validity}) If a \texttt{DoTask()} operation returns $\ell$, then before that, an \texttt{InsertTask(}$\ell$\texttt{)} was executed and returned $success$. (\emph{Uniqueness}) Each task is performed at most once, i.e, for each task $\ell$, at most one \texttt{DoTask()} operation returns $\ell$.
 
-In addition, the property that every inserted task is eventually done is also a desired progress property of the implementation of type $DTA$.
-
-
-\emph{Some description here.}
+In addition, the property that every inserted task is eventually done is also a desired progress property of the implementation of type DTA.
 
 \begin{algorithm}
-\caption{DoTask()}               %标题
-\label{alg1}                         %标记算法，方便在其它地方引用
-\begin{algorithmic}[1]
-\WHILE {(true)}
-   \STATE $v \leftarrow root$\\
-   \IF {($v.surplus() \leq 0$)}
-   \RETURN $\perp$
-   \ENDIF \\
-   \vspace{3mm}
-   /* Descent */
-   \WHILE {$v$ is not a leaf}
-       \STATE $(x_L, y_L) \leftarrow v.left.read()$\\
-       \STATE $(x_R, y_R) \leftarrow v.right.read()$\\
-       \STATE $s_L \leftarrow min(x_L-y_L, 2^{height(v)})$ \\
-       \STATE $s_R \leftarrow min(x_R-y_R, 2^{height(v)})$ \\
-       \STATE $r \leftarrow random(0,1)$
-       \IF {($(s_L+s_R)=0$)}
-           \STATE Mark-up($v$)
-       \ELSIF {($r<s_L/(s_L+s_R)$)}
-           \STATE $v \leftarrow v.left$
-       \ELSE
-           \STATE $v \leftarrow v.rght$
-       \ENDIF
-   \ENDWHILE
-   \vspace{3mm}\\
-   /* $v$ is a leaf */
-   \STATE $(x,y) \leftarrow v.read()$
-   \STATE $(flag, l)$ $\leftarrow$ $v$.TryTask(task$[y+1]$)
-   \STATE $v$.CAS$((x, y), (x, y+1))$    // Update Insertion Count
-   \STATE $v \leftarrow v.parent$
-   \STATE Mark-up($v$)
-   \IF {$flag$ = success}
-       \RETURN $\ell$
-   \ENDIF
-\ENDWHILE
-\end{algorithmic}
+\While {(true)}{
+   $v \leftarrow root$;\\
+   
+   If{($v.surplus() \leq 0$)}{
+   Return $\perp$;
+   }
+}
+%   \ENDIF \\
+%   \vspace{3mm}
+%   /* Descent */
+%   \WHILE {$v$ is not a leaf}
+%       \STATE $(x_L, y_L) \leftarrow v.left.read()$\\
+%       \STATE $(x_R, y_R) \leftarrow v.right.read()$\\
+%       \STATE $s_L \leftarrow min(x_L-y_L, 2^{height(v)})$ \\
+%       \STATE $s_R \leftarrow min(x_R-y_R, 2^{height(v)})$ \\
+%       \STATE $r \leftarrow random(0,1)$
+%       \IF {($(s_L+s_R)=0$)}
+%           \STATE Mark-up($v$)
+%       \ELSIF {($r<s_L/(s_L+s_R)$)}
+%           \STATE $v \leftarrow v.left$
+%       \ELSE
+%           \STATE $v \leftarrow v.rght$
+%       \ENDIF
+%   \ENDWHILE
+%   \vspace{3mm}\\
+%   /* $v$ is a leaf */
+%   \STATE $(x,y) \leftarrow v.read()$
+%   \STATE $(flag, l)$ $\leftarrow$ $v$.TryTask(task$[y+1]$)
+%   \STATE $v$.CAS$((x, y), (x, y+1))$    // Update Insertion Count
+%   \STATE $v \leftarrow v.parent$
+%   \STATE Mark-up($v$)
+%   \IF {$flag$ = success}
+%       \RETURN $\ell$
+%   \ENDIF
+%\ENDWHILE
 \end{algorithm}
 
-\begin{algorithm}
-\caption{Insert(task $\ell$)}               %标题
-\label{alg2}                         %标记算法，方便在其它地方引用
-\begin{algorithmic}[1]
-\WHILE {(true)}
-   \STATE $v \leftarrow root$\\
-   \vspace{3mm}
-   /* Descent */
-   \WHILE {($v$ is not a leaf)}
-       \STATE $(x_L, y_L) \leftarrow v.left.read()$\\
-       \STATE $(x_R, y_R) \leftarrow v.right.read()$\\
-       \STATE $s_L \leftarrow min(x_L-y_L, 2^{height(v)})$ \\
-       \STATE $s_R \leftarrow min(x_R-y_R, 2^{height(v)})$ \\
-       \STATE $r \leftarrow random(0,1)$
-       \IF {($(s_L+s_R) = 0$)}
-           \STATE Mark-up($v$)
-       \ELSIF {($r < s_L/(s_L + s_R)$)}
-           \STATE $v \leftarrow v.left$
-       \ELSE
-           \STATE $v \leftarrow v.rght$
-       \ENDIF
-   \ENDWHILE
-   \vspace{3mm}\\
-   /* $v$ is a leaf */
-   \STATE $(x,y) \leftarrow v.read()$
-   \STATE $flag$ $\leftarrow$ $v$.PutTask(task$[x+1]$, $\ell$)
-   \STATE $v$.CAS$((x,y), (x+1,y))$ // Update Insertion Count
-   \STATE $v \leftarrow v.parent$
-   \STATE Mark-up($v$)
-   \IF {($flag$ = success)}
-       \RETURN $success$
-   \ENDIF
-\ENDWHILE
-\end{algorithmic}
-\end{algorithm}
 
-\begin{algorithm}
-\caption{Mark-up($v$)}               %标题
-\label{alg3}                         %标记算法，方便在其它地方引用
-\begin{algorithmic}[1]
-\IF{($v$ is not Null)}
-    \FOR {($i=0; i<2; i++$)}
-    \STATE $(x, y) \leftarrow v.read()$
-    \STATE $(x_L, y_L) \leftarrow v.left.read()$
-    \STATE $(x_R, y_R) \leftarrow v.right.read()$
-    \STATE $v$.CAS$((x,y), (max(x, x_L + x_R), max(y, y_L + y_R))$\\
-    \ENDFOR
-\ENDIF
-\end{algorithmic}
-\end{algorithm}
+
+
+
+
+
+
+
+
+
+
+
+%\begin{algorithm}
+%\caption{DoTask()}               %标题
+%\label{alg1}                         %标记算法，方便在其它地方引用
+%\begin{algorithmic}[1]
+%\WHILE {(true)}
+%   \STATE $v \leftarrow root$\\
+%   \IF {($v.surplus() \leq 0$)}
+%   \RETURN $\perp$
+%   \ENDIF \\
+%   \vspace{3mm}
+%   /* Descent */
+%   \WHILE {$v$ is not a leaf}
+%       \STATE $(x_L, y_L) \leftarrow v.left.read()$\\
+%       \STATE $(x_R, y_R) \leftarrow v.right.read()$\\
+%       \STATE $s_L \leftarrow min(x_L-y_L, 2^{height(v)})$ \\
+%       \STATE $s_R \leftarrow min(x_R-y_R, 2^{height(v)})$ \\
+%       \STATE $r \leftarrow random(0,1)$
+%       \IF {($(s_L+s_R)=0$)}
+%           \STATE Mark-up($v$)
+%       \ELSIF {($r<s_L/(s_L+s_R)$)}
+%           \STATE $v \leftarrow v.left$
+%       \ELSE
+%           \STATE $v \leftarrow v.rght$
+%       \ENDIF
+%   \ENDWHILE
+%   \vspace{3mm}\\
+%   /* $v$ is a leaf */
+%   \STATE $(x,y) \leftarrow v.read()$
+%   \STATE $(flag, l)$ $\leftarrow$ $v$.TryTask(task$[y+1]$)
+%   \STATE $v$.CAS$((x, y), (x, y+1))$    // Update Insertion Count
+%   \STATE $v \leftarrow v.parent$
+%   \STATE Mark-up($v$)
+%   \IF {$flag$ = success}
+%       \RETURN $\ell$
+%   \ENDIF
+%\ENDWHILE
+%\end{algorithmic}
+%\end{algorithm}
+%
+%\begin{algorithm}
+%\caption{Insert(task $\ell$)}               %标题
+%\label{alg2}                         %标记算法，方便在其它地方引用
+%\begin{algorithmic}[1]
+%\WHILE {(true)}
+%   \STATE $v \leftarrow root$\\
+%   \vspace{3mm}
+%   /* Descent */
+%   \WHILE {($v$ is not a leaf)}
+%       \STATE $(x_L, y_L) \leftarrow v.left.read()$\\
+%       \STATE $(x_R, y_R) \leftarrow v.right.read()$\\
+%       \STATE $s_L \leftarrow min(x_L-y_L, 2^{height(v)})$ \\
+%       \STATE $s_R \leftarrow min(x_R-y_R, 2^{height(v)})$ \\
+%       \STATE $r \leftarrow random(0,1)$
+%       \IF {($(s_L+s_R) = 0$)}
+%           \STATE Mark-up($v$)
+%       \ELSIF {($r < s_L/(s_L + s_R)$)}
+%           \STATE $v \leftarrow v.left$
+%       \ELSE
+%           \STATE $v \leftarrow v.rght$
+%       \ENDIF
+%   \ENDWHILE
+%   \vspace{3mm}\\
+%   /* $v$ is a leaf */
+%   \STATE $(x,y) \leftarrow v.read()$
+%   \STATE $flag$ $\leftarrow$ $v$.PutTask(task$[x+1]$, $\ell$)
+%   \STATE $v$.CAS$((x,y), (x+1,y))$ // Update Insertion Count
+%   \STATE $v \leftarrow v.parent$
+%   \STATE Mark-up($v$)
+%   \IF {($flag$ = success)}
+%       \RETURN $success$
+%   \ENDIF
+%\ENDWHILE
+%\end{algorithmic}
+%\end{algorithm}
+%
+%\begin{algorithm}
+%\caption{Mark-up($v$)}               %标题
+%\label{alg3}                         %标记算法，方便在其它地方引用
+%\begin{algorithmic}[1]
+%\IF{($v$ is not Null)}
+%    \FOR {($i=0; i<2; i++$)}
+%    \STATE $(x, y) \leftarrow v.read()$
+%    \STATE $(x_L, y_L) \leftarrow v.left.read()$
+%    \STATE $(x_R, y_R) \leftarrow v.right.read()$
+%    \STATE $v$.CAS$((x,y), (max(x, x_L + x_R), max(y, y_L + y_R))$\\
+%    \ENDFOR
+%\ENDIF
+%\end{algorithmic}
+%\end{algorithm}
 
 \chapter{Correctness Proof}
 \section{Correctness}
