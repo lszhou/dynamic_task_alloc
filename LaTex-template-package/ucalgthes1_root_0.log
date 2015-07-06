@@ -1,21 +1,14 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=pdflatex 2015.6.28)  28 JUN 2015 21:42
+This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=latex 2015.6.28)  5 JUL 2015 21:29
 entering extended mode
 **ucalgthes1_root_0.tex
-
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1_root_0.tex
+(O:\dynamic_task_alloc\LaTex-template-package\ucalgthes1_root_0.tex
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman, ngerman, german-x-2009-06-19, ngerman-x-2009-06-19, french, loaded.
-
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1.cls
+(O:\dynamic_task_alloc\LaTex-template-package\ucalgthes1.cls
 Document Class: ucalgthes1 1998/03/01 v1.0 University of Calgary Thesis Class
-
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\doublespace.sty)
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\thes12.clo)
+(O:\dynamic_task_alloc\LaTex-template-package\doublespace.sty)
+(O:\dynamic_task_alloc\LaTex-template-package\thes12.clo)
 \descriptionmargin=\dimen102
 \signwidth=\skip41
 \c@part=\count79
@@ -28,8 +21,7 @@ Document Class: ucalgthes1 1998/03/01 v1.0 University of Calgary Thesis Class
 \c@figure=\count86
 \c@table=\count87
 
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\thesistitlepage.sty))
+(O:\dynamic_task_alloc\LaTex-template-package\thesistitlepage.sty))
 (C:\CTEX\MiKTeX\tex\latex\ams\classes\amsthm.sty
 Package: amsthm 2004/08/06 v2.20
 \thm@style=\toks14
@@ -108,7 +100,7 @@ Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
 )
 (C:\CTEX\MiKTeX\tex\generic\oberdiek\ifpdf.sty
 Package: ifpdf 2009/04/10 v2.0 Provides the ifpdf switch (HO)
-Package ifpdf Info: pdfTeX in pdf mode detected.
+Package ifpdf Info: pdfTeX in pdf mode not detected.
 )
 (C:\CTEX\MiKTeX\tex\generic\oberdiek\ifvtex.sty
 Package: ifvtex 2008/11/04 v1.4 Switches for detecting VTeX and its modes (HO)
@@ -201,11 +193,10 @@ Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 (C:\CTEX\MiKTeX\tex\latex\00miktex\graphics.cfg
 File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
 )
-Package graphics Info: Driver file: pdftex.def on input line 91.
+Package graphics Info: Driver file: dvips.def on input line 91.
 
-(C:\CTEX\MiKTeX\tex\latex\pdftex-def\pdftex.def
-File: pdftex.def 2009/08/25 v0.04m Graphics/color for pdfTeX
-\Gread@gobject=\count109
+(C:\CTEX\MiKTeX\tex\latex\graphics\dvips.def
+File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
 ))
 \Gin@req@height=\dimen122
 \Gin@req@width=\dimen123
@@ -255,8 +246,8 @@ Package: hycolor 2009/12/12 v1.6 Color options of hyperref/bookmark (HO)
 Package: xcolor-patch 2009/12/12 xcolor patch
 ))
 \@linkdim=\dimen124
-\Hy@linkcounter=\count110
-\Hy@pagecounter=\count111
+\Hy@linkcounter=\count109
+\Hy@pagecounter=\count110
 
 (C:\CTEX\MiKTeX\tex\latex\hyperref\pd1enc.def
 File: pd1enc.def 2010/01/16 v6.80c Hyperref: PDFDocEncoding definition (HO)
@@ -290,7 +281,7 @@ Package: bitset 2007/09/28 v1.0 Data type bit set (HO)
 (C:\CTEX\MiKTeX\tex\generic\oberdiek\bigintcalc.sty
 Package: bigintcalc 2007/11/11 v1.1 Expandable big integer calculations (HO)
 ))
-\Fld@menulength=\count112
+\Fld@menulength=\count111
 \Field@Width=\dimen125
 \Fld@charsize=\dimen126
 \Field@toks=\toks27
@@ -305,24 +296,30 @@ Package hyperref Info: PDF/A mode OFF on input line 4732.
 (C:\CTEX\MiKTeX\tex\generic\oberdiek\atbegshi.sty
 Package: atbegshi 2009/12/02 v1.10 At begin shipout hook (HO)
 )
-\Hy@abspage=\count113
-\c@Item=\count114
-\c@Hfootnote=\count115
+\Hy@abspage=\count112
+\c@Item=\count113
+\c@Hfootnote=\count114
 )
-*hyperref using default driver hpdftex*
-(C:\CTEX\MiKTeX\tex\latex\hyperref\hpdftex.def
-File: hpdftex.def 2010/01/16 v6.80c Hyperref driver for pdfTeX
+*hyperref using default driver hdvips*
+(C:\CTEX\MiKTeX\tex\latex\hyperref\hdvips.def
+File: hdvips.def 2010/01/16 v6.80c Hyperref driver for dvips
+
+(C:\CTEX\MiKTeX\tex\latex\hyperref\pdfmark.def
+File: pdfmark.def 2010/01/16 v6.80c Hyperref definitions for pdfmark specials
+\pdf@docset=\toks28
+\pdf@box=\box35
+\pdf@toks=\toks29
+\pdf@defaulttoks=\toks30
+\Fld@listcount=\count115
+\c@bookmark@seq@number=\count116
+
+(C:\CTEX\MiKTeX\tex\generic\oberdiek\rerunfilecheck.sty
+Package: rerunfilecheck 2009/12/18 v1.2 Rerun checks for auxiliary files (HO)
 
 (C:\CTEX\MiKTeX\tex\generic\oberdiek\atveryend.sty
 Package: atveryend 2009/12/11 v1.3 Hooks at very end of document (HO)
 Package atveryend Info: \enddocument detected (standard).
 )
-\Fld@listcount=\count116
-\c@bookmark@seq@number=\count117
-
-(C:\CTEX\MiKTeX\tex\generic\oberdiek\rerunfilecheck.sty
-Package: rerunfilecheck 2009/12/18 v1.2 Rerun checks for auxiliary files (HO)
-
 (C:\CTEX\MiKTeX\tex\generic\oberdiek\uniquecounter.sty
 Package: uniquecounter 2009/12/18 v1.1 Provides unlimited unique counter (HO)
 )
@@ -330,17 +327,12 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 3
 26.
 )
 \Hy@SectionHShift=\skip64
-)
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1_root_0.aux
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter1.aux)
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter2.aux)
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter3.aux)
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter4.aux)
+))
+(O:\dynamic_task_alloc\LaTex-template-package\ucalgthes1_root_0.aux
+(O:\dynamic_task_alloc\LaTex-template-package\chapter1.aux)
+(O:\dynamic_task_alloc\LaTex-template-package\chapter2.aux)
+(O:\dynamic_task_alloc\LaTex-template-package\chapter3.aux)
+(O:\dynamic_task_alloc\LaTex-template-package\chapter4.aux)
 
 Package natbib Warning: Citation `InProc-GHHW2007a' multiply defined.
 
@@ -365,7 +357,7 @@ LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 35.
 LaTeX Font Info:    ... okay on input line 35.
 
 *geometry auto-detecting driver*
-*geometry detected driver: pdftex*
+*geometry detected driver: dvips*
 -------------------- Geometry parameters
 paper: letterpaper
 landscape: --
@@ -383,7 +375,7 @@ truedimen: --
 includehead: --
 includefoot: --
 includemp: --
-driver: pdftex
+driver: dvips
 -------------------- Page layout dimensions and switches
 \paperwidth  614.295pt
 \paperheight 794.96999pt
@@ -405,21 +397,8 @@ driver: pdftex
 
 (1in=72.27pt, 1cm=28.45pt)
 -----------------------
-(C:\CTEX\MiKTeX\tex\context\base\supp-pdf.tex
-[Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count118
-\scratchdimen=\dimen127
-\scratchbox=\box35
-\nofMPsegments=\count119
-\nofMParguments=\count120
-\everyMPshowfont=\toks28
-\MPscratchCnt=\count121
-\MPscratchDim=\dimen128
-\MPnumerator=\count122
-\everyMPtoPDFconversion=\toks29
-)
 Package hyperref Info: Link coloring OFF on input line 35.
- (C:\CTEX\MiKTeX\tex\latex\hyperref\nameref.sty
+(C:\CTEX\MiKTeX\tex\latex\hyperref\nameref.sty
 Package: nameref 2009/12/18 v2.35 Cross-referencing by name of section
 
 (C:\CTEX\MiKTeX\tex\latex\oberdiek\refcount.sty
@@ -428,35 +407,28 @@ Package: refcount 2008/08/11 v3.1 Data extraction from references (HO)
 (C:\CTEX\MiKTeX\tex\generic\oberdiek\gettitlestring.sty
 Package: gettitlestring 2009/12/18 v1.3 Cleanup title references (HO)
 )
-\c@section@level=\count123
+\c@section@level=\count117
 )
 LaTeX Info: Redefining \ref on input line 35.
 LaTeX Info: Redefining \pageref on input line 35.
 
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1_root_0.out)
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1_root_0.out)
+(O:\dynamic_task_alloc\LaTex-template-package\ucalgthes1_root_0.out)
+(O:\dynamic_task_alloc\LaTex-template-package\ucalgthes1_root_0.out)
 \@outlinefile=\write3
 \AtBeginShipoutBox=\box36
 
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1_root_0.bbl) [1
+(O:\dynamic_task_alloc\LaTex-template-package\ucalgthes1_root_0.bbl) [1
 
 
-{C:/CTEX/UserData/pdftex/config/pdftex.map{Unicode.sfd}{UGBK.sfd}}]
+]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 38.
- (C:\CTEX\MiKTeX\tex\latex\base\omscmr.fd
+
+(C:\CTEX\MiKTeX\tex\latex\base\omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 38.
-pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
-been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.38 \makethesistitle
-                      [1]
+ [1]
 \bf {Abstract}
 [1
 
@@ -464,61 +436,46 @@ l.38 \makethesistitle
 \bf {Acknowledgements}
 [2
 
-]
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1_root_0.toc)
+] (O:\dynamic_task_alloc\LaTex-template-package\ucalgthes1_root_0.toc)
 \tf@toc=\write4
- [3
 
-]
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1_root_0.lot)
+[3
+
+] (O:\dynamic_task_alloc\LaTex-template-package\ucalgthes1_root_0.lot)
 \tf@lot=\write5
- [4
 
-]
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1_root_0.lof)
+[4
+
+] (O:\dynamic_task_alloc\LaTex-template-package\ucalgthes1_root_0.lof)
 \tf@lof=\write6
- [5
+
+[5
+
+] (O:\dynamic_task_alloc\LaTex-template-package\symbols.tex) [6
+
+
 
 ]
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\symbols.tex) [6
-
-
-
-]
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter1.tex
+(O:\dynamic_task_alloc\LaTex-template-package\chapter1.tex
 Chapter \bf {1}.
-)pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
- been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.76 \include{chapter1}
-                        [1
+) [1
 
 
 
 
-]
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter2.tex
+] (O:\dynamic_task_alloc\LaTex-template-package\chapter2.tex
 Chapter \bf {2}.
 [2
 
 
 
-] [3]) [4]
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter3.tex
+] [3]) [4] (O:\dynamic_task_alloc\LaTex-template-package\chapter3.tex
 Chapter \bf {3}.
 
 Overfull \hbox (20.66219pt too wide) in paragraph at lines 4--5
-\OT1/cmr/m/n/12 Our dy-namic task al-lo-ca-tion type (DTA) sup-ports two op-er-
-a-tions, \OT1/cmtt/m/n/12 DoTask() \OT1/cmr/m/n/12 and \OT1/cmtt/m/n/12 InsertT
-ask($\OML/cmm/m/it/12 `$\OT1/cmtt/m/n/12 )\OT1/cmr/m/n/12 ,
+[]\OT1/cmr/m/n/12 Our dy-namic task al-lo-ca-tion type (DTA) sup-ports two op-e
+r-a-tions, \OT1/cmtt/m/n/12 DoTask() \OT1/cmr/m/n/12 and \OT1/cmtt/m/n/12 Inser
+tTask($\OML/cmm/m/it/12 `$\OT1/cmtt/m/n/12 )\OT1/cmr/m/n/12 ,
  []
 
 [5
@@ -531,8 +488,8 @@ Chapter \bf {4}.
 
 ] [8] [9]
 Overfull \hbox (3.57555pt too wide) in paragraph at lines 219--220
-[]\OT1/cmtt/m/n/12 The uniqueness is obvious. When multiple processes are calli
-ng TryTask($\OML/cmm/m/it/12 `$\OT1/cmtt/m/n/12 )
+[][]\OT1/cmtt/m/n/12 The uniqueness is obvious. When multiple processes are cal
+ling TryTask($\OML/cmm/m/it/12 `$\OT1/cmtt/m/n/12 )
  []
 
 
@@ -559,26 +516,11 @@ Overfull \hbox (5.72021pt too wide) in paragraph at lines 219--220
  and turn 0 to
  []
 
-[10]) [11]
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter4.tex) [12
+[10]) [11] (O:\dynamic_task_alloc\LaTex-template-package\chapter4.tex) [12
 
 
 ]
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1_root_0.bblpdfTeX warning (ext4): destination
- with the same identifier (name{cite.InProc-GHHW2007a}) has been already used, 
-duplicate ignored
-<to be read again> 
-                   \relax 
-l.3 \bibitem{InProc-GHHW2007a}
-                              pdfTeX warning (ext4): destination with the same 
-identifier (name{cite.Herlihy:1990:LCC:78969.78972}) has been already used, dup
-licate ignored
-<to be read again> 
-                   \relax 
-l.10 \bibitem{Herlihy:1990:LCC:78969.78972}
-                                           )
+(O:\dynamic_task_alloc\LaTex-template-package\ucalgthes1_root_0.bbl)
 
 Package natbib Warning: There were multiply defined citations.
 
@@ -588,17 +530,11 @@ Package atveryend Info: Empty hook `BeforeClearDocument' on input line 86.
 
 ]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 86.
-
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1_root_0.aux
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter1.aux)
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter2.aux)
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter3.aux)
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter4.aux))
+ (O:\dynamic_task_alloc\LaTex-template-package\ucalgthes1_root_0.aux
+(O:\dynamic_task_alloc\LaTex-template-package\chapter1.aux)
+(O:\dynamic_task_alloc\LaTex-template-package\chapter2.aux)
+(O:\dynamic_task_alloc\LaTex-template-package\chapter3.aux)
+(O:\dynamic_task_alloc\LaTex-template-package\chapter4.aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 86.
 
 
@@ -611,24 +547,12 @@ Package rerunfilecheck Info: Checksums for `ucalgthes1_root_0.out':
 (rerunfilecheck)             After:  F65B81976ACCCFF701D81BDA5A0B80EF;1080.
  ) 
 Here is how much of TeX's memory you used:
- 7026 strings out of 495285
- 103353 string characters out of 3181587
- 199537 words of memory out of 3000000
- 10032 multiletter control sequences out of 15000+200000
+ 6661 strings out of 495286
+ 95582 string characters out of 3181610
+ 196857 words of memory out of 3000000
+ 9723 multiletter control sequences out of 15000+200000
  8777 words of font info for 32 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
- 31i,9n,32p,960b,375s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/CTEX/MiKTeX/fon
-ts/type1/public/amsfonts/cm/cmmi12.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfo
-nts/cm/cmmi8.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/C
-TEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/CTEX/MiKTeX/fonts/type1
-/public/amsfonts/cm/cmr8.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cms
-y10.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/CTEX/MiKTe
-X/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/CTEX/MiKTeX/fonts/type1/public/
-amsfonts/cm/cmtt12.pfb>
-Output written on ucalgthes1_root_0.pdf (21 pages, 175931 bytes).
-PDF statistics:
- 251 PDF objects out of 1000 (max. 8388607)
- 50 named destinations out of 1000 (max. 500000)
- 145 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 32i,9n,32p,960b,368s stack positions out of 5000i,500n,10000p,200000b,50000s
 
+Output written on ucalgthes1_root_0.dvi (21 pages, 65832 bytes).
