@@ -21,25 +21,25 @@ In addition, the property that every inserted task is eventually done is also a 
 
 \begin{algorithm}
 \caption{\texttt{DoTask()}}
-\While {(true)}{
+\While {$true$}{
    $v \leftarrow root$;\\
 
-   \If{($v.surplus() \leq 0$)}{
+   \If{$v.surplus() \leq 0$}{
    \Return $\perp$;\
    }
    \BlankLine
    /* Descent */\;
-    \While{($v$ is not a leaf)}{
+    \While{$v$ is not a leaf}{
         $(x_L, y_L) \leftarrow v.left.read()$\;
         $(x_R, y_R) \leftarrow v.right.read()$\;
         $s_L \leftarrow min(x_L-y_L, 2^{height(v)})$\;
         $s_R \leftarrow min(x_R-y_R, 2^{height(v)})$\;
         $r \leftarrow random(0,1)$\;
 
-        \uIf{($(s_L+s_R)=0$)}{
+        \uIf{$(s_L+s_R)=0$}{
             Mark-up($v$)\;
         }
-        \uElseIf{($r<s_L/(s_L+s_R)$)}{
+        \uElseIf{$r<s_L/(s_L+s_R)$}{
             $v \leftarrow v.left$\;
         }
         \Else{
@@ -51,10 +51,13 @@ In addition, the property that every inserted task is eventually done is also a 
     /* $v$ is a leaf */\;
     $(x,y) \leftarrow v.read()$\;
     $(flag, l)$ $\leftarrow$ $v$.\texttt{TryTask}(task$[y+1]$)\;
-    $v$.CAS$((x, y), (x, y+1))$; // Update Insertion Count\;
+
+    \BlankLine
+    /* Update Insertion Count */\;
+    $v$.CAS$((x, y), (x, y+1))$\; 
     $v \leftarrow v.parent$\;
     Mark-up($v$)\;
-    \If{($flag$ = success)}{
+    \If{$flag$ = $success$}{
         \Return $\ell$
     }
 }
@@ -103,21 +106,21 @@ In addition, the property that every inserted task is eventually done is also a 
 
 \begin{algorithm}
 \caption{\texttt{InsertTask(}$\ell$\texttt{)}}
-\While{(true)}{
+\While{$true$}{
     $v \leftarrow root$\;
     \BlankLine
     /* Descent */\;
-    \While{($v$ is not a leaf)}{
+    \While{$v$ is not a leaf}{
         $(x_L, y_L) \leftarrow v.left.read()$\;
         $(x_R, y_R) \leftarrow v.right.read()$\;
-        $s_L \leftarrow min(x_L-y_L, 2^{height(v)})$\;
-        $s_R \leftarrow min(x_R-y_R, 2^{height(v)})$\;
+        $s_L \leftarrow 2^{height(v)} - min(x_L-y_L, 2^{height(v)})$\;
+        $s_R \leftarrow 2^{height(v)} - min(x_R-y_R, 2^{height(v)})$\;
         $r \leftarrow random(0,1)$\;
 
-        \uIf{($(s_L+s_R)=0$)}{
+        \uIf{$(s_L+s_R)=0$}{
             Mark-up($v$)\;
         }
-        \uElseIf{($r<s_L/(s_L+s_R)$)}{
+        \uElseIf{$r<s_L/(s_L+s_R)$}{
             $v \leftarrow v.left$\;
         }
         \Else{
@@ -128,12 +131,15 @@ In addition, the property that every inserted task is eventually done is also a 
     \BlankLine
     /* $v$ is a leaf */\;
     $(x,y) \leftarrow v.read()$\;
-    $(flag, l)$ $\leftarrow$ $v$.\texttt{TryTask}(task$[y+1]$)\;
-    $v$.CAS$((x, y), (x, y+1))$; // Update Insertion Count\;
+    $flag$ $\leftarrow$ $v$.\texttt{PutTask}(task$[x+1]$)\;
+    
+    \BlankLine
+    /* Update Insertion Count */\;
+    $v$.CAS$((x, y), (x+1, y))$; 
     $v \leftarrow v.parent$\;
     Mark-up($v$)\;
-    \If{($flag$ = success)}{
-        \Return $\ell$
+    \If{$flag$ = $success$}{
+        \Return $success$
     }
 }
 \end{algorithm}
@@ -180,7 +186,7 @@ In addition, the property that every inserted task is eventually done is also a 
 
 \begin{algorithm}
 \caption{\texttt{Mark-up}($v$)}
-\If{($v$ is not Null)}{
+\If{$v$ is not $null$}{
     \For {($i=0; i<2; i++$)}{
         $(x, y) \leftarrow v.read()$\;
         $(x_L, y_L) \leftarrow v.left.read()$\;
