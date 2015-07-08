@@ -1,0 +1,47 @@
+\def\CTeXPreproc{Created by ctex v0.2.14, don't edit!}
+%--------------------CHAPTER 2-----------------------------
+\chapter{Model of Computation and Definitions}
+In this chapter, we will formally describe the computational model and give the definitions, which are based on Herlihy and Wing's \cite{Herlihy:1990:LCC:78969.78972} and Golab, Hadzilacos and Woelfel's \cite{InProc-GHHW2007a}.
+
+\section{Computational Model}
+The computational model we consider is the standard asynchronous shared memory model with $n$ processes, each process has a unique identifier $i \in {1,...,n}$. The set of processes is denoted $\{p_1, p_2,...,p_n\}$ and up to $n-1$ processes may fail by crashing.
+
+A \emph{shared object} is defined as a data structure with a well-defined set of states and a set of \emph{operation types} \cite{InProc-GHHW2007a}. The state transition happens when an operation of an operation type is applied to shared object in a given state. Process interact with shared objects by applying operations on the objects. We consider two types of operations: atomic and non-atomic. Atomic operations occur instantaneously and are represented as \emph{atomic steps}. Non-atomic operations are represented using separate \emph{invocation} and \emph{response steps}. A response step matches an invocation step if the two steps are applied by the same process to the same shared
+object.
+
+Each process executes its program by taking \emph{steps} until it \emph{terminates} which means a special state is reached and the process takes no further action. 
+
+Each shared object has a $type$ $\tau$ which can be defined as follows \cite{InProc-GHHW2007a},
+$$\tau = (\mathcal{S}, s_{init},\mathcal{O},\mathcal{R} ,\delta )$$
+
+where $\mathcal{S}$ is a set of states, $s_{init} \in \mathcal{S}$ is the initial state, $\mathcal{O}$ is a set of operation types, $\mathcal{R}$ is the set of responses, and $\delta :\mathcal{S} \times \mathcal{O} \to \mathcal{S} \times \mathcal{R}$ is a state transition mapping.
+
+In this thesis, we consider the system that supports atomic compare-and-swap (CAS) object. A CAS object $v$ is a shared memory object stores a value from some set and supports two atomic synchronization operations $v.$\texttt{read()} and $v.$\texttt{CAS(x,y)}. Operation $v.$\texttt{read()} returns the current value of $v$ and leaves the value unchanged. Operation $v.$\texttt{CAS(x,y)} writes new value into it only if it matches the given value $x$, i.e, if current value of $v$ equals $x$, then operation $v.$\texttt{CAS(x,y)} succeeds, and the value of $v$ is changed to be $y$ and $true$ is returned. Otherwise, the operation fails, and the current value of $v$ remains unchanged and $false$ is returned.
+
+A process can execute local coin flip operation that returns an integer value distributed uniformly at random from an arbitrary finite set of integers. In the following discussion, we use \texttt{random(s)} to return a value which is distributed uniformly at random from set $\{0, 1, 2,..., s-1\}$. We analyze our algorithm under the assumption of a strong adaptive adversary. At any point of time, it can see the entire past history and know the states of all processes. Based on this information, it decides which process takes the next step.
+
+Here are more definitions and terminologies we need in our following discussions,
+
+
+\noindent \textbf{History}. A \emph{history} (or execution) $H$, obtained by processes executing operations on shared objects, is a sequence of steps which are defined as above. $H|obj$ of history $H$ is the subsequence of all invocation and response steps in $H$ whose object names are $obj$. If all invocation and response steps in a history $H$ have the same object name $obj$, then the $H|obj = H$. Thus, in the following discussion, when we discuss the concurrency behavior of a specific objet $obj$, the history $H$ and $H|obj$ are the same.
+
+We use $inv_H(op)$ to denote the position of the invocation of operation $op$ in history $H$ and use $rep_H(op)$ to denote the position of the corresponding response of $op$ in $H$. Actually, for each operation $op$, it is not necessary to have a matching response. In this case, we call the operation $op$ is \emph{pending} and denote it as $rsp_H(op) = \infty$. Otherwise, we call the operation is \emph{complete} in $H$. Obviously, all atomic operations are complete.
+
+A history is \emph{complete} if all its operations are complete. A completion of an incomplete history $H$ is an extension $H'$ of $H$, such that $H'$ contains exactly the same operations as $H$ but the responses are added for the pending operations in $H$.
+
+Let $H$ be a complete history. With each non-atomic operation $op$ in $H$ we could associate a time interval $I_H(op) = [inv(op), rsp(op)]$. Similarly, for an uncomplete history, we denote the interval with respect to the pending operation $op$ by $I_H(op) = [inv(op), \infty]$.
+
+A history is \emph{sequential} if the first step in the history is an invocation (or an atomic step), and each invocation, except possibly the last one, is immediately followed by a corresponding response. It is obvious that a sequential history defines a total order over all operations.
+
+\noindent \textbf{Sequential Specification.} The sequential specification $S_{obj}$ for a shared object $obj$ is a set of sequential histories on $obj$. We say a sequential history $S$ satisfies the sequential specification $S_{obj}$ of object $obj$, it means $S \in S_{obj}$. A sequential history $S$ of object $obj$ is valid (sometimes also called legal) if it satisfies the sequential specification of $obj$.
+
+\noindent \textbf{Linearization.} A history $H$ linearizes to a sequential history $S$, if and only if $S$ satisfies the following conditions: (1) $S$ and the completion of $H$ have the same operations, (2) sequential history $S$ is valid, and (3) there is a mapping from each time interval $I_H(op)$ to a time point $t_H(op) \in I_H(op)$, such that the sequential history $S$ could be obtained by sorting the operations in $H$ by their $t_H(op)$ values.
+
+A history is linearizable if and only if there exists a sequential history $S$ that linearizes $H$. In this case, $S$ is called linearization of $H$.
+
+We choose one linearization of $H$ and this linearization defines $t_H(op)$. For each operation $op$ in history $H$, we call the point $t_H(op)$ linearization point of $op$.
+
+A shared object is linearizable if every history $H$ of that object is linearizable.
+
+
+

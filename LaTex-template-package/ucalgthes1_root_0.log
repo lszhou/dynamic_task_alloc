@@ -1,21 +1,21 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=pdflatex 2015.6.28)  28 JUN 2015 21:42
+This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=pdflatex 2015.6.28)  7 JUL 2015 22:56
 entering extended mode
 **ucalgthes1_root_0.tex
 
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1_root_0.tex
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\ucalgthes
+1_root_0.tex
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, ge
 rman, ngerman, german-x-2009-06-19, ngerman-x-2009-06-19, french, loaded.
 
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1.cls
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\ucalgthes
+1.cls
 Document Class: ucalgthes1 1998/03/01 v1.0 University of Calgary Thesis Class
 
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\doublespace.sty)
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\thes12.clo)
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\doublespa
+ce.sty)
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\thes12.cl
+o)
 \descriptionmargin=\dimen102
 \signwidth=\skip41
 \c@part=\count79
@@ -28,9 +28,8 @@ Document Class: ucalgthes1 1998/03/01 v1.0 University of Calgary Thesis Class
 \c@figure=\count86
 \c@table=\count87
 
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\thesistitlepage.sty))
-(C:\CTEX\MiKTeX\tex\latex\ams\classes\amsthm.sty
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\thesistit
+lepage.sty)) (C:\CTEX\MiKTeX\tex\latex\ams\classes\amsthm.sty
 Package: amsthm 2004/08/06 v2.20
 \thm@style=\toks14
 \thm@bodyfont=\toks15
@@ -331,16 +330,16 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 3
 )
 \Hy@SectionHShift=\skip64
 )
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1_root_0.aux
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter1.aux)
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter2.aux)
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter3.aux)
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter4.aux)
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\ucalgthes
+1_root_0.aux
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\chapter1.
+aux)
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\chapter2.
+aux)
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\chapter3.
+aux)
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\chapter4.
+aux)
 
 Package natbib Warning: Citation `InProc-GHHW2007a' multiply defined.
 
@@ -433,15 +432,15 @@ Package: gettitlestring 2009/12/18 v1.3 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 35.
 LaTeX Info: Redefining \pageref on input line 35.
 
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1_root_0.out)
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1_root_0.out)
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\ucalgthes
+1_root_0.out)
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\ucalgthes
+1_root_0.out)
 \@outlinefile=\write3
 \AtBeginShipoutBox=\box36
 
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1_root_0.bbl) [1
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\ucalgthes
+1_root_0.bbl) [1
 
 
 {C:/CTEX/UserData/pdftex/config/pdftex.map{Unicode.sfd}{UGBK.sfd}}]
@@ -465,32 +464,32 @@ l.38 \makethesistitle
 [2
 
 ]
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1_root_0.toc)
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\ucalgthes
+1_root_0.toc)
 \tf@toc=\write4
  [3
 
 ]
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1_root_0.lot)
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\ucalgthes
+1_root_0.lot)
 \tf@lot=\write5
  [4
 
 ]
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1_root_0.lof)
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\ucalgthes
+1_root_0.lof)
 \tf@lof=\write6
  [5
 
 ]
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\symbols.tex) [6
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\symbols.t
+ex) [6
 
 
 
 ]
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter1.tex
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\chapter1.
+tex
 Chapter \bf {1}.
 )pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has
  been already used, duplicate ignored
@@ -503,16 +502,16 @@ l.76 \include{chapter1}
 
 
 ]
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter2.tex
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\chapter2.
+tex
 Chapter \bf {2}.
 [2
 
 
 
 ] [3]) [4]
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter3.tex
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\chapter3.
+tex
 Chapter \bf {3}.
 
 Overfull \hbox (20.66219pt too wide) in paragraph at lines 4--5
@@ -525,50 +524,310 @@ ask($\OML/cmm/m/it/12 `$\OT1/cmtt/m/n/12 )\OT1/cmr/m/n/12 ,
 
 
 
-] [6]
-Chapter \bf {4}.
-[7
+]
 
-] [8] [9]
-Overfull \hbox (3.57555pt too wide) in paragraph at lines 219--220
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 60.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 138.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 190.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 190.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 190.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 190.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 190.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 190.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 190.
+
+
+Package relsize Warning: Current font size is unknown! (Why?!?)
+(relsize)                Assuming \normalsize on input line 190.
+
+[6] [7] [8]
+Chapter \bf {4}.
+[9
+
+] [10] [11]
+Overfull \hbox (3.57555pt too wide) in paragraph at lines 268--269
 []\OT1/cmtt/m/n/12 The uniqueness is obvious. When multiple processes are calli
 ng TryTask($\OML/cmm/m/it/12 `$\OT1/cmtt/m/n/12 )
  []
 
 
-Overfull \hbox (4.47574pt too wide) in paragraph at lines 219--220
+Overfull \hbox (4.47574pt too wide) in paragraph at lines 268--269
 \OT1/cmtt/m/n/12 at the memory location, only one of them will receive success 
 and the index $\OML/cmm/m/it/12 `$
  []
 
 
-Overfull \hbox (60.05077pt too wide) in paragraph at lines 219--220
+Overfull \hbox (60.05077pt too wide) in paragraph at lines 268--269
 \OT1/cmtt/m/n/12 of the task, all the other competitor processes will get failu
 re. Task $\OML/cmm/m/it/12 `$ \OT1/cmtt/m/n/12 is performed
  []
 
 
-Overfull \hbox (18.07022pt too wide) in paragraph at lines 219--220
+Overfull \hbox (18.07022pt too wide) in paragraph at lines 268--269
 \OT1/cmtt/m/n/12 successfully as long as the value of corresponding memory loca
 tion is turned to
  []
 
 
-Overfull \hbox (5.72021pt too wide) in paragraph at lines 219--220
+Overfull \hbox (5.72021pt too wide) in paragraph at lines 268--269
 \OT1/cmtt/m/n/12 1. The following process will never repeatedly turn it be to 0
  and turn 0 to
  []
 
-[10]) [11]
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter4.tex) [12
+[12]) [13]
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\chapter4.
+tex) [14
 
 
 ]
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1_root_0.bblpdfTeX warning (ext4): destination
- with the same identifier (name{cite.InProc-GHHW2007a}) has been already used, 
-duplicate ignored
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\ucalgthes
+1_root_0.bblpdfTeX warning (ext4): destination with the same identifier (name{c
+ite.InProc-GHHW2007a}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
 l.3 \bibitem{InProc-GHHW2007a}
@@ -583,22 +842,22 @@ l.10 \bibitem{Herlihy:1990:LCC:78969.78972}
 Package natbib Warning: There were multiply defined citations.
 
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 86.
-[13
+[15
 
 
 ]
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 86.
 
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\ucalgthes1_root_0.aux
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter1.aux)
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter2.aux)
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter3.aux)
-(D:\Users\longsheng\Desktop\dynamic_task_alloc-master\dynamic_task_alloc-master
-\LaTex-template-package\chapter4.aux))
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\ucalgthes
+1_root_0.aux
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\chapter1.
+aux)
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\chapter2.
+aux)
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\chapter3.
+aux)
+(D:\Users\longsheng\Desktop\dynamic_task_alloc\LaTex-template-package\chapter4.
+aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 86.
 
 
@@ -611,24 +870,25 @@ Package rerunfilecheck Info: Checksums for `ucalgthes1_root_0.out':
 (rerunfilecheck)             After:  F65B81976ACCCFF701D81BDA5A0B80EF;1080.
  ) 
 Here is how much of TeX's memory you used:
- 7026 strings out of 495285
- 103353 string characters out of 3181587
- 199537 words of memory out of 3000000
- 10032 multiletter control sequences out of 15000+200000
- 8777 words of font info for 32 fonts, out of 3000000 for 9000
+ 7102 strings out of 495285
+ 102480 string characters out of 3181587
+ 211547 words of memory out of 3000000
+ 10034 multiletter control sequences out of 15000+200000
+ 9253 words of font info for 34 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
- 31i,9n,32p,960b,375s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/CTEX/MiKTeX/fon
-ts/type1/public/amsfonts/cm/cmmi12.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfo
-nts/cm/cmmi8.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/C
-TEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/CTEX/MiKTeX/fonts/type1
-/public/amsfonts/cm/cmr8.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cms
-y10.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/CTEX/MiKTe
-X/fonts/type1/public/amsfonts/cm/cmti12.pfb><C:/CTEX/MiKTeX/fonts/type1/public/
-amsfonts/cm/cmtt12.pfb>
-Output written on ucalgthes1_root_0.pdf (21 pages, 175931 bytes).
+ 35i,17n,32p,960b,527s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/CTEX/MiKTeX/fon
+ts/type1/public/amsfonts/cm/cmbx12.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfo
+nts/cm/cmitt10.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C
+:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/CTEX/MiKTeX/fonts/ty
+pe1/public/amsfonts/cm/cmr12.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm
+/cmr17.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/CTEX/MiK
+TeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/CTEX/MiKTeX/fonts/type1/publi
+c/amsfonts/cm/cmsy8.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmti12.p
+fb><C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on ucalgthes1_root_0.pdf (23 pages, 207267 bytes).
 PDF statistics:
- 251 PDF objects out of 1000 (max. 8388607)
- 50 named destinations out of 1000 (max. 500000)
+ 352 PDF objects out of 1000 (max. 8388607)
+ 122 named destinations out of 1000 (max. 500000)
  145 words of extra memory for PDF output out of 10000 (max. 10000000)
 
