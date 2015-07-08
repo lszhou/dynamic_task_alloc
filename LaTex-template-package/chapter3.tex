@@ -21,11 +21,11 @@ In addition, the property that every inserted task is eventually done is also a 
 
 \begin{algorithm}
 \caption{\texttt{DoTask()}}
-\While{(true)}
-{
-   $v \leftarrow root$\;
+\While {(true)}{
+   $v \leftarrow root$;\\
+
    \If{($v.surplus() \leq 0$)}{
-    \Return $\perp$
+   \Return $\perp$;\
    }
    \BlankLine
    /* Descent */\;
