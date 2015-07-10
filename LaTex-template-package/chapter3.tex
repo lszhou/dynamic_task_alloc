@@ -1,15 +1,13 @@
 %--------------------CHAPTER 3-----------------------------
 \chapter{Dynamic Task Allocation Objects}
 
-Our dynamic task allocation type (DTA) supports two operations, \texttt{DoTask()} and \texttt{InsertTask(}$\ell$\texttt{)}, where $\ell$ is the task identifier that is unique for each task.
+Our dynamic task allocation (DTA) type supports two operations, \texttt{DoTask()} and \texttt{InsertTask(}$\ell$\texttt{)}, where $\ell$ is the task identifier that is unique for each task.
 
-Now we formalize the notion of type DTA by specifying the above two operations. We assume that there exists an atomic operation \texttt{PutTask(}$M,\ell$\texttt{)}, and a process associates task $\ell$ with memory location $M$ by calling \texttt{PutTask(}$M,\ell$\texttt{)}. It returns $success$ if task $l$ is associated with location $M$, and returns $failure$ if location $M$ was already associated with another task. We say a task $\ell$ is inserted if it is associated to a shared memory location $M$.
+Now we formalize the notion of type DTA by specifying the above two operations. We assume that there exists an atomic operation \texttt{PutTask(}$M,\ell$\texttt{)}, and a process associates task $\ell$ with memory location $M$ by calling \texttt{PutTask(}$M,\ell$\texttt{)}. It returns $success$ if task $l$ is associated with location $M$, and returns $failure$ if location $M$ was already associated with another task. We say task $\ell$ is inserted if it is associated with a memory location $M$.
 
-Similarly, we assume there exists an atomic operation \texttt{TryTask(}$M$\texttt{)}, and the task $\ell$ associated with memory location $M$ could be performed atomically by a process by calling \texttt{TryTask(}$M$\texttt{)}. Out of several processes calling \texttt{TryTask(}$M$\texttt{)}, only one receives $success$ and the index $\ell$ of that task, while all the others receive $failure$. This assumption guarantees that only one process will actually perform task $\ell$, i.e, each task $\ell$ can be performed at most once during the executing.
+Similarly, we assume there exists an atomic operation \texttt{TryTask(}$M$\texttt{)}, and task $\ell$ associated with memory location $M$ could be performed atomically by calling \texttt{TryTask(}$M$\texttt{)}. Out of several processes calling \texttt{TryTask(}$M$\texttt{)}, only one receives $success$ and the index $\ell$ of that task, while all the others receive $failure$.
 
-A task is $done$ if its index has been returned by a process after calling \texttt{DoTask()}.
-
-A task is $available$ at location $M$ if it has been inserted to $M$ and $success$ is returned by a process after calling \texttt{InsertTask(}$\ell$\texttt{)}, but is not done yet. A task is $available$, if it is $available$ at some memory location.
+A task is $done$ if its index has been returned by a process after calling \texttt{DoTask()}. A task is $available$ at location $M$ if it has been inserted to $M$ and $success$ is returned by a process after calling \texttt{InsertTask(}$\ell$\texttt{)}, but is not done yet. A task is $available$, if it is $available$ at some memory location.
 
 The aim of operation \texttt{DoTask()} is to perform an available task on location $M$ by calling \texttt{TryTask(}$M$\texttt{)}. Every \texttt{DoTask()} may perform several \texttt{TryTask(}$M$\texttt{)} operations. However, only one of them will succeed. Once one \texttt{TryTask(}$M$\texttt{)} succeeds, there is no available task on $M$ and the task index $\ell$ will be returned by \texttt{DoTask()}. Additionally, if there is no available task, then operation \texttt{DoTask()} returns $\perp$.
 
@@ -54,7 +52,7 @@ In addition, the property that every inserted task is eventually done is also a 
 
     \BlankLine
     /* Update Insertion Count */\;
-    $v$.CAS$((x, y), (x, y+1))$\; 
+    $v$.CAS$((x, y), (x, y+1))$\;
     $v \leftarrow v.parent$\;
     Mark-up($v$)\;
     \If{$flag$ = $success$}{
@@ -132,10 +130,10 @@ In addition, the property that every inserted task is eventually done is also a 
     /* $v$ is a leaf */\;
     $(x,y) \leftarrow v.read()$\;
     $flag$ $\leftarrow$ $v$.\texttt{PutTask}(task$[x+1]$)\;
-    
+
     \BlankLine
     /* Update Insertion Count */\;
-    $v$.CAS$((x, y), (x+1, y))$; 
+    $v$.CAS$((x, y), (x+1, y))$;
     $v \leftarrow v.parent$\;
     Mark-up($v$)\;
     \If{$flag$ = $success$}{
