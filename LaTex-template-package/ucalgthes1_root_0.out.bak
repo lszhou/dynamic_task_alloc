@@ -1,18 +1,14 @@
-\BOOKMARK [0][-]{section*.2}{Abstract}{}% 1
-\BOOKMARK [0][-]{section*.3}{Acknowledgements}{}% 2
-\BOOKMARK [0][-]{chapter*.5}{Table of Contents}{}% 3
-\BOOKMARK [0][-]{chapter*.7}{List of Tables}{}% 4
-\BOOKMARK [0][-]{chapter*.9}{List of Figures}{}% 5
-\BOOKMARK [0][-]{chapter*.11}{List of Symbols}{}% 6
-\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 7
-\BOOKMARK [1][-]{section.1.1}{Related Work}{chapter.1}% 8
-\BOOKMARK [1][-]{section.1.2}{Statement of Results}{chapter.1}% 9
-\BOOKMARK [0][-]{chapter.2}{Model of Computation and Definitions}{}% 10
-\BOOKMARK [1][-]{section.2.1}{Computational Model}{chapter.2}% 11
-\BOOKMARK [0][-]{chapter.3}{Dynamic Task Allocation Objects}{}% 12
-\BOOKMARK [0][-]{chapter.4}{Correctness Proof}{}% 13
-\BOOKMARK [1][-]{section.4.1}{Correctness}{chapter.4}% 14
-\BOOKMARK [2][-]{subsection.4.1.1}{Analysis and Proofs}{section.4.1}% 15
-\BOOKMARK [1][-]{section.4.2}{Performance}{chapter.4}% 16
-\BOOKMARK [2][-]{subsection.4.2.1}{DoTask Analysis}{section.4.2}% 17
-\BOOKMARK [2][-]{subsection.4.2.2}{InsertTask Analysis}{section.4.2}% 18
+\BOOKMARK [0][-]{section*.1}{Abstract}{}% 1
+\BOOKMARK [0][-]{chapter*.4}{Table of Contents}{}% 2
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 3
+\BOOKMARK [1][-]{section.1.1}{Related Work}{chapter.1}% 4
+\BOOKMARK [1][-]{section.1.2}{Statement of Results}{chapter.1}% 5
+\BOOKMARK [0][-]{chapter.2}{Model of Computation and Definitions}{}% 6
+\BOOKMARK [1][-]{section.2.1}{Computational Model}{chapter.2}% 7
+\BOOKMARK [0][-]{chapter.3}{Dynamic Task Allocation Object}{}% 8
+\BOOKMARK [0][-]{chapter.4}{Correctness Proof}{}% 9
+\BOOKMARK [1][-]{section.4.1}{Correctness}{chapter.4}% 10
+\BOOKMARK [2][-]{subsection.4.1.1}{Analysis and Proofs}{section.4.1}% 11
+\BOOKMARK [1][-]{section.4.2}{Performance}{chapter.4}% 12
+\BOOKMARK [2][-]{subsection.4.2.1}{DoTask Analysis}{section.4.2}% 13
+\BOOKMARK [2][-]{subsection.4.2.2}{InsertTask Analysis}{section.4.2}% 14

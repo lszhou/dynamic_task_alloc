@@ -1,5 +1,5 @@
 %--------------------CHAPTER 3-----------------------------
-\chapter{Dynamic Task Allocation Objects}
+\chapter{Dynamic Task Allocation Object}
 
 Our dynamic task allocation (DTA) type supports two operations, \texttt{DoTask()} and \texttt{InsertTask(}$\ell$\texttt{)}, where $\ell$ is the task identifier that is unique for each task.
 
@@ -13,9 +13,12 @@ The aim of operation \texttt{DoTask()} is to perform an available task on locati
 
 The goal of \texttt{InsertTask(}$\ell$\texttt{)} operation is to find a free memory location $M$ and insert task $\ell$ atomically by calling \texttt{PutTask(}$M,\ell$\texttt{)}. \texttt{PutTask(}$M,\ell$\texttt{)} fails if location $M$ has been associated with another task, so each \texttt{InsertTask(}$\ell$\texttt{)} operation may perform several \texttt{PutTask(}$M,\ell$\texttt{)} operations, but only one of them will succeed. Once one \texttt{TryTask(}$M$\texttt{)} succeeds, then task $\ell$ is available on location $M$ and $success$ notification is returned by \texttt{InsertTask(}$\ell$\texttt{)} operation.
 
-Type DTA is required to satisfy: (Validity) If a \texttt{DoTask()} operation returns $\ell$, then before that, an \texttt{InsertTask(}$\ell$\texttt{)} was executed and returned $success$. (Uniqueness) Each task is performed at most once, i.e, for each task $\ell$, at most one \texttt{DoTask()} operation returns $\ell$.
+Type DTA is required to satisfy: (Validity) If a \texttt{DoTask()} operation returns $\ell$, then before the \texttt{DoTask()} operation, an \texttt{InsertTask(}$\ell$\texttt{)} was executed and returned $success$. (Uniqueness) Each task is performed at most once, i.e, for each task $\ell$, at most one \texttt{DoTask()} operation returns $\ell$.
 
 In addition, the property that every inserted task is eventually done is also a desired progress property of the implementation of type DTA.
+
+\section*{Implementation of DTA}
+The main data structure we applied for the implementation of DTA is a binary tree.
 
 \begin{algorithm}
 \caption{\texttt{DoTask()}}
@@ -133,7 +136,7 @@ In addition, the property that every inserted task is eventually done is also a 
 
     \BlankLine
     /* Update Insertion Count */\;
-    $v$.CAS$((x, y), (x+1, y))$;
+    $v$.CAS$((x, y), (x+1, y))$\;
     $v \leftarrow v.parent$\;
     Mark-up($v$)\;
     \If{$flag$ = $success$}{
