@@ -9,6 +9,6 @@
 \contentsline {chapter}{\numberline {4}Correctness Proof}{9}{chapter.4}
 \contentsline {section}{\numberline {4.1}Correctness}{9}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Analysis and Proofs}{9}{subsection.4.1.1}
-\contentsline {section}{\numberline {4.2}Performance}{14}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}DoTask Analysis}{14}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}InsertTask Analysis}{14}{subsection.4.2.2}
+\contentsline {section}{\numberline {4.2}Performance}{11}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}DoTask Analysis}{11}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}InsertTask Analysis}{11}{subsection.4.2.2}
