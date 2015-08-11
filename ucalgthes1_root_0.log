@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=pdflatex 2015.7.8)  13 JUL 2015 12:22
+This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=pdflatex 2015.7.8)  11 AUG 2015 10:20
 entering extended mode
 **ucalgthes1_root_0.tex
 (C:\myDocument\dynamic_task_alloc\ucalgthes1_root_0.tex
@@ -453,20 +453,20 @@ File: p2e-pdftex.def 2009/08/05 v0.1s Driver-dependant file (RN,HjG,JT)
 (C:\myDocument\dynamic_task_alloc\chapter2.aux)
 (C:\myDocument\dynamic_task_alloc\chapter3.aux)
 (C:\myDocument\dynamic_task_alloc\chapter4.aux))
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 36.
+LaTeX Font Info:    ... okay on input line 36.
 
 *geometry auto-detecting driver*
 *geometry detected driver: pdftex*
@@ -522,7 +522,7 @@ driver: pdftex
 \MPnumerator=\count127
 \everyMPtoPDFconversion=\toks32
 )
-Package hyperref Info: Link coloring OFF on input line 37.
+Package hyperref Info: Link coloring OFF on input line 36.
  (C:\CTEX\MiKTeX\tex\latex\hyperref\nameref.sty
 Package: nameref 2009/12/18 v2.35 Cross-referencing by name of section
 
@@ -534,20 +534,20 @@ Package: gettitlestring 2009/12/18 v1.3 Cleanup title references (HO)
 )
 \c@section@level=\count128
 )
-LaTeX Info: Redefining \ref on input line 37.
-LaTeX Info: Redefining \pageref on input line 37.
+LaTeX Info: Redefining \ref on input line 36.
+LaTeX Info: Redefining \pageref on input line 36.
 
 (C:\myDocument\dynamic_task_alloc\ucalgthes1_root_0.out)
 (C:\myDocument\dynamic_task_alloc\ucalgthes1_root_0.out)
 \@outlinefile=\write3
 \AtBeginShipoutBox=\box59
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 39.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 38.
 
 (C:\CTEX\MiKTeX\tex\latex\base\omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 39.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 38.
  [1
 
 {C:/CTEX/UserData/pdftex/config/pdftex.map{Unicode.sfd}{UGBK.sfd}}]
@@ -565,7 +565,7 @@ Chapter \bf {1}.
  been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.77 \include{chapter1}
+l.76 \include{chapter1}
                         [1
 
 
@@ -869,19 +869,19 @@ Chapter \bf {4}.
 
 ]
 (C:\myDocument\dynamic_task_alloc\ucalgthes1_root_0.bbl)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 87.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 86.
  [12
 
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 87.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 86.
 
 (C:\myDocument\dynamic_task_alloc\ucalgthes1_root_0.aux
 (C:\myDocument\dynamic_task_alloc\chapter1.aux)
 (C:\myDocument\dynamic_task_alloc\chapter2.aux)
 (C:\myDocument\dynamic_task_alloc\chapter3.aux)
 (C:\myDocument\dynamic_task_alloc\chapter4.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 87.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 86.
 
 
 Package rerunfilecheck Warning: File `ucalgthes1_root_0.out' has changed.
@@ -889,17 +889,17 @@ Package rerunfilecheck Warning: File `ucalgthes1_root_0.out' has changed.
 (rerunfilecheck)                or use package `bookmark'.
 
 Package rerunfilecheck Info: Checksums for `ucalgthes1_root_0.out':
-(rerunfilecheck)             Before: 7057049D24AAAE5484973605163E6A51;2700
-(rerunfilecheck)             After:  EFE1A73022311BC89D16E71933E2812B;866.
+(rerunfilecheck)             Before: 994C073ACAA9B1AA76880916F8AC801C;2492
+(rerunfilecheck)             After:  8F2E723EE2EF1F81CD2699A8F3A11DDD;799.
  ) 
 Here is how much of TeX's memory you used:
- 7402 strings out of 495285
- 104029 string characters out of 3181588
+ 7400 strings out of 495285
+ 104005 string characters out of 3181588
  220849 words of memory out of 3000000
- 10344 multiletter control sequences out of 15000+200000
+ 10343 multiletter control sequences out of 15000+200000
  9085 words of font info for 33 fonts, out of 3000000 for 9000
  14 hyphenation exceptions out of 8191
- 35i,17n,32p,960b,533s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 35i,17n,32p,960b,529s stack positions out of 5000i,500n,10000p,200000b,50000s
 <C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/CTEX/MiKTeX/fon
 ts/type1/public/amsfonts/cm/cmbx12.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfo
 nts/cm/cmmi12.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/
@@ -909,9 +909,9 @@ mr8.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/CTEX/MiKT
 eX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/CTEX/MiKTeX/fonts/type1/public/
 amsfonts/cm/cmti12.pfb><C:/CTEX/MiKTeX/fonts/type1/public/amsfonts/cm/cmtt12.pf
 b>
-Output written on ucalgthes1_root_0.pdf (15 pages, 180934 bytes).
+Output written on ucalgthes1_root_0.pdf (15 pages, 178546 bytes).
 PDF statistics:
- 294 PDF objects out of 1000 (max. 8388607)
- 111 named destinations out of 1000 (max. 500000)
- 113 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 288 PDF objects out of 1000 (max. 8388607)
+ 110 named destinations out of 1000 (max. 500000)
+ 105 words of extra memory for PDF output out of 10000 (max. 10000000)
 
