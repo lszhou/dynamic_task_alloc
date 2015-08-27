@@ -70,8 +70,8 @@ In addition, the property that every inserted task is eventually done is also a 
 
 
 %\begin{algorithm}
-%\caption{DoTask()}               %标题
-%\label{alg1}                         %标记算法，方便在其它地方引用
+%\caption{DoTask()}
+%\label{alg1}
 %\begin{algorithmic}[1]
 %\WHILE {(true)}
 %   \STATE $v \leftarrow root$\\
@@ -109,8 +109,8 @@ In addition, the property that every inserted task is eventually done is also a 
 %\end{algorithm}
 %
 %\begin{algorithm}
-%\caption{Insert(task $\ell$)}               %标题
-%\label{alg2}                         %标记算法，方便在其它地方引用
+%\caption{Insert(task $\ell$)}               %锟斤拷锟斤拷
+%\label{alg2}                         %锟斤拷锟斤拷锟姐法锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟截凤拷锟斤拷锟斤拷
 %\begin{algorithmic}[1]
 %\WHILE {(true)}
 %   \STATE $v \leftarrow root$\\
@@ -145,8 +145,8 @@ In addition, the property that every inserted task is eventually done is also a 
 %\end{algorithm}
 %
 %\begin{algorithm}
-%\caption{Mark-up($v$)}               %标题
-%\label{alg3}                         %标记算法，方便在其它地方引用
+%\caption{Mark-up($v$)}               %锟斤拷锟斤拷
+%\label{alg3}                         %锟斤拷锟斤拷锟姐法锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟截凤拷锟斤拷锟斤拷
 %\begin{algorithmic}[1]
 %\IF{($v$ is not Null)}
 %    \FOR {($i=0; i<2; i++$)}
@@ -224,4 +224,3 @@ At the leaf, this holds because if and only if the insertion count of newly inse
 
 For an arbitrary inner node $v$, we suppose, by the induction step and lemma 1, the result holds for children $v.left$ and $v.right$. We could notice that any process updates the insertion count and removal count as an atomic operation (line 6, method 3). If some remove operation has been counted at node $v$, then the corresponding insert operation for that task must have been counted at $v$ simultaneously by the double compare-and-swap operation. Apply this to the root, then validity condition holds.
 \end{proof}
-
