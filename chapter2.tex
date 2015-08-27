@@ -20,7 +20,7 @@ We use $inv_H(op)$ to denote the invocation of operation $op$ in history $H$ and
 
 A history $H$ is \emph{complete} if all operations in $H$ are \emph{complete}. A completion of an incomplete history $H$ is an extension $H'$ of $H$, such that $H'$ contains exactly the same operations as $H$ but the matching responses are added for all pending operations in $H$.
 
-Let $H$ be a complete history, we could associate a time interval $I_H(op) = [inv(op), rsp(op)]$ with each operation $op$ in $H$ . Similarly, for an uncomplete history, we denote the interval with respect to the pending operation $op$ by $I_H(op) = [inv(op), \infty]$.
+Let $H$ be a complete history, we could associate a time interval $I_H(op) = [inv(op), rsp(op)]$ with each operation $op$ in $H$. Similarly, for an uncomplete history, we denote the interval with respect to the pending operation $op$ by $I_H(op) = [inv(op), \infty]$.
 
 A history is \emph{sequential} if the first event is an invocation, and each invocation, except possibly the last one, is immediately followed by a matching response.
 
@@ -31,7 +31,7 @@ A history is linearizable if and only if there exists a sequential history $S$ t
 
 \textbf{Randomness}. A process can execute local coin flip operation that returns an integer value distributed uniformly at random from an arbitrary finite set of integers. In the following discussion, we use method \texttt{random(s)} to return a value which is distributed uniformly at random from set $\{0, 1, 2,..., s-1\}$.
 
-\textbf{Adversary}. We analyze our algorithm under the assumption of a strong adaptive adversary. At any point of time, it can see the entire past history and know the states of all processes. 
+\textbf{Adversary}. We analyze our algorithm under the assumption of a strong adaptive adversary. At any point of time, it can see the entire past history and know the states of all processes.
 
 
 %A \emph{shared object} is defined as a data structure with a well-defined set of states and a set of \emph{operation types} \cite{InProc-GHHW2007a}. The state transition happens when an operation of an operation type is applied to shared object in a given state. In the following sections, we consider atomic and non-atomic operations. Atomic operations occur instantaneously and are represented as \emph{atomic steps}. Non-atomic operations are represented using separate \emph{invocation} and \emph{response steps}. A response step matches an invocation step if the two steps are applied by the same process to the same shared object.
