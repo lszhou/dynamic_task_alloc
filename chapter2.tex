@@ -49,17 +49,19 @@ events in a history $H$ have the same object name $obj$, then the $H|obj = H$. T
 when we discuss the concurrency behavior of a specific objet $obj$, the history $H$ and $H|obj$ are the same.
 
 We use $inv_H(op)$ to denote the invocation of operation $op$ in history $H$ and use $rsp_H(op)$ to
-denote the matching response of $op$ in $H$. An invocation event $inv_H(op)$, it is not necessary to have a
+denote the matching response of $op$ in $H$. An invocation event $inv_H(op)$, it is not necessarily to have a
 matching response. In this case, we say the operation $op$ is \emph{pending}. Otherwise, we call operation \emph{op}
 is \emph{complete}.
 
 A history $H$ is \emph{complete} if all operations in $H$ are \emph{complete}. A history $H'$ is an extension of a history $H$
 if $H$ is the prefix of $H'$. A history $H'$ is called the completion of an incomplete history $H$ if $H'$, containing the same
-operations as $H$ is an extension of $H$ and all operations in $H'$ are complete.
+events as $H$, is an extension of $H$ and each operation in $H'$ is complete.
 
-Let $H$ be a complete history, we could associate a time interval $I_H(op) = [inv(op), rsp(op)]$ with each
-operation $op$ in $H$. Similarly, for an uncomplete history, we denote the interval with respect to the pending
-operation $op$ by $I_H(op) = [inv(op), \infty]$.
+We say an invocation or response event happens at time $T$ if it is the $T$th event in the history. 
+Let $H$ be a complete history, we could associate a time interval $I_H(op) = [T_{inv(op)}, T_{rsp(op)}]$ with each
+operation $op$ in $H$, where $T_{inv(op)}$ and $T_{rsp(op)}$ is the time when event $inv(op)$ and $rsp(op)$ happens 
+respectively. Similarly, for an uncomplete history, we denote the interval with respect to the pending
+operation $op$ by $I_H(op) = [T_{inv(op)}, \infty]$.
 
 A history is \emph{sequential} if the first event is an invocation, and each invocation, except possibly the last
 one, is immediately followed by a matching response (\emph{define: matching response?}).
@@ -68,14 +70,13 @@ one, is immediately followed by a matching response (\emph{define: matching resp
 
 \textbf{Linearization.}
 A history $H$ linearizes to a sequential history $S$, if and only if $S$ satisfies the
-following conditions: (1) $S$ and the completion of $H$ have the same operations, (2) sequential history $S$ is
+following conditions: (1) $S$ and any completion of $H$ have the same operations, (2) sequential history $S$ is
 valid, and (3) there is a mapping from each time interval $I_H(op)$ to a time point $t_H(op) \in I_H(op)$, such
-that the sequential history $S$ could be obtained by sorting the operations in $H$ by their $t_H(op)$ values.
+that the sequential history $S$ is obtained by sorting the operations in $H$ by their $t_H(op)$ values.
 
-A history is linearizable if and only if there exists a sequential history $S$ that linearizes $H$. In this case,
-$S$ is called the linearization of $H$. Each linearization of $H$ defines a point $t_H(op)$. For each operation $op$
-in history $H$, we call the point $t_H(op)$ linearization point of $op$. A shared object is linearizable if every
-history $H$ of that object is linearizable.
+A history is linearizable if and only if $H$ linearizes to some sequential history $S$. In this case,
+$S$ is called the linearization of $H$. For each operation $op$ in history $H$, we call the point $t_H(op)$ 
+the linearization point of $op$. A shared object is linearizable if every history $H$ on that object is linearizable.
 
 
 
@@ -90,7 +91,12 @@ uniformly at random from an arbitrary finite set of integers. In the following d
 We analyze our algorithm under the assumption of a strong adaptive adversary. At any
 point of time, it can see the entire past history and know the states of all processes.
 
+(\emph{What a process do to execute a program? What is an adversary? What is the functionality of an adversary? (to schedule processes )? 
+How it schedules processes?})
+
+
 %========================== Update log =================
 % Aug.27
 % -change some items like from "value" to "state"
 % -compeletion of a imcomplete history definition.
+% -some typos
