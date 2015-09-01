@@ -8,36 +8,28 @@ The computational model we consider is the standard asynchronous shared memory m
 denoted as $\{p_1, p_2,...,p_n\}$ , where up to $n-1$ processes may fail by crashing.
 
 
-\textbf{Type}.
-A $type$ $\tau$ is defined as follows \cite{InProc-GHHW2007a},
+\textbf{Type and Object}.
+A $type$ $\tau$ could be defined as an automaton as follows \cite{InProc-GHHW2007a},
 $$\tau = (\mathcal{S}, s_{init},\mathcal{O},\mathcal{R} ,\delta )$$
 
 where $\mathcal{S}$ is a set of states, $s_{init} \in \mathcal{S}$ is the initial state, $\mathcal{O}$ is a set of
 operation types, $\mathcal{R}$ is the set of responses, and
-$\delta :\mathcal{S} \times \mathcal{O} \to \mathcal{S} \times \mathcal{R}$ is a state transition mapping.
+$\delta :\mathcal{S} \times \mathcal{O} \to \mathcal{S} \times \mathcal{R}$ is a one-to-many state transition mapping.
 
-(\emph{read more explaination about ``type" here in the paper and add some more contents.})
+An $object$ is an implementation of a type. For each type $\tau$, the transition mapping $\delta$ captures the
+behaviour of objects of type $\tau$, in the absence of concurreny,
+as follows: if a process applies an operation of type $opt$ to an object of type $\tau$ which is in state $s$, the the object
+may return to the process a response $r$ and change its states to $s'$ if and only if $(s', r) \in \delta(s, opt)$.
 
+An object supports only \texttt{read()} and \texttt{write(x)} operations is called a $read/write register$
+(or just $register$). Operation \texttt{read()} returns the current state of register and leaves the state unchanged.
+Operation \texttt{write(x)} changes the state of register to be $x$.
 
-
-
-\textbf{Object}.
-An object is a sequential implementation (\emph{define what is `implementation'?}) of a type.
-(\emph{Have more description based on type definition here.})
-
-An object supports only read and write operations is called a \emph{read/write register} (or just \emph{register}).
-
-A compare-and-swap (CAS) object $\tau$ supports two operations: \texttt{read()} and \texttt{CAS(x,y)}.
-Operation \texttt{read()} returns the current state of $\tau$ and leaves the state unchanged. Operation
-\texttt{CAS(x,y)} changes the state if and only if the current state of $\tau$ is equal to the given state $x$, i.e,
-if current state of $\tau$ equals $x$, then operation \texttt{CAS(x,y)} succeeds, and the state of $\tau$ is changed
+An object supports \texttt{read()} and \texttt{CAS(x,y)} operations is called $compare-and-swap$ (CAS) object.
+Operation \texttt{CAS(x,y)} changes the state of the obejct if and only if the current state is equal to the given state $x$, i.e,
+if current state equals $x$, then operation \texttt{CAS(x,y)} succeeds, and the state is changed
 to be $y$ and $true$ is returned. Otherwise, operation \texttt{CAS(x,y)} fails, the current state remains unchanged and
 $false$ is returned.
-
-In our thesis, we consider the system that supports atomic (\emph{define}) CAS object and atomic read/write register
-(\emph{define read and write register}). Processes interact with objects by applying operations on them.
-
-
 
 \textbf{History}
 (\emph{add more explaination for history!}).
@@ -57,9 +49,9 @@ A history $H$ is \emph{complete} if all operations in $H$ are \emph{complete}. A
 if $H$ is the prefix of $H'$. A history $H'$ is called the completion of an incomplete history $H$ if $H'$, containing the same
 events as $H$, is an extension of $H$ and each operation in $H'$ is complete.
 
-We say an invocation or response event happens at time $T$ if it is the $T$th event in the history. 
+We say an invocation or response event happens at time $T$ if it is the $T$th event in the history.
 Let $H$ be a complete history, we could associate a time interval $I_H(op) = [T_{inv(op)}, T_{rsp(op)}]$ with each
-operation $op$ in $H$, where $T_{inv(op)}$ and $T_{rsp(op)}$ is the time when event $inv(op)$ and $rsp(op)$ happens 
+operation $op$ in $H$, where $T_{inv(op)}$ and $T_{rsp(op)}$ is the time when event $inv(op)$ and $rsp(op)$ happens
 respectively. Similarly, for an uncomplete history, we denote the interval with respect to the pending
 operation $op$ by $I_H(op) = [T_{inv(op)}, \infty]$.
 
@@ -75,7 +67,7 @@ valid, and (3) there is a mapping from each time interval $I_H(op)$ to a time po
 that the sequential history $S$ is obtained by sorting the operations in $H$ by their $t_H(op)$ values.
 
 A history is linearizable if and only if $H$ linearizes to some sequential history $S$. In this case,
-$S$ is called the linearization of $H$. For each operation $op$ in history $H$, we call the point $t_H(op)$ 
+$S$ is called the linearization of $H$. For each operation $op$ in history $H$, we call the point $t_H(op)$
 the linearization point of $op$. A shared object is linearizable if every history $H$ on that object is linearizable.
 
 
@@ -91,7 +83,7 @@ uniformly at random from an arbitrary finite set of integers. In the following d
 We analyze our algorithm under the assumption of a strong adaptive adversary. At any
 point of time, it can see the entire past history and know the states of all processes.
 
-(\emph{What a process do to execute a program? What is an adversary? What is the functionality of an adversary? (to schedule processes )? 
+(\emph{What a process do to execute a program? What is an adversary? What is the functionality of an adversary? (to schedule processes )?
 How it schedules processes?})
 
 
