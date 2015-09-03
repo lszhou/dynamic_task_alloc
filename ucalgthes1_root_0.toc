@@ -4,10 +4,10 @@
 \contentsline {section}{\numberline {1.1}Related Work}{1}{section.1.1}
 \contentsline {section}{\numberline {1.2}Statement of Results}{1}{section.1.2}
 \contentsline {chapter}{\numberline {2}Model of Computation and Definitions}{2}{chapter.2}
-\contentsline {chapter}{\numberline {3}Dynamic Task Allocation Object}{5}{chapter.3}
-\contentsline {chapter}{\numberline {4}Correctness Proof}{9}{chapter.4}
-\contentsline {section}{\numberline {4.1}Correctness}{9}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Analysis and Proofs}{9}{subsection.4.1.1}
-\contentsline {section}{\numberline {4.2}Performance}{11}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}DoTask Analysis}{11}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}InsertTask Analysis}{11}{subsection.4.2.2}
+\contentsline {chapter}{\numberline {3}Dynamic Task Allocation Object}{6}{chapter.3}
+\contentsline {chapter}{\numberline {4}Correctness Proof}{10}{chapter.4}
+\contentsline {section}{\numberline {4.1}Correctness}{10}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Analysis and Proofs}{10}{subsection.4.1.1}
+\contentsline {section}{\numberline {4.2}Performance}{12}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}DoTask Analysis}{12}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}InsertTask Analysis}{12}{subsection.4.2.2}
