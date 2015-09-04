@@ -18,8 +18,8 @@ $\delta :\mathcal{S} \times \mathcal{O} \to \mathcal{S} \times \mathcal{R}$ is a
 
 An \emph{object} is an implementation of a type. For each type $\tau$, the transition mapping $\delta$ captures the
 behaviour of objects of type $\tau$, in the absence of concurreny,
-as follows: if a process applies an operation of type $opt$ to an object of type $\tau$ which is in state $s$, the the object
-may return to the process a response $r$ and change its states to $s'$ if and only if $(s', r) \in \delta(s, opt)$.
+as follows: if a process applies an operation of type $opt$ to an object of type $\tau$ which is in state $s$, the object
+may return to the process a response $rsp$ and change its states to $s'$ if and only if $(s', rsp) \in \delta(s, opt)$.
 
 An object supports only \texttt{read()} and \texttt{write(x)} operations is called a \emph{read/write register}
 (or just \emph{register}). Operation \texttt{read()} returns the current state of register and leaves the state unchanged.
@@ -33,26 +33,26 @@ $false$ is returned.
 
 \textbf{History}
 A \emph{history} $H$, obtained by processes executing
-operations on objects, is a sequence of operation \emph{invocation event} $INV$
-and \emph{response events} $RSP$.
-An invocation event $INV$ of operation type $opt$ where process $p$ invokes operation on object
+operations on objects, is a sequence of operation \emph{invocation}
+and \emph{response} events.
+An invocation event INV of operation type $opt$ where process $p$ invokes operation on object
 $obj$ is defined as a 5-tuple
 $$INV = (invocation, p, obj, opt, t)$$
 where $invocation$ is the event type and
-$t$ is the order of event $INV$ in history $H$. We also call $t$ is the \emph{time} when $INV$ happens.
+$t$ is the order of event INV in history $H$. We also call $t$ the \emph{time} when INV happens.
 
-A response event $RSP$ where process $p$ receives response $rsp$ from an operation execution on object $obj$
+A response event RSP where process $p$ receives response $rsp$ from an operation execution on object $obj$
 is defined as
-$$(response, p, obj, rsp, t)$$
-where $response$ is the event type, $t$ is the order of event $INV$
-in history $H$. We also call $t$ is the time when $INV$ happens.
+$$RSP = (response, p, obj, rsp, t)$$
+where $response$ is the event type, $t$ is the order of event RSP
+in history $H$. We also call $t$ the time when RSP happens.
 
 Response event $(response, p_j, obj_q, rsp, t_1)$ \emph{matches} invocation event $(invocation, p_i, obj_p, opt, t_0)$
 in history $H$, if the two events are applied by the same process to the same object, i.e, $i = j$ and $p = q$.
-The response event is also called the $matching$ response of the invocation event.
+In this case, the response event is also called the $matching$ response of the invocation event.
 
-An \emph{operation execution} in $H$ is a pair $oe = (INV, RSP)$ consisting of an invocation event $INV$
-and the next matching response event $RSP$, or just an invocation event $INV$, denoted as $oe = (INV, null)$.
+An \emph{operation execution} in $H$ is a pair $oe$ = (INV, RSP) consisting of an invocation event INV
+and the next matching response event RSP, or just an invocation event INV, denoted as $oe$ = (INV, $null$).
 For the latter case, we call the operation execution is \emph{pending}. For the former case, we call the operation
 execution is \emph{complete}. A history $H$ is \emph{complete} if all operation executions in $H$ are \emph{complete},
 otherwise, it is \emph{incomplete}.
@@ -67,7 +67,7 @@ events in a history $H$ have the same object name $obj$, then the $H|obj = H$. T
 when we discuss the concurrency behavior of a specific objet $obj$, the history $H$ and $H|obj$ are the same.
 
 Let $H$ be a complete history, we could associate a time interval $I_{(INV, RSP)} = [t_0, t_1]$ with each
-operation execution $(INV, RSP)$ in $H$, where $t_0$ and $t_1$ is the time point when $INV$ and $RSP$ happen
+operation execution (INV, RSP) in $H$, where $t_0$ and $t_1$ is the time point when INV and RSP happen
 respectively. Similarly, for an uncomplete history, we denote the time interval $I_{(INV, RSP)}$ with respect to the pending
 operation execution by $I_{(INV, RSP)} = [t_0, \infty]$.
 
