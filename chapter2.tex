@@ -9,14 +9,14 @@ denoted as $\{p_1, p_2,...,p_n\}$ , where up to $n-1$ processes may fail by cras
 
 
 \textbf{Type and Object}.
-A \emph{type} $\tau$ could be defined as an automaton as follows \cite{InProc-GHHW2007a},
+A \emph{type} $\tau$ is defined as an automaton as follows \cite{InProc-GHHW2007a},
 $$\tau = (\mathcal{S}, s_{init},\mathcal{O},\mathcal{R} ,\delta )$$
 
 where $\mathcal{S}$ is a set of states, $s_{init} \in \mathcal{S}$ is the initial state, $\mathcal{O}$ is a set of
 operation types, $\mathcal{R}$ is the set of responses, and
 $\delta :\mathcal{S} \times \mathcal{O} \to \mathcal{S} \times \mathcal{R}$ is a one-to-many state transition mapping.
 
-An \emph{object} is an implementation of a type. For each type $\tau$, the transition mapping $\delta$ captures the
+An \emph{object} is a sequential implementation of a type. For each type $\tau$, the transition mapping $\delta$ captures the
 behaviour of objects of type $\tau$, in the absence of concurreny,
 as follows: if a process applies an operation of type $opt$ to an object of type $\tau$ which is in state $s$, the object
 may return to the process a response $rsp$ and change its states to $s'$ if and only if $(s', rsp) \in \delta(s, opt)$.
@@ -26,7 +26,8 @@ An object supports only \texttt{read()} and \texttt{write(x)} operations is call
 Operation \texttt{write(x)} changes the state of register to be $x$.
 
 An object supports \texttt{read()} and \texttt{CAS(x,y)} operations is called \emph{compare-and-swap} (CAS) object.
-Operation \texttt{CAS(x,y)} changes the state of the obejct if and only if the current state is equal to the given state $x$, i.e,
+Operation \texttt{read()} is the same as what we defined above. Operation \texttt{CAS(x,y)} changes the state of
+the obejct if and only if the current state is equal to the given state $x$, i.e,
 if current state equals $x$, then operation \texttt{CAS(x,y)} succeeds, and the state is changed
 to be $y$ and $true$ is returned. Otherwise, operation \texttt{CAS(x,y)} fails, the current state remains unchanged and
 $false$ is returned.
@@ -35,17 +36,17 @@ $false$ is returned.
 A \emph{history} $H$, obtained by processes executing
 operations on objects, is a sequence of operation \emph{invocation}
 and \emph{response} events.
-An invocation event INV of operation type $opt$ where process $p$ invokes operation on object
-$obj$ is defined as a 5-tuple
-$$INV = (invocation, p, obj, opt, t)$$
-where $invocation$ is the event type and
-$t$ is the order of event INV in history $H$. We also call $t$ the \emph{time} when INV happens.
 
-A response event RSP where process $p$ receives response $rsp$ from an operation execution on object $obj$
-is defined as
-$$RSP = (response, p, obj, rsp, t)$$
-where $response$ is the event type, $t$ is the order of event RSP
-in history $H$. We also call $t$ the time when RSP happens.
+An invocation event, denoted as INV, is a 5-tuple,
+$$(invocation, p, obj, opt, t)$$
+where $invocation$ is the event type, $p$ is the process executing the operation, $obj$ is the object on which the operation
+is executed, $opt$ is the operation type and $t$ is the \emph{time} when INV happens which is defined
+as the order of event INV in history $H$.
+
+A response event, denoted as RSP, is also a 5-tuple,
+$$(response, p, obj, rsp, t)$$
+where $response$ is the event type, $p$ is the process receiving response $rsp$ from an execution on object $obj$ and $t$
+is the time when RSP happens which is defined as the order of event RSP in history $H$.
 
 Response event $(response, p_j, obj_q, rsp, t_1)$ \emph{matches} invocation event $(invocation, p_i, obj_p, opt, t_0)$
 in history $H$, if the two events are applied by the same process to the same object, i.e, $i = j$ and $p = q$.
@@ -66,10 +67,10 @@ invocation and response events in $H$ on object $obj$. If all invocation and res
 events in a history $H$ have the same object name $obj$, then the $H|obj = H$. Thus, in the following discussion,
 when we discuss the concurrency behavior of a specific objet $obj$, the history $H$ and $H|obj$ are the same.
 
-Let $H$ be a complete history, we could associate a time interval $I_{(INV, RSP)} = [t_0, t_1]$ with each
-operation execution (INV, RSP) in $H$, where $t_0$ and $t_1$ is the time point when INV and RSP happen
-respectively. Similarly, for an uncomplete history, we denote the time interval $I_{(INV, RSP)}$ with respect to the pending
-operation execution by $I_{(INV, RSP)} = [t_0, \infty]$.
+Let $H$ be a complete history, we could associate a time interval $I_{oe} = [t_0, t_1]$ with each
+operation execution $oe$ = (INV, RSP) in $H$, where $t_0$ and $t_1$ is the time point when INV and RSP happen
+respectively. Similarly, for an incomplete history, we denote the time interval $I_{oe}$ with respect to the pending
+operation execution $oe$ = (INV, $null$) by $I_{oe} = [t_0, \infty]$.
 
 Operation execution $oe_0$ \emph{precedes} operation execution $oe_1$ in $H$ if the response event of
 $oe_0$ happens before the invocation event of $oe_1$ in $H$.
@@ -81,11 +82,11 @@ possibly the last one, is immediately followed by a matching response event.
 \textbf{Linearization.}
 A history $H$ \emph{linearizes} to a sequential history $S$, if and only if $S$ satisfies the
 following conditions: (1) $S$ and any completion of $H$ have the same operations, (2) sequential history $S$ is
-valid, and (3) there is a mapping from each time interval $I_{(INV, RSP)}$ to a time point $t_{(INV, RSP)} \in I_{(INV, RSP)}$, such
-that the sequential history $S$ is obtained by sorting the operations in $H$ based on their $t_{(INV, RSP)}$ values.
+valid, and (3) there is a mapping from each time interval $I_{oe}$ to a time point $t_{oe} \in I_{oe}$, such
+that the sequential history $S$ is obtained by sorting the operations in $H$ based on their $t_{oe}$ values.
 
 A history is \emph{linearizable} if and only if $H$ linearizes to some sequential history $S$. In this case,
-$S$ is called the \emph{linearization} of $H$. For each operation $opt$ in history $H$, we call the time point $t_{(INV, RSP)}$
+$S$ is called the \emph{linearization} of $H$. For each operation $opt$ in history $H$, we call time point $t_{oe}$
 the \emph{linearization point} of $opt$. An object $obj$ is linearizable if every history $H$ on $obj$ is linearizable.
 
 \textbf{Randomness}.
@@ -94,15 +95,21 @@ uniformly at random from an arbitrary finite set of integers. In the following d
 \texttt{random(s)} to return a value which is distributed uniformly at random from set $\{0, 1, 2,..., s-1\}$.
 
 \textbf{Adversary}.
-We analyze our algorithm under the assumption of a strong adaptive adversary. At any
-point of time, it can see the entire past history and know the states of all processes.
+In the standard shared memory model, each process executes its program by applying
+shared memory operations (\texttt{read()}, \texttt{write(x)}
+\texttt{CAS(x,y)}, etc) on objects determined by the program. The order of operation executions
+by concurrent processes
+can be interleaved arbitrarily.
 
-(\emph{What a process do to execute a program? What is an adversary? What is the functionality of an adversary? (to schedule processes )?
-How it schedules processes?})
+For deterministic shared memory algorithms, we analysize its performance via the standard  worst-case analysis assuming that
+this interleaving occurs in the ``worst" possible way. However, in the analysis of randomized algorithms, we use
+$adversary$ model to describe how the interleaving of executions can be influenced by random choices
+made by processes.
 
-
-%========================== Update log =================
-% Aug.27
-% -change some items like from "value" to "state"
-% -compeletion of a imcomplete history definition.
-% -some typos
+There are several adversary models with different strengths
+% \cite{DBLP:journals/corr/cs-DS-0209014},
+and
+the most pessimistic reasonable assumption is modeled by the \emph{strong adaptive adversary}. we analyze
+our randomized shared memory algorithm under the assumption of a strong adaptive adversary, i.e, at any
+point of time, it can see the entire past history and know the states of all processes and decide on
+the schedule accordingly.

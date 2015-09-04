@@ -1,39 +1,52 @@
 %--------------------CHAPTER 3-----------------------------
 \chapter{Dynamic Task Allocation Object}
 
-Our dynamic task allocation (DTA) type supports two operations, \texttt{DoTask()} and \texttt{InsertTask(}$\ell$\texttt{)}, where $\ell$ is the task identifier that is unique for each task.
+The dynamic task allocation (DTA) type supports two operations, \texttt{DoTask()} and
+\texttt{InsertTask(}$\ell$\texttt{)}, where $\ell$ is the identifier that is unique for each task (\emph{define what is task,
+give the domain}).
 
-Now we formalize the notion of type DTA by specifying the above two operations. We assume that there exists an atomic operation \texttt{PutTask(}$M,\ell$\texttt{)}, and a process associates task $\ell$ with memory location $M$ by calling \texttt{PutTask(}$M,\ell$\texttt{)}. It returns $success$ if task $l$ is associated with location $M$, and returns $failure$ if location $M$ was already associated with another task. We say task $\ell$ is inserted if it is associated with a memory location $M$.
+Now we formalize the notion of type DTA by specifying the above two operations.
+We assume that there exists an atomic operation \texttt{PutTask(}$M,\ell$\texttt{)},
+and a process associates (\emph{what is associate?}) task $\ell$ with memory location (\emph{what is memory location?}) $M$
+by calling \texttt{PutTask(}$M,\ell$\texttt{)}.
+It returns $success$ if task $\ell$ is associated with location $M$, and returns $failure$ if location $M$ was
+already associated with another task.
 
-Similarly, we assume there exists an atomic operation \texttt{TryTask(}$M$\texttt{)}, and task $\ell$ associated with memory location $M$ could be performed atomically by calling \texttt{TryTask(}$M$\texttt{)}. Out of several processes calling \texttt{TryTask(}$M$\texttt{)}, only one receives $success$ and the index $\ell$ of that task, while all the others receive $failure$.
 
-A task is $done$ or $performed$ if its index has been returned by a process after calling \texttt{DoTask()}. A task is $available$ at location $M$ if it has been inserted to $M$ and $success$ is returned by a process after calling \texttt{InsertTask(}$\ell$\texttt{)}, but is not done yet. A task is $available$, if it is $available$ at some memory location.
+Similarly, we assume there exists an atomic operation \texttt{TryTask(}$M$\texttt{)}, and
+task $\ell$ associated with memory location $M$ could be performed atomically by calling \texttt{TryTask(}$M$\texttt{)}.
+Out of several processes calling \texttt{TryTask(}$M$\texttt{)}, one receives $success$ and the index $\ell$ of
+that task, while all the others receive $failure$. (\emph{state transition for all initial states, what happens
+next if there is no...})
 
-The aim of operation \texttt{DoTask()} is to perform an available task on location $M$ by calling \texttt{TryTask(}$M$\texttt{)}. Every \texttt{DoTask()} may perform several \texttt{TryTask(}$M$\texttt{)} operations. However, only one of them will succeed. Once one \texttt{TryTask(}$M$\texttt{)} succeeds, then there is no available task on $M$ and the task index $\ell$ will be returned by \texttt{DoTask()}. Additionally, if there is no available task, then operation \texttt{DoTask()} returns $\perp$.
+A task is $done$ or $performed$ if its index has been returned by a process after calling \texttt{DoTask()}.
+A task is $available$ at location $M$ if it has been inserted to $M$ and $success$ is returned by a process
+after calling \texttt{InsertTask(}$\ell$\texttt{)}, but is not done yet. A task is $available$, if it is $available$
+at some memory location.
 
-The goal of \texttt{InsertTask(}$\ell$\texttt{)} operation is to find a free memory location $M$ and insert task $\ell$ atomically by calling \texttt{PutTask(}$M,\ell$\texttt{)}. \texttt{PutTask(}$M,\ell$\texttt{)} fails if location $M$ has been associated with another task, so each \texttt{InsertTask(}$\ell$\texttt{)} operation may perform several \texttt{PutTask(}$M,\ell$\texttt{)} operations, but only one of them will succeed. Once one \texttt{TryTask(}$M$\texttt{)} succeeds, then task $\ell$ is available on location $M$ and $success$ notification is returned by \texttt{InsertTask(}$\ell$\texttt{)} operation.
+The aim of operation \texttt{DoTask()} is to perform an available task on location $M$ by calling
+\texttt{TryTask(}$M$\texttt{)}. Every \texttt{DoTask()} may perform several \texttt{TryTask(}$M$\texttt{)}
+operations. However, only one of them will succeed. Once one \texttt{TryTask(}$M$\texttt{)} succeeds, then
+there is no available task on $M$ and the task index $\ell$ will be returned by \texttt{DoTask()}. Additionally,
+if there is no available task, then operation \texttt{DoTask()} returns $\perp$.
 
-Type DTA is required to satisfy: (Validity) If a \texttt{DoTask()} operation returns $\ell$, then before the \texttt{DoTask()} operation, an \texttt{InsertTask(}$\ell$\texttt{)} was executed and returned $success$. (Uniqueness) Each task is performed at most once, i.e, for each task $\ell$, at most one \texttt{DoTask()} operation returns $\ell$.
+The goal of \texttt{InsertTask(}$\ell$\texttt{)} operation is to find a free memory location $M$ and insert
+task $\ell$ atomically by calling \texttt{PutTask(}$M,\ell$\texttt{)}. \texttt{PutTask(}$M,\ell$\texttt{)}
+fails if location $M$ has been associated with another task, so each \texttt{InsertTask(}$\ell$\texttt{)}
+operation may perform several \texttt{PutTask(}$M,\ell$\texttt{)} operations, but only one of them will succeed.
+Once one \texttt{TryTask(}$M$\texttt{)} succeeds, then task $\ell$ is available on location $M$ and $success$
+notification is returned by \texttt{InsertTask(}$\ell$\texttt{)} operation.
 
-In addition, the property that every inserted task is eventually done is also a desired progress property of the implementation of type DTA.
+Type DTA is required to satisfy: (\emph{Validity}) If a \texttt{DoTask()} operation returns $\ell$, then before the
+\texttt{DoTask()} operation, an \texttt{InsertTask(}$\ell$\texttt{)} was executed and returned $success$.
+(\emph{Uniqueness}) Each task is performed at most once, i.e, for each task $\ell$, at most one \texttt{DoTask()}
+operation returns $\ell$.
+
+In addition, the property that every inserted task is eventually done is also a desired progress property
+of the implementation of type DTA.
 
 \section*{Implementation of DTA}
 (under work...)
-%The main data structure we used for the implementation of DTA is a binary tree. Each tree node $v$ contains a CAS object. The value of each CAS object is a pair $(x, y)$ where $x$ is called the \emph{insert count} and $y$ is called \emph{remove count}. The \emph{insert count} tracks the number of tasks inserted in the subtree while \emph{remove count} tracks the number of tasks that are already performed in the subtree. In another word, $x$ is the total number of successful \texttt{InsertTask} operations performed in the subtree rooted at $v$ and $y$ is the total number of successful \texttt{DoTask} operations performed in the subtree rooted at $v$.
-%
-%Thus, if $v$.\texttt{read}() returns pair $(x, y)$, then there are $(x-y)$ tasks available in the subtree rooted at $v$ because there have been $x$ tasks inserted and $y$ tasks performed. We define this difference $(x-y)$ the \emph{surplus} at node $v$ and denote it as $u_v$. Symmetrically, we define the complement $(2^h-u_v)$ the $\emph{space}$ at node $v$ where $h$ is the height of node $v$.
-%
-%For each leaf of the binary tree, it contains not only a CAS object but also an unbounded array $task[ ]$ whose cells are memory locations which could be associated with tasks. When a task $\ell$ is associated with the a cell $task[i]$, then we say task $\ell$ is inserted into cell $task[i]$ or array $task[ ]$.
-%
-%\Tree[.$v_1$ [.$v_{1,1}$
-%               ]
-%          [.$v_2$ [.$v_{2,1}$ ]
-%
-%                [.VP [.V\1 [.V \textit{is} ]
-%                           [.AP [.Deg \textit{really} ]
-%                                [.A\1 [.A \textit{simple} ]
-%                                      \qroof{\textit{to use}}.CP ]]]]]]
-
 
 \begin{algorithm}
 \caption{\texttt{DoTask()}}
@@ -80,8 +93,8 @@ In addition, the property that every inserted task is eventually done is also a 
 \end{algorithm}
 
 %\begin{algorithm}
-%\caption{DoTask()}               %±êÌâ
-%\label{alg1}                         %±ê¼ÇËã·¨£¬·½±ãÔÚÆäËüµØ·½ÒýÓÃ
+%\caption{DoTask()}               %ï¿½ï¿½ï¿½ï¿½
+%\label{alg1}                         %ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø·ï¿½ï¿½ï¿½ï¿½ï¿½
 %\begin{algorithmic}[1]
 %\WHILE {(true)}
 %   \STATE $v \leftarrow root$\\
@@ -163,8 +176,8 @@ In addition, the property that every inserted task is eventually done is also a 
 
 
 %\begin{algorithm}
-%\caption{Insert(task $\ell$)}               %±êÌâ
-%\label{alg2}                         %±ê¼ÇËã·¨£¬·½±ãÔÚÆäËüµØ·½ÒýÓÃ
+%\caption{Insert(task $\ell$)}               %ï¿½ï¿½ï¿½ï¿½
+%\label{alg2}                         %ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø·ï¿½ï¿½ï¿½ï¿½ï¿½
 %\begin{algorithmic}[1]
 %\WHILE {(true)}
 %   \STATE $v \leftarrow root$\\
@@ -216,8 +229,8 @@ In addition, the property that every inserted task is eventually done is also a 
 
 %
 %\begin{algorithm}
-%\caption{Mark-up($v$)}               %±êÌâ
-%\label{alg3}                         %±ê¼ÇËã·¨£¬·½±ãÔÚÆäËüµØ·½ÒýÓÃ
+%\caption{Mark-up($v$)}               %ï¿½ï¿½ï¿½ï¿½
+%\label{alg3}                         %ï¿½ï¿½ï¿½ï¿½ï¿½ã·¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø·ï¿½ï¿½ï¿½ï¿½ï¿½
 %\begin{algorithmic}[1]
 %\IF{($v$ is not Null)}
 %    \FOR {($i=0; i<2; i++$)}
