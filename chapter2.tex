@@ -14,39 +14,42 @@ $$\tau = (\mathcal{S}, s_{init},\mathcal{O},\mathcal{R} ,\delta )$$
 
 where $\mathcal{S}$ is a set of states, $s_{init} \in \mathcal{S}$ is the initial state, $\mathcal{O}$ is a set of
 operation types, $\mathcal{R}$ is the set of responses, and
-$\delta :\mathcal{S} \times \mathcal{O} \to \mathcal{S} \times \mathcal{R}$ is a one-to-many state transition mapping.
+$\delta :\mathcal{S} \times \mathcal{O} \to \mathcal{S} \times \mathcal{R}$ is a state transition mapping.
 
-An \emph{object} is a sequential implementation of a type. For each type $\tau$, the transition mapping $\delta$ captures the
+An \emph{object} is an implementation of a type. For each type $\tau$, the transition mapping $\delta$ captures the
 behaviour of objects of type $\tau$, in the absence of concurreny,
 as follows: if a process applies an operation of type $opt$ to an object of type $\tau$ which is in state $s$, the object
 may return to the process a response $rsp$ and change its states to $s'$ if and only if $(s', rsp) \in \delta(s, opt)$.
 
-An object supports only \texttt{read()} and \texttt{write(x)} operations is called a \emph{read/write register}
-(or just \emph{register}). Operation \texttt{read()} returns the current state of register and leaves the state unchanged.
-Operation \texttt{write(x)} changes the state of register to be $x$.
+An object that supports only \texttt{read()} and \texttt{write(x)} operations is called a \emph{read/write register}
+(or just \emph{register}). Operation \texttt{read()} returns the current state of the register and leaves the state unchanged.
+Operation \texttt{write(x)} changes the state of the register to $x$.
 
-An object supports \texttt{read()} and \texttt{CAS(x,y)} operations is called \emph{compare-and-swap} (CAS) object.
-Operation \texttt{read()} is the same as what we defined above. Operation \texttt{CAS(x,y)} changes the state of
-the obejct if and only if the current state is equal to the given state $x$, i.e,
-if current state equals $x$, then operation \texttt{CAS(x,y)} succeeds, and the state is changed
-to be $y$ and $true$ is returned. Otherwise, operation \texttt{CAS(x,y)} fails, the current state remains unchanged and
+An object that supports \texttt{read()} and \texttt{CAS(x,y)} operations is called \emph{compare-and-swap} (CAS) object.
+Operation \texttt{read()} is the same as defined above. Operation \texttt{CAS(x,y)} changes the state of
+the object if and only if the current state is equal to $x$ and then operation \texttt{CAS(x,y)} succeeds, and the state is changed
+to $y$ and $true$ is returned. Otherwise, operation \texttt{CAS(x,y)} fails, the current state remains unchanged and
 $false$ is returned.
 
 \textbf{History}
 A \emph{history} $H$, obtained by processes executing
-operations on objects, is a sequence of operation \emph{invocation}
+operations on objects, is a sequence of \emph{invocation}
 and \emph{response} events.
 
-An invocation event, denoted as INV, is a 5-tuple,
-$$(invocation, p, obj, opt, t)$$
+An invocation event is a 5-tuple,
+\begin{center}
+INV = $(invocation, p, obj, opt, t)$
+\end{center}
 where $invocation$ is the event type, $p$ is the process executing the operation, $obj$ is the object on which the operation
 is executed, $opt$ is the operation type and $t$ is the \emph{time} when INV happens which is defined
-as the order of event INV in history $H$.
+as the position of event INV in history $H$.
 
-A response event, denoted as RSP, is also a 5-tuple,
-$$(response, p, obj, rsp, t)$$
-where $response$ is the event type, $p$ is the process receiving response $rsp$ from an execution on object $obj$ and $t$
-is the time when RSP happens which is defined as the order of event RSP in history $H$.
+A response event is also a 5-tuple,
+\begin{center}
+RSP = $(response, p, obj, rsp, t)$
+\end{center}
+where $response$ is the event type, $p$ is the process receiving response $rsp$ from an oeration on object $obj$ and $t$
+is the time when RSP happens which is defined as the position of event RSP in history $H$.
 
 Response event $(response, p_j, obj_q, rsp, t_1)$ \emph{matches} invocation event $(invocation, p_i, obj_p, opt, t_0)$
 in history $H$, if the two events are applied by the same process to the same object, i.e, $i = j$ and $p = q$.
@@ -54,62 +57,59 @@ In this case, the response event is also called the $matching$ response of the i
 
 An \emph{operation execution} in $H$ is a pair $oe$ = (INV, RSP) consisting of an invocation event INV
 and the next matching response event RSP, or just an invocation event INV, denoted as $oe$ = (INV, $null$).
-For the latter case, we call the operation execution is \emph{pending}. For the former case, we call the operation
+In the latter case, we say the operation execution is \emph{pending}. In the former case, we say the operation
 execution is \emph{complete}. A history $H$ is \emph{complete} if all operation executions in $H$ are \emph{complete},
 otherwise, it is \emph{incomplete}.
 
-History $H'$ is an extension of history $H$ if $H$ is the prefix of $H'$.
-History $H'$ is called the \emph{completion} of incomplete history $H$ if $H'$, containing the same
-events as $H$, is an extension of $H$ and each operation in $H'$ is complete.
+History $H'$ is an extension of history $H$ if $H$ is a prefix of $H'$.
+History $H'$ is a \emph{completion} of history $H$ if $H'$ contains all the
+events in $H$ and $H'$ is an extension of $H$, and each operation execution in $H'$ is complete.
 
 $H|obj$ of history $H$ is the subsequence of all
 invocation and response events in $H$ on object $obj$. If all invocation and response
-events in a history $H$ have the same object name $obj$, then the $H|obj = H$. Thus, in the following discussion,
-when we discuss the concurrency behavior of a specific objet $obj$, the history $H$ and $H|obj$ are the same.
+events in a history $H$ have the same object name $obj$, then the $H|obj = H$.
 
-Let $H$ be a complete history, we could associate a time interval $I_{oe} = [t_0, t_1]$ with each
-operation execution $oe$ = (INV, RSP) in $H$, where $t_0$ and $t_1$ is the time point when INV and RSP happen
-respectively. Similarly, for an incomplete history, we denote the time interval $I_{oe}$ with respect to the pending
+Let $H$ be a complete history. We associate a time interval $I_{oe} = [t_0, t_1]$ with each
+operation execution $oe$ = (INV, RSP) in $H$, where $t_0$ and $t_1$ are the points in time when INV and RSP happen.
+Similarly, for an incomplete history, we denote the time interval $I_{oe}$ with respect to a pending
 operation execution $oe$ = (INV, $null$) by $I_{oe} = [t_0, \infty]$.
 
 Operation execution $oe_0$ \emph{precedes} operation execution $oe_1$ in $H$ if the response event of
 $oe_0$ happens before the invocation event of $oe_1$ in $H$.
 We say that $oe_0$ and $oe_1$ are \emph{concurrent} in $H$ if neither precedes the other.
 
-A history is \emph{sequential} if the first event is an invocation event, and each invocation event, except
+A history is \emph{sequential} if its first event is an invocation event, and each invocation event, except
 possibly the last one, is immediately followed by a matching response event.
 
 \textbf{Linearization.}
 A history $H$ \emph{linearizes} to a sequential history $S$, if and only if $S$ satisfies the
-following conditions: (1) $S$ and any completion of $H$ have the same operations, (2) sequential history $S$ is
+following conditions: (1) $S$ and any completion of $H$ have the same operation executions, (2) sequential history $S$ is
 valid, and (3) there is a mapping from each time interval $I_{oe}$ to a time point $t_{oe} \in I_{oe}$, such
 that the sequential history $S$ is obtained by sorting the operations in $H$ based on their $t_{oe}$ values.
 
 A history is \emph{linearizable} if and only if $H$ linearizes to some sequential history $S$. In this case,
-$S$ is called the \emph{linearization} of $H$. For each operation $opt$ in history $H$, we call time point $t_{oe}$
-the \emph{linearization point} of $opt$. An object $obj$ is linearizable if every history $H$ on $obj$ is linearizable.
+$S$ is called the \emph{linearization} of $H$. For each operation $opt$ in history $H$, we call time point $t_{oe}$, which is
+defined as above, the \emph{linearization point} of $opt$. An object $obj$ is linearizable if every history $H$ on $obj$ is linearizable.
 
 \textbf{Randomness}.
-A process can execute local coin flip operation that returns an integer value distributed
+A process can execute local coin flip operations that return integer values distributed
 uniformly at random from an arbitrary finite set of integers. In the following discussion, we use method
 \texttt{random(s)} to return a value which is distributed uniformly at random from set $\{0, 1, 2,..., s-1\}$.
 
 \textbf{Adversary}.
 In the standard shared memory model, each process executes its program by applying
-shared memory operations (\texttt{read()}, \texttt{write(x)}
-\texttt{CAS(x,y)}, etc) on objects determined by the program. The order of operation executions
-by concurrent processes
+shared memory operations (\texttt{read()}, \texttt{write(x)}, \texttt{CAS(x,y)}, etc) on objects,
+as determined by their program. Operation executions of concurrent processes
 can be interleaved arbitrarily.
 
-For deterministic shared memory algorithms, we analysize its performance via the standard  worst-case analysis assuming that
-this interleaving occurs in the ``worst" possible way. However, in the analysis of randomized algorithms, we use
+For deterministic shared memory algorithms, we analysize their performance via the standard  worst-case analysis assuming that
+this interleaving occurs in the ``worst" possible way. However, in the analysis of randomized algorithms, we use an
 $adversary$ model to describe how the interleaving of executions can be influenced by random choices
 made by processes.
 
 There are several adversary models with different strengths
 % \cite{DBLP:journals/corr/cs-DS-0209014},
-and
-the most pessimistic reasonable assumption is modeled by the \emph{strong adaptive adversary}. we analyze
+The most pessimistic reasonable assumption is modeled by the \emph{strong adaptive adversary}. We analyze
 our randomized shared memory algorithm under the assumption of a strong adaptive adversary, i.e, at any
-point of time, it can see the entire past history and know the states of all processes and decide on
+point of time, it can see the entire past history and knows the states of all processes and decides on
 the schedule accordingly.
