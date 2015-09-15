@@ -7,7 +7,6 @@ and Wing's \cite{Herlihy:1990:LCC:78969.78972} and Golab, Hadzilacos and Woelfel
 The computational model we consider is the standard asynchronous shared memory model with a set of $n$ processes,
 denoted as $\{p_1, p_2,...,p_n\}$ , where up to $n-1$ processes may fail by crashing.
 
-
 \textbf{Type and Object}.
 A \emph{type} $\tau$ is defined as an automaton as follows \cite{InProc-GHHW2007a},
 $$\tau = (\mathcal{S}, s_{init},\mathcal{O},\mathcal{R} ,\delta )$$
@@ -108,7 +107,7 @@ $adversary$ model to describe how the interleaving of executions can be influenc
 made by processes.
 
 There are several adversary models with different strengths
-% \cite{DBLP:journals/corr/cs-DS-0209014},
+\cite{DBLP:journals/corr/cs-DS-0209014},
 The most pessimistic reasonable assumption is modeled by the \emph{strong adaptive adversary}. We analyze
 our randomized shared memory algorithm under the assumption of a strong adaptive adversary, i.e, at any
 point of time, it can see the entire past history and knows the states of all processes and decides on

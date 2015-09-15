@@ -1,5 +1,10 @@
 \begin{thebibliography}{1}
 
+\bibitem{DBLP:journals/corr/cs-DS-0209014}
+James Aspnes.
+\newblock Randomized protocols for asynchronous consensus.
+\newblock {\em CoRR}, cs.DS/0209014, 2002.
+
 \bibitem{InProc-GHHW2007a}
 Wojciech Golab, Vassos Hadzilacos, Danny Hendler, and Philipp Woelfel.
 \newblock Constant-rmr implementations of cas and other synchronization
