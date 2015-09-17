@@ -32,8 +32,8 @@ $false$ is returned.
 
 \textbf{History}
 A \emph{history} $H$, obtained by processes executing
-operations on objects, is a sequence of \emph{invocation}
-and \emph{response} events.
+operations on objects, is a sequence of invocation
+and response events.
 
 An invocation event is a 5-tuple,
 \begin{center}
@@ -110,5 +110,5 @@ There are several adversary models with different strengths
 \cite{DBLP:journals/corr/cs-DS-0209014},
 The most pessimistic reasonable assumption is modeled by the \emph{strong adaptive adversary}. We analyze
 our randomized shared memory algorithm under the assumption of a strong adaptive adversary, i.e, at any
-point of time, it can see the entire past history and knows the states of all processes and decides on
-the schedule accordingly.
+point of time, it can see the entire past history and knows the states of all processes and decides which process
+takes the next step.
