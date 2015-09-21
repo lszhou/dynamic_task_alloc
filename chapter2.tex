@@ -51,17 +51,25 @@ RSP = $(response, p, obj, rsp, t)$
 where $response$ is the event type, $p$ is the process receiving response $rsp$ from an oeration on object $obj$ and $t$
 is the time when RSP happens which is defined as the position of event RSP in history $H$.
 
-For an invocation or response event with respect to process $p$, we also say the event is performed by process $p$.
+For an event with respect to
+process $p$, we also say this event is \emph{applied} by process $p$.
+
+In the following discussion, we suppose in a history $H$, the situation that an invocation event
+$(invocation, p_i, obj_p, opt_0, t_0)$ is followed immediately by another invocation event\\
+$(invocation, p_j, obj_q, opt_1, t_1)$ where $i = j$ and $p = q$ will not happen.
 
 Response event $(response, p_j, obj_q, rsp, t_1)$ \emph{matches} invocation event $(invocation, p_i, obj_p, opt, t_0)$
 in history $H$, if the two events are applied by the same process to the same object, i.e, $i = j$ and $p = q$.
 In this case, the response event is also called the $matching$ response of the invocation event.
 
 An \emph{operation execution} in $H$ is a pair $oe$ = (INV, RSP) consisting of an invocation event INV
-and the next matching response event RSP, or just an invocation event INV, denoted as $oe$ = (INV, $null$).
+and its matching response event RSP, or just an invocation event INV with no matching response event,
+denoted as $oe$ = (INV, $null$).
 In the latter case, we say the operation execution is \emph{pending}. In the former case, we say the operation
 execution is \emph{complete}. A history $H$ is \emph{complete} if all operation executions in $H$ are \emph{complete},
-otherwise, it is \emph{incomplete}.
+otherwise, it is \emph{incomplete}. If events INV and RSP are applied by process $p$, then we say
+operation execution $oe$ = (INV, RSP) is \emph{performed} by process $p$. Thus, two operation
+executions performed by the same process on the same project will not interleave in a history $H$.
 
 History $H'$ is an extension of history $H$ if $H$ is a prefix of $H'$.
 History $H'$ is a \emph{completion} of history $H$ if $H'$ contains all the
@@ -97,16 +105,17 @@ that the sequential history $S$ is obtained by sorting the operations in $H$ bas
 
 A history is \emph{linearizable} if and only if $H$ linearizes to some sequential history $S$. In this case,
 $S$ is called the \emph{linearization} of $H$. For each operation $opt$ in history $H$, we call time point $t_{oe}$, which is
-defined as above, the \emph{linearization point} of $opt$. An object $obj$ is linearizable if every history $H$ on $obj$ is linearizable.
+defined as above, the \emph{linearization point} of $opt$. An object $obj$ is linearizable if every
+history $H$ on $obj$ is linearizable.
 
 \textbf{Randomness}.
 A randomized algorithm is an algorithm where processes are allowed to make random decisions for the next step.
-This is modelled by giving each process a special operation called \emph{coin-flip}. We say a process can flip a coin
-when it calls this operation. When a process flips a coin, it receives a random value $c$ from some arbitrary set $\omega$
-which is calle the \emph{coin-flip domain}. The process can then use this random value in its program for future decisions.
+This is modelled by giving each process a special operation called \emph{coin-flip operation}. We say a process can flip a coin
+when it calls this operation. When a process flips a coin, it receives a random value $c$ from some arbitrary set $\Omega$
+which is calle the \emph{coin-flip domain}. The process can then use this random value $c$ in its program for future decisions.
 
-A vector $\overrightarrow{\rm c} = (c_1, c_2, c_3, ...) \in \Omega^{\infty}$ is called a \emph{coin flip vector}. An history $H$ is
-said to \emph{observe} the coin flip vector $\overrightarrow{\rm c}$ if
+A vector $\overrightarrow{\rm c} = (c_1, c_2, c_3, ...) \in \Omega^{\infty}$ is called a \emph{coin-flip vector}.
+An history $H$ is said to \emph{observe} the coin-flip vector $\overrightarrow{\rm c}$ if
 the $i$-th coin-flip operation in $H$
 returns value $c_i$.
 
@@ -120,8 +129,10 @@ shared memory operations (\texttt{read()}, \texttt{write(x)}, \texttt{CAS(x,y)},
 as determined by their program. Operation executions of concurrent processes
 can be interleaved arbitrarily.
 
-A \emph{schedule} is represented by a sequence (possibly infinite) of process ids $\mathcal{P} = (p_0, p_1, p_2,...)$.
-A history $H$ is said to observe schedule $\mathcal{P}$ if the $i$-th event in $H$ is performed by process $p_i$.
+A \emph{schedule} with \emph{lenght} $k+1$ is represented by a sequence of process ids
+$\mathcal{P} = (p_0, p_1, p_2,..., p_k)$.
+A history $H$ is said to \emph{observe} schedule $\mathcal{P}$ if the number of events in $H$ is $k$,
+and for $i \in (0, k)$, the $i$-th event is applied by process $p_i$.
 
 The random choices processes make can influence the schedule. To model the worst-case possible
 way that the system can be influenced by the algorithm’s random choices,
@@ -133,11 +144,11 @@ Mathematically, an adversary is defined as a mapping:
 $\mathcal{A} :  \Omega^{\infty} \to \mathcal{P}^{\infty}$
 \end{center}
 
-Given an algorithm $\mathcal{M}$, an adversary $\mathcal{A}$, and a coin flip vector $\overrightarrow{\rm c}$,
+Given an algorithm $\mathcal{M}$, an adversary $\mathcal{A}$, and a coin-flip vector $\overrightarrow{\rm c}$,
 a history $H_{\mathcal{M},\mathcal{A}, \overrightarrow{\rm c}}$ is generated, such that all
 processes perform events as dictated by algorithm $\mathcal{M}$, and history
 $H_{\mathcal{M}, \mathcal{A}, \overrightarrow{\rm c}}$
-observes the coin flip vector $\overrightarrow{\rm c}$ and the schedule $\mathcal{A}$.
+observes the coin-flip vector $\overrightarrow{\rm c}$ and the schedule $\mathcal{A}$.
 
 There are several adversary models with different strengths \cite{DBLP:journals/corr/cs-DS-0209014},
 Here we consider a so-called \emph{adaptive adversary}. Informally, the adaptive adversary makes scheduling
