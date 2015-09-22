@@ -155,16 +155,19 @@ There are several adversary models with different strengths \cite{DBLP:journals/
 In our thesis, we only conside the \emph{adaptive adversary}.
 
 Informally, the adaptive adversary makes scheduling
-decisions as follows: At any point, it can see the entire history of the randomized algorithm up to that point.
-This includes all coin-flip operations and their return values up to that point. Depending this,
+decisions as follows: At any point, it can see the entire history up to that point.
+This includes all coin-flip operations and their return values up to that point. Depending on this,
 the adversary decides which process takes the next step.
 
 For a history $H$ that contains $k$ coin-flip operations, we use $H[k]$ to denote the subsequence of
 $H$ that contains all events up to the $k$-th invocation event of a coin-flip operation.
 
 Adversary $\mathcal{A}$ is \emph{adaptive} for algorithm $\mathcal{M}$ if, for any two coin-flip
-vectors $\overrightarrow{\rm c}$ and $\overrightarrow{\rm d}$ that have a common prefix
-of length $k$, we have
+vectors $\overrightarrow{\rm c} \in \Omega^{\infty}$ and $\overrightarrow{\rm d} \in \Omega^{\infty}$ that have a common prefix
+of length $k$ (i.e, the first $k$ elements of them are the same), then we have
 $$H_{\mathcal{M},\mathcal{A}, \overrightarrow{\rm c}}[k+1] = H_{\mathcal{M},\mathcal{A}, \overrightarrow{\rm d}}[k+1]$$
+In this case, we also say Adversary $\mathcal{A}$ is an \emph{adaptive adversary}.
+
+
 From the above definition, we can see an adaptive adversary cannot use
 future coin flips to make current scheduling decisions.
