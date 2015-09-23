@@ -1,6 +1,7 @@
 
 %--------------------CHAPTER 2-----------------------------
 \chapter{Model of Computation and Definitions}
+\section{Asynchronous Shared Memory Model}
 In this chapter, we will describe our model of computation and give the definitions, which are based on Herlihy
 and Wing's \cite{Herlihy:1990:LCC:78969.78972} and Golab, Hadzilacos and Woelfel's \cite{InProc-GHHW2007a}.
 
@@ -19,16 +20,6 @@ An \emph{object} is an implementation of a type. For each type $\tau$, the trans
 behaviour of objects of type $\tau$, in the absence of concurreny,
 as follows: if a process applies an operation of type $opt$ to an object of type $\tau$ which is in state $s$, the object
 may return to the process a response $rsp$ and change its states to $s'$ if and only if $(s', rsp) \in \delta(s, opt)$.
-
-An object that supports only \texttt{read()} and \texttt{write(x)} operations is called a \emph{read/write register}
-(or just \emph{register}). Operation \texttt{read()} returns the current state of the register and leaves the state unchanged.
-Operation \texttt{write(x)} changes the state of the register to $x$.
-
-An object that supports \texttt{read()} and \texttt{CAS(x,y)} operations is called \emph{compare-and-swap} (CAS) object.
-Operation \texttt{read()} is the same as defined above. Operation \texttt{CAS(x,y)} changes the state of
-the object if and only if the current state is equal to $x$ and then operation \texttt{CAS(x,y)} succeeds, and the state is changed
-to $y$ and $true$ is returned. Otherwise, operation \texttt{CAS(x,y)} fails, the current state remains unchanged and
-$false$ is returned.
 
 \textbf{History}
 A \emph{history} $H$, obtained by processes executing
@@ -107,6 +98,26 @@ $S$ is called the \emph{linearization} of $H$. For each operation $opt$ in histo
 defined as above, the \emph{linearization point} of $opt$. An object $obj$ is linearizable if every
 history $H$ on $obj$ is linearizable.
 
+\section{Primitive Objects}
+In this section, we describe the two primitive objects which will be used in our following discussion,
+namely \emph{read-write register} and \emph{compare-and-swap} (CAS) objects. Most implementations
+of more sophisticated objects use these objects as the base objects in their implementations,
+since most modern architectures support either read-write registers and CAS objects \cite{itanium} \cite{weaver1994sparc}.
+
+\textbf{Read-Write Register}. An object that supports only \texttt{read()} and \texttt{write(x)} operations is called
+a read-write register (or just \emph{register}). Operation \texttt{read()} returns the current state of register and
+leaves the state unchanged. Operation \texttt{write(x)} changes the state of the register to $x$ and returns nothing.
+If the set of states that can be stored in the register is unbounded then we say the register is \emph{unbounded register};
+otherwise the register is \emph{bounded register}.
+
+\textbf{CAS Object}. An object that supports \texttt{read()} and \texttt{CAS(x,y)} operations is called compare-and-swap (CAS) object.
+Operation \texttt{read()} is the same as defined above. Operation \texttt{CAS(x,y)} changes the state of
+the object if and only if the current state is equal to $x$ and then operation \texttt{CAS(x,y)} succeeds, and the state is changed
+to $y$ and $true$ is returned. Otherwise, operation \texttt{CAS(x,y)} fails, the current state remains unchanged and
+$false$ is returned.
+
+\section{Adversary Models for Randomized Algorithms}
+
 \textbf{Randomness}.
 A randomized algorithm is an algorithm where processes are allowed to make random decisions for the next step.
 This is modelled by giving each process a special operation called \emph{coin-flip operation}. We say a process can flip a coin
@@ -168,6 +179,94 @@ of length $k$ (i.e, the first $k$ elements of them are the same), then we have
 $$H_{\mathcal{M},\mathcal{A}, \overrightarrow{\rm c}}[k+1] = H_{\mathcal{M},\mathcal{A}, \overrightarrow{\rm d}}[k+1]$$
 In this case, we also say Adversary $\mathcal{A}$ is an \emph{adaptive adversary}.
 
-
 From the above definition, we can see an adaptive adversary cannot use
 future coin flips to make current scheduling decisions.
+
+\section{The Dynamic Task Alloction Problem}
+%refer: Pareek_MSc_21
+We specify the dynamic task alloction problem in terms of a type DTA, and the properties
+that an implementation of type DTA must satisfy.
+
+(\emph{define what is a ``task" here by giving the domain, like the process (task identifier == process identifier)})\\
+
+The type DTA supports two operation types, \texttt{DoTask()} and
+\texttt{InsertTask(}$\ell$\texttt{)}, where $\ell$ is the identifier that is unique for each task.
+A process \emph{attempts} to perform a task by executing \texttt{DoTask()}, and the process associates
+a task $\ell$ with a memory location by executing \texttt{InsertTask(}$\ell$\texttt{)}.
+
+We assume that there exists an atomic operation \texttt{PutTask(}$M,\ell$\texttt{)},
+and a process associates (\emph{what is associate?}) task $\ell$ with memory location (\emph{what is memory location?}) $M$
+by calling \texttt{PutTask(}$M,\ell$\texttt{)}.
+It returns $success$ if task $\ell$ is associated with location $M$, and returns $failure$ if location $M$ was
+already associated with another task.
+
+Similarly, we assume there exists an atomic operation \texttt{TryTask(}$M$\texttt{)}, and
+task $\ell$ associated with memory location $M$ could be performed atomically by calling \texttt{TryTask(}$M$\texttt{)}.
+Out of several processes calling \texttt{TryTask(}$M$\texttt{)}, one receives $success$ and the index $\ell$ of
+that task, while all the others receive $failure$. (\emph{state transition for all initial states, what happens
+next if there is no...})
+
+A task is $done$ or $performed$ if its index has been returned by a process after calling \texttt{DoTask()}.
+A task is $available$ at location $M$ if it has been inserted to $M$ and $success$ is returned by a process
+after calling \texttt{InsertTask(}$\ell$\texttt{)}, but is not done yet. A task is $available$, if it is $available$
+at some memory location.
+
+The aim of operation \texttt{DoTask()} is to perform an available task on location $M$ by calling
+\texttt{TryTask(}$M$\texttt{)}. Every \texttt{DoTask()} may perform several \texttt{TryTask(}$M$\texttt{)}
+operations. However, only one of them will succeed. Once one \texttt{TryTask(}$M$\texttt{)} succeeds, then
+there is no available task on $M$ and the task index $\ell$ will be returned by \texttt{DoTask()}. Additionally,
+if there is no available task, then operation \texttt{DoTask()} returns $\perp$.
+
+The goal of \texttt{InsertTask(}$\ell$\texttt{)} operation is to find a free memory location $M$ and insert
+task $\ell$ atomically by calling \texttt{PutTask(}$M,\ell$\texttt{)}. \texttt{PutTask(}$M,\ell$\texttt{)}
+fails if location $M$ has been associated with another task, so each \texttt{InsertTask(}$\ell$\texttt{)}
+operation may perform several \texttt{PutTask(}$M,\ell$\texttt{)} operations, but only one of them will succeed.
+Once one \texttt{TryTask(}$M$\texttt{)} succeeds, then task $\ell$ is available on location $M$ and $success$
+notification is returned by \texttt{InsertTask(}$\ell$\texttt{)} operation.
+
+Type DTA is required to satisfy: (\emph{Validity}) If a \texttt{DoTask()} operation returns $\ell$, then before the
+\texttt{DoTask()} operation, an \texttt{InsertTask(}$\ell$\texttt{)} was executed and returned $success$.
+(\emph{Uniqueness}) Each task is performed at most once, i.e, for each task $\ell$, at most one \texttt{DoTask()}
+operation returns $\ell$.
+
+In addition, the property that every inserted task is eventually done is also a desired progress property
+of the implementation of type DTA.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%

@@ -1,49 +1,23 @@
 %--------------------CHAPTER 3-----------------------------
 \chapter{Dynamic Task Allocation Object}
 
-The dynamic task allocation (DTA) type supports two operations, \texttt{DoTask()} and
-\texttt{InsertTask(}$\ell$\texttt{)}, where $\ell$ is the identifier that is unique for each task (\emph{define what is task,
-give the domain}).
+% Some questions need to be answered?
+% (1) In this thesis, what is the shared memory system Architecture, CC or DSM. (Pareek_MSc_15, Wojciech_201011_PhD_thesis_17)
+% (2) What is shared memory object? and what is "the implementation" of a shared memory object?
+% (3) Should the random(s), etc be assumed linearizable or atomic? what's the difference here? (Pareek_MSc_20)
+% The classification of memory accesses into local and remote depends on the memory
+% model of the multiprocessor: In the distributed shared memory (DSM) model, a variable’s
+% physical address determines locality with respect to a processor, each variable being local
+% to exactly one processor and remote to all others. In the cache-coherent (CC) model,
+% processors operate on cached copies of shared variables, and it is the state of a processor’s
+% local cache combined with the action of the coherence protocol (which keeps consistent
+% copies of a variable in different caches) that determines locality. A memory access is
+% local if it results in a cache hit and can be resolved without accessing main memory or
+% a remote cache; a memory access is remote otherwise. To analyze the worst-case RMR
+% complexity of an algorithm, we assume that each process runs on a distinct processor.
+% (For this reason, we speak of processes and processors interchangeably.)
 
-Now we formalize the notion of type DTA by specifying the above two operations.
-We assume that there exists an atomic operation \texttt{PutTask(}$M,\ell$\texttt{)},
-and a process associates (\emph{what is associate?}) task $\ell$ with memory location (\emph{what is memory location?}) $M$
-by calling \texttt{PutTask(}$M,\ell$\texttt{)}.
-It returns $success$ if task $\ell$ is associated with location $M$, and returns $failure$ if location $M$ was
-already associated with another task.
 
-
-Similarly, we assume there exists an atomic operation \texttt{TryTask(}$M$\texttt{)}, and
-task $\ell$ associated with memory location $M$ could be performed atomically by calling \texttt{TryTask(}$M$\texttt{)}.
-Out of several processes calling \texttt{TryTask(}$M$\texttt{)}, one receives $success$ and the index $\ell$ of
-that task, while all the others receive $failure$. (\emph{state transition for all initial states, what happens
-next if there is no...})
-
-A task is $done$ or $performed$ if its index has been returned by a process after calling \texttt{DoTask()}.
-A task is $available$ at location $M$ if it has been inserted to $M$ and $success$ is returned by a process
-after calling \texttt{InsertTask(}$\ell$\texttt{)}, but is not done yet. A task is $available$, if it is $available$
-at some memory location.
-
-The aim of operation \texttt{DoTask()} is to perform an available task on location $M$ by calling
-\texttt{TryTask(}$M$\texttt{)}. Every \texttt{DoTask()} may perform several \texttt{TryTask(}$M$\texttt{)}
-operations. However, only one of them will succeed. Once one \texttt{TryTask(}$M$\texttt{)} succeeds, then
-there is no available task on $M$ and the task index $\ell$ will be returned by \texttt{DoTask()}. Additionally,
-if there is no available task, then operation \texttt{DoTask()} returns $\perp$.
-
-The goal of \texttt{InsertTask(}$\ell$\texttt{)} operation is to find a free memory location $M$ and insert
-task $\ell$ atomically by calling \texttt{PutTask(}$M,\ell$\texttt{)}. \texttt{PutTask(}$M,\ell$\texttt{)}
-fails if location $M$ has been associated with another task, so each \texttt{InsertTask(}$\ell$\texttt{)}
-operation may perform several \texttt{PutTask(}$M,\ell$\texttt{)} operations, but only one of them will succeed.
-Once one \texttt{TryTask(}$M$\texttt{)} succeeds, then task $\ell$ is available on location $M$ and $success$
-notification is returned by \texttt{InsertTask(}$\ell$\texttt{)} operation.
-
-Type DTA is required to satisfy: (\emph{Validity}) If a \texttt{DoTask()} operation returns $\ell$, then before the
-\texttt{DoTask()} operation, an \texttt{InsertTask(}$\ell$\texttt{)} was executed and returned $success$.
-(\emph{Uniqueness}) Each task is performed at most once, i.e, for each task $\ell$, at most one \texttt{DoTask()}
-operation returns $\ell$.
-
-In addition, the property that every inserted task is eventually done is also a desired progress property
-of the implementation of type DTA.
 
 \section*{Implementation of DTA}
 (under work...)
