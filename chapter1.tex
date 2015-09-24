@@ -14,18 +14,23 @@
 % \emph{p processes cooperatively perform a set of tasks in the presence of adversity and the tasks
 % are injected dynamically by the adversary during the execution.}
 
-Asynchronous \emph{task allocation}, also called \emph{do-all} \cite{georgiou2007all}, is defined informally
+Asynchronous \emph{task allocation} problem, also called \emph{do-all} problem\cite{georgiou2007all}, is defined informally
 as the problem of $n$ processes in the
 network, cooperatively performing $m$ independent tasks, in the presence of adversity.
 
-Solving such cooperation problems consisting of large numbers
-of tasks on multiple processors is highly related to solving a broad range of distributed computing problems,
+Such cooperation problems consisting of large numbers
+of tasks by multiple processes is highly related to a broad range of distributed computing problems,
 such as mutual exclusion \cite{bender2011mutual}, consensus problem \cite{lynch1996distributed}
 distributed clocks \cite{aumann1992clock},
 and shared-memory collect \cite{ajtai1994theory}.
 
-In shared-memory models, the task allocation problem is known as the Write-All problem,
-introduced and studied by Kanellakis and Shvartsman \cite{kanellakis1992efficient}.
+In shared memory models, the task allocation problem is known as \emph{Write-All} problem,
+introduced and studied by Kanellakis and Shvartsman \cite{kanellakis1992efficient} and defined as follows:
+Given a zero-valued array of $m$ elements and $n$ processors,
+write value $1$ into each array location in the presence of adversity.
+
+Following the initial work \cite{kanellakis1992efficient}, the task allocation problem was studied in a variety
+of shared memory settings e.g., [5, 7, 14, 51, 65, 68, 69, 82, 87, 88, 89].
 
 \section{Related Work}
 

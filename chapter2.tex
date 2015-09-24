@@ -185,8 +185,34 @@ From the above definition, we can see an adaptive adversary cannot use
 future coin flips to make current scheduling decisions.
 
 \section{The Dynamic Task Alloction Problem}
+Performing a \emph{task} can be be any computation which can be performed by a single
+process in constant time and the tasks are assumed to satisfy the following three
+properties \cite{georgiou2007all}:
+
+\begin{itemize}
+  \item \emph{Similarity}: The computations consume equal or comparable resources
+  \item \emph{Independence}: One computation is independent of any of the others.
+  \item \emph{Idempotence}: Tasks admit at-least-once execution semantics.
+\end{itemize}
+
+For simplicity, 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 %refer: Pareek_MSc_21
-We specify the dynamic task alloction problem in terms of a type DTA, and the properties
+Now we specify the dynamic task alloction problem in terms of a type DTA, and the properties
 that an implementation of type DTA must satisfy.
 
 \subsection{The Type DTA}

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.8.11)  24 SEP 2015 13:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.8.11)  24 SEP 2015 15:26
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -605,7 +605,7 @@ x,y)
  []
 
 [5] [6] [7]
-Underfull \hbox (badness 10000) in paragraph at lines 194--195
+Underfull \hbox (badness 10000) in paragraph at lines 220--221
 
  []
 
@@ -671,10 +671,10 @@ lic/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/am
 sfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmti12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmt
 t12.pfb>
-Output written on ucalgthes1_root_0.pdf (20 pages, 173054 bytes).
+Output written on ucalgthes1_root_0.pdf (20 pages, 174243 bytes).
 PDF statistics:
- 360 PDF objects out of 1000 (max. 8388607)
- 323 compressed objects within 4 object streams
+ 362 PDF objects out of 1000 (max. 8388607)
+ 325 compressed objects within 4 object streams
  129 named destinations out of 1000 (max. 500000)
  145 words of extra memory for PDF output out of 10000 (max. 10000000)
 
