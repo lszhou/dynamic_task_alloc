@@ -186,16 +186,16 @@ future coin flips to make current scheduling decisions.
 
 \section{The Dynamic Task Alloction Problem}
 Performing a \emph{task} can be be any computation which can be performed by a single
-process in constant time and the tasks are assumed to satisfy the following three
-properties \cite{georgiou2007all}:
+process in constant time \cite{georgiou2007all} and the tasks are assumed to satisfy the following three
+properties:
+\emph{Similarity}: The computations consume equal or comparable resources.
+\emph{Independence}: One computation is independent of any of the others.
+\emph{Idempotence}: Tasks admit at-least-once execution semantics.
 
-\begin{itemize}
-  \item \emph{Similarity}: The computations consume equal or comparable resources
-  \item \emph{Independence}: One computation is independent of any of the others.
-  \item \emph{Idempotence}: Tasks admit at-least-once execution semantics.
-\end{itemize}
+For simplicity, in our thesis a task is defined as a register initialized with state $0$.
+Each task has a unique identifier from the
+set $\mathcal{L} = [m] = \{l_0, l_1, l_2,..., l_m\}$, where 
 
-For simplicity, 
 
 
 
