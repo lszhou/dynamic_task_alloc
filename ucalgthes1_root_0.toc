@@ -8,6 +8,7 @@
 \contentsline {section}{\numberline {2.2}Primitive Objects}{5}{section.2.2}
 \contentsline {section}{\numberline {2.3}Adversary Models for Randomized Algorithms}{6}{section.2.3}
 \contentsline {section}{\numberline {2.4}The Dynamic Task Alloction Problem}{8}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}The Type DTA}{8}{subsection.2.4.1}
 \contentsline {chapter}{\numberline {3}Dynamic Task Allocation Object}{10}{chapter.3}
 \contentsline {chapter}{\numberline {4}Correctness Proof}{13}{chapter.4}
 \contentsline {section}{\numberline {4.1}Correctness}{13}{section.4.1}

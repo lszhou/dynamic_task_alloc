@@ -6,7 +6,9 @@ In this chapter, we will describe our model of computation and give the definiti
 and Wing's \cite{Herlihy:1990:LCC:78969.78972} and Golab, Hadzilacos and Woelfel's \cite{InProc-GHHW2007a}.
 
 The computational model we consider is the standard asynchronous shared memory model with a set $\mathcal{P}$
-of $n$ processes, denoted as $\{p_0, p_2,...,p_{n-1}\}$ , where up to $n-1$ processes may fail by crashing.
+of $n$ processes, denoted as $\mathcal{P} = [p] =\{p_0, p_2,...,p_{n-1}\}$ , where up to $n-1$ processes may fail by crashing.
+A process may crash at any moment during the computation and once crashed it does not restart,
+and does not perform any further actions.
 
 \textbf{Type and Object}.
 A \emph{type} $\tau$ is defined as an automaton as follows \cite{InProc-GHHW2007a},
@@ -186,6 +188,8 @@ future coin flips to make current scheduling decisions.
 %refer: Pareek_MSc_21
 We specify the dynamic task alloction problem in terms of a type DTA, and the properties
 that an implementation of type DTA must satisfy.
+
+\subsection{The Type DTA}
 
 (\emph{define what is a ``task" here by giving the domain, like the process (task identifier == process identifier)})\\
 

@@ -1,15 +1,34 @@
 %--------------------CHAPTER 1-----------------------------
 \chapter{Introduction}
-%In this chapter, we will introduce the task allocation problem as well as its dynamic version and survey the past work related to it.
+% In this chapter, we will introduce the task allocation problem as well as its dynamic version
+% and survey the past work related to it.
 %
-%Task allocation problem, also called do-all problem, is already a foundational topic in distributing computing. During the last two decades, significant research was dedicated to studying the task allocation problem in various models of computation, including message passing, shared memory, etc. under specific assumption about the asynchrony and failures.
+% Task allocation problem, also called do-all problem, is already a foundational topic
+% in distributing computing. During the last two decades, significant research was dedicated to studying
+% the task allocation problem in various models of computation, including message passing, shared memory,
+% etc. under specific assumption about the asynchrony and failures.
 %
-%In this thesis, we consider the dynamic version of the task allocation problem via randomized asynchronous shared memory. The dynamic version could be described as follows:
-%
-%\emph{p processes cooperatively perform a set of tasks in the presence of adversity and the tasks are injected dynamically by the adversary during the execution.}
+% In this thesis, we consider the dynamic version of the task allocation problem via randomized
+% asynchronous shared memory. The dynamic version could be described as follows:
+
+% \emph{p processes cooperatively perform a set of tasks in the presence of adversity and the tasks
+% are injected dynamically by the adversary during the execution.}
+
+Asynchronous \emph{task allocation}, also called \emph{do-all} \cite{georgiou2007all}, is defined informally
+as the problem of $n$ processes in the
+network, cooperatively performing $m$ independent tasks, in the presence of adversity.
+
+Solving such cooperation problems consisting of large numbers
+of tasks on multiple processors is highly related to solving a broad range of distributed computing problems,
+such as mutual exclusion \cite{bender2011mutual}, consensus problem \cite{lynch1996distributed}
+distributed clocks \cite{aumann1992clock},
+and shared-memory collect \cite{ajtai1994theory}.
+
+In shared-memory models, the task allocation problem is known as the Write-All problem,
+introduced and studied by Kanellakis and Shvartsman \cite{kanellakis1992efficient}.
 
 \section{Related Work}
-(Under work...)
+
 %The task allocation via shared memory was firstly discussed by Kanellakis and Shavartsman[1]. In their paper about PRAM algorithm, they gave a robust parallel solution to the task allocation problem. The data structures they used are four full binary trees and tasks are abstracted as registers in an array. Each cell of the array is initialized with 0, and when it is turned to be 1 implies the abstracted task is performed successfully.
 %
 %Up to now, there have been many research results focus on the topic. ..
@@ -22,12 +41,10 @@
 \section{Statement of Results}
 %To solve the dynamic task allocation problem, we implement the dynamic task allocation type by a concurrent data structure called adaptive To-do tree. The dynamic inserted tasks are stored in the shared-memory bit array at the leaves. Multiple processes could get access to the bit array to perform and insert a task via the randomized DoTask and InsertTask operations supported by the To-do tree.
 %
-%In this thesis, we will introduce a randomized adaptive To-do tree algorithm which is similar to that presented by Dan Alistarh and Michael, etc. in their paper [¡­]. The performance of our algorithm depends on the input sequence of tasks but not a fixed value. It has no constraint on the number of tasks presented in the to-do tree. Additionally, our algorithm implemented by the compare-and-swap registers directly which makes the complexity of our algorithm to be quadratic.
+%In this thesis, we will introduce a randomized adaptive To-do tree algorithm which is similar to that presented by Dan Alistarh and Michael, etc. in their paper [ï¿½ï¿½]. The performance of our algorithm depends on the input sequence of tasks but not a fixed value. It has no constraint on the number of tasks presented in the to-do tree. Additionally, our algorithm implemented by the compare-and-swap registers directly which makes the complexity of our algorithm to be quadratic.
 %
 %In chapter 2, we will formally define the dynamic task allocation problem again and describe out adaptive To-do tree algorithm.
 %
 %In chapter 3, we will give a framework for the performance analysis of our algorithm.
 %
 %In chapter 4, we summarize our results, relate them to past work and discuss the open questions that arise from our work.
-
-

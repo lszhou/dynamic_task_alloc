@@ -1,9 +1,34 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{ajtai1994theory}
+Miklos Ajtai, James Aspnes, Cynthia Dwork, and Orli Waarts.
+\newblock A theory of competitive analysis for distributed algorithms.
+\newblock In {\em Foundations of Computer Science, 1994 Proceedings., 35th
+  Annual Symposium on}, pages 401--411. IEEE, 1994.
 
 \bibitem{DBLP:journals/corr/cs-DS-0209014}
 James Aspnes.
 \newblock Randomized protocols for asynchronous consensus.
 \newblock {\em CoRR}, cs.DS/0209014, 2002.
+
+\bibitem{aumann1992clock}
+Yonatan Aumann and Michael~O Rabin.
+\newblock Clock construction in fully asynchronous parallel systems and pram
+  simulation.
+\newblock In {\em Foundations of Computer Science, 1992. Proceedings., 33rd
+  Annual Symposium on}, pages 147--156. IEEE, 1992.
+
+\bibitem{bender2011mutual}
+Michael Bender, Seth Gilbert, et~al.
+\newblock Mutual exclusion with o (log\^{} 2 log n) amortized work.
+\newblock In {\em Foundations of Computer Science (FOCS), 2011 IEEE 52nd Annual
+  Symposium on}, pages 728--737. IEEE, 2011.
+
+\bibitem{georgiou2007all}
+Chryssis Georgiou.
+\newblock {\em Do-All Computing in Distributed Systems: Cooperation in the
+  Presence of Adversity}.
+\newblock Springer Science \& Business Media, 2007.
 
 \bibitem{InProc-GHHW2007a}
 Wojciech Golab, Vassos Hadzilacos, Danny Hendler, and Philipp Woelfel.
@@ -16,5 +41,26 @@ Wojciech Golab, Vassos Hadzilacos, Danny Hendler, and Philipp Woelfel.
 Maurice~P. Herlihy and Jeannette~M. Wing.
 \newblock Linearizability: A correctness condition for concurrent objects.
 \newblock {\em ACM Trans. Program. Lang. Syst.}, 12(3):463--492, July 1990.
+
+\bibitem{itanium}
+Itanium.
+\newblock {\em Intel Itanium Architecture Software Developer’s Manual Volume
+  1: Application Architecture Revision 2.1}.
+\newblock Intel Corporation, October 2002.
+
+\bibitem{kanellakis1992efficient}
+Paris~C Kanellakis and Alex~A Shvartsman.
+\newblock Efficient parallel algorithms can be made robust.
+\newblock {\em Distributed Computing}, 5(4):201--217, 1992.
+
+\bibitem{lynch1996distributed}
+Nancy~A Lynch.
+\newblock {\em Distributed algorithms}.
+\newblock Morgan Kaufmann, 1996.
+
+\bibitem{weaver1994sparc}
+David~L Weaver and Tom Gremond.
+\newblock {\em The SPARC architecture manual}.
+\newblock PTR Prentice Hall Englewood Cliffs, NJ 07632, 1994.
 
 \end{thebibliography}
