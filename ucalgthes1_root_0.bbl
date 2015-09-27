@@ -37,6 +37,13 @@ Wojciech Golab, Vassos Hadzilacos, Danny Hendler, and Philipp Woelfel.
 \newblock In {\em Proceedings of the 26th Annual ACM Symposium on Principles of
   Distributed Computing (PODC)}, pages 3--12, 2007.
 
+\bibitem{golab2011linearizable}
+Wojciech Golab, Lisa Higham, and Philipp Woelfel.
+\newblock Linearizable implementations do not suffice for randomized
+  distributed computation.
+\newblock In {\em Proceedings of the forty-third annual ACM symposium on Theory
+  of computing}, pages 373--382. ACM, 2011.
+
 \bibitem{Herlihy:1990:LCC:78969.78972}
 Maurice~P. Herlihy and Jeannette~M. Wing.
 \newblock Linearizability: A correctness condition for concurrent objects.
