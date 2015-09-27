@@ -20,7 +20,7 @@ $\delta :\mathcal{S} \times \mathcal{O} \to \mathcal{S} \times \mathcal{R}$ is a
 
 An \emph{object} is an implementation of a type. For each type $\tau$, the transition mapping $\delta$ captures the
 behaviour of objects of type $\tau$, in the absence of concurreny,
-as follows: if a process applies an operation of type $opt$ to an object of type $\tau$ which is in state $s$, the object
+as follows: if a process applies an operation $opt$ to an object of type $\tau$ which is in state $s$, the object
 may return to the process a response $rsp$ and change its states to $s'$ if and only if $(s', rsp) \in \delta(s, opt)$.
 
 \textbf{History}.
@@ -34,7 +34,7 @@ INV = $(invocation, p, obj, opt, t)$
 \end{center}
 where $invocation$ is the event type, $p$ is the process executing the operation, $obj$ is the object on which the operation
 is executed, $opt$ is the operation and $t$ is the \emph{time} when INV happens which is defined
-as the position of event INV in history $H$.
+as the position of event INV in history $H$. We also say the event INV is the invocation event of operation $opt$.
 
 A response event is also a 5-tuple,
 \begin{center}
@@ -42,9 +42,6 @@ RSP = $(response, p, obj, rsp, t)$
 \end{center}
 where $response$ is the event type, $p$ is the process receiving response $rsp$ from an oeration on object $obj$ and $t$
 is the time when RSP happens which is defined as the position of event RSP in history $H$.
-
-For an event with respect to
-process $p$, we also say this event is \emph{applied} by process $p$.
 
 In the following discussion, we suppose in a history $H$, the situation that an invocation event
 $(invocation, p_i, obj_p, opt_0, t_0)$ is followed immediately by another invocation event\\
@@ -63,7 +60,7 @@ otherwise, it is \emph{incomplete}. If events INV and RSP are applied by process
 operation execution $oe$ = (INV, RSP) is \emph{performed} by process $p$. Thus, two operation
 executions performed by the same process on the same project will not interleave in a history $H$.
 
-We say that an operation $opt$ is atomic in history $H$, if op’s invocation event is either the last event in
+We say that an operation $opt$ is \emph{atomic} in history $H$, if $opt$'s invocation event is either the last event in
 $H$, or else is followed immediately in $H$ by a matching response event.
 
 History $H'$ is an extension of history $H$ if $H$ is a prefix of $H'$.
@@ -103,11 +100,11 @@ $S$ is called the \emph{linearization} of $H$. For each operation $opt$ in histo
 defined as above, the \emph{linearization point} of $opt$. An object $obj$ is linearizable if every
 history $H$ on $obj$ is linearizable.
 
-\section{Primitive Objects}
-In this section, we describe the two primitive objects which will be used in our following discussion,
+\section{Base Objects}
+In this section, we describe the two base objects which will be used in our following discussion,
 namely \emph{read-write register} and \emph{compare-and-swap} (CAS) objects. Most implementations
-of more sophisticated objects use these objects as the base objects in their implementations,
-since most modern architectures support either read-write registers and CAS objects \cite{itanium} \cite{weaver1994sparc}.
+of more sophisticated objects use them as the base objects in their implementations and
+most modern architectures support either read-write registers and CAS objects \cite{itanium} \cite{weaver1994sparc}.
 
 \textbf{Read-Write Register}.
 An object that supports only \texttt{read()} and \texttt{write(x)} operations is called
@@ -184,9 +181,9 @@ the adversary decides which process takes the next step.
 Adversary $\mathcal{A}$ is \emph{adaptive for algorithm $\mathcal{M}$} \cite{golab2011linearizable}
 if, for any two coin-flip
 vectors $\overrightarrow{\rm c} \in \Omega^{\infty}$ and $\overrightarrow{\rm d} \in \Omega^{\infty}$ that have a common prefix
-of length $k$ (i.e, the first $k$ elements of them are the same), then we have
+of length $k$ (i.e, the first $k$ elements of $\overrightarrow{\rm c}$ and $\overrightarrow{\rm d}$ are the same), then we have
 $$H_{\mathcal{M},\mathcal{A}, \overrightarrow{\rm c}}[k+1] = H_{\mathcal{M},\mathcal{A}, \overrightarrow{\rm d}}[k+1]$$
-In this case, we also say Adversary $\mathcal{A}$ is an \emph{adaptive adversary}.
+In this case, we say adversary $\mathcal{A}$ is an \emph{adaptive adversary}.
 
 From the above definition, we can see an adaptive adversary cannot use
 future coin flips to make current scheduling decisions.
