@@ -6,6 +6,13 @@ Miklos Ajtai, James Aspnes, Cynthia Dwork, and Orli Waarts.
 \newblock In {\em Foundations of Computer Science, 1994 Proceedings., 35th
   Annual Symposium on}, pages 401--411. IEEE, 1994.
 
+\bibitem{alistarh2014dynamic}
+Dan Alistarh, James Aspnes, Michael~A Bender, Rati Gelashvili, and Seth
+  Gilbert.
+\newblock Dynamic task allocation in asynchronous shared memory.
+\newblock In {\em Proceedings of the Twenty-Fifth Annual ACM-SIAM Symposium on
+  Discrete Algorithms}, pages 416--435. SIAM, 2014.
+
 \bibitem{DBLP:journals/corr/cs-DS-0209014}
 James Aspnes.
 \newblock Randomized protocols for asynchronous consensus.
