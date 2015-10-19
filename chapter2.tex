@@ -1,17 +1,18 @@
 
+
 %--------------------CHAPTER 2-----------------------------
 \chapter{Model of Computation and Definitions}
 \section{Asynchronous Shared Memory Model}
 In this chapter, we will describe our model of computation and give the definitions, which are based on Herlihy
-and Wing's\cite{Herlihy:1990:LCC:78969.78972} and Golab, Higham and Woelfel's\cite{golab2011linearizable}.
+and Wing's \cite{Herlihy:1990:LCC:78969.78972} and Golab, Higham and Woelfel's \cite{golab2011linearizable}.
 
 The computational model we consider is the standard asynchronous shared memory model with a set $\mathcal{P}$
-of $n$ processes, denoted as $\mathcal{P} = [p] =\{p_0, p_2,...,p_{n-1}\}$ , where up to $n-1$ processes may fail by crashing.
+of $n$ processes, denoted as $\mathcal{P} = [p] =\{0, 1, 2,..., n-1\}$ , where up to $n-1$ processes may fail by crashing.
 A process may crash at any moment during the computation and once crashed it does not restart,
 and does not perform any further actions.
 
 \textbf{Type and Object}.
-A \emph{type} $\tau$ is defined as an automaton as follows\cite{InProc-GHHW2007a},
+A \emph{type} $\tau$ is defined as an automaton as follows \cite{InProc-GHHW2007a},
 $$\tau = (\mathcal{S}, s_{init},\mathcal{O},\mathcal{R} ,\delta )$$
 
 where $\mathcal{S}$ is a set of states, $s_{init} \in \mathcal{S}$ is the initial state, $\mathcal{O}$ is a set of
@@ -101,9 +102,10 @@ defined as above, the \emph{linearization point} of $opt$. An object $obj$ is li
 history $H$ on $obj$ is linearizable.
 
 \section{Base Objects}
-In this section, we describe the two base objects, i.e, \emph{read-write register} and \emph{compare-and-swap} (CAS) objects, which will be used in our following discussion. Most implementations
+In this section, we describe the two base objects, i.e, \emph{read-write register} and \emph{compare-and-swap} (CAS)
+objects, which will be used in our following discussion. Most implementations
 of more sophisticated objects use them as the base objects in their implementations and
-most modern architectures support either read-write registers and CAS objects\cite{itanium}\cite{weaver1994sparc}.
+most modern architectures support either read-write registers and CAS objects \cite{itanium} \cite{weaver1994sparc}.
 
 \textbf{Read-Write Register}.
 An object that supports only \texttt{read()} and \texttt{write(x)} operations is called
@@ -121,24 +123,24 @@ $false$ is returned.
 \section{Adversary Models for Randomized Algorithms}
 
 \textbf{Randomness}.
-A randomized algorithm is an algorithm where processes are allowed to make random decisions for the next step
+A randomized algorithm is an algorithm where processes are allowed to make random decisions for future steps
 by calling a special operation called \emph{coin-flip operation}. We also say a process \emph{flips a coin}
 when it calls this operation.
 
-When a process flips a coin, it receives a random value $c$ from some arbitrary set $\Omega$
-which is calle the \emph{coin-flip domain}. The process can then use this random value $c$ in its program for future decisions.
+When a process flips a coin, it receives a random value $c$ from some arbitrary countable set $\Omega$,
+which is the \emph{coin-flip domain}. The process can then use this random value $c$ in its program for future decisions.
 
 A vector $\overrightarrow{\rm c} = (c_0, c_1, c_2,...) \in \Omega^{\infty}$ is called a \emph{coin-flip vector}.
 A history $H$ is said to \emph{observe} the coin-flip vector $\overrightarrow{\rm c}$ if
-for an arbitrary integer $i \in [0, \infty)$, the $i$-th coin-flip operation in $H$ returns value $c_i \in \Omega$.
+for any integer $i \in \{0, 1, 2, ...\}$, the $i$-th coin-flip operation in $H$ returns value $c_i \in \Omega$.
 
 For a history $H$ that contains $k$ coin-flip operations, we use $H[k]$ to denote the prefix of $H$
-that ends with the $k$-th invocation of a coin-flip operation. If fewer than $k$ coin-flip operation
-executions occur during H, then $H[k]$ denotes $H$.
+that ends with the $k$-th invocation of a coin-flip operation. If fewer than $k$ coin-flips occur during H, then $H[k]$ denotes $H$.
 
-In the following discussion, we use operation \texttt{random($\Omega$)}, which is assumed
-to be atomic, to return a value which is distributed uniformly at random over coin-flip domain
-$\Omega = \{0, 1, 2,..., s-1\}$.
+% % put this paragraph later when using it
+% In the following discussion, we use operation \texttt{random($\Omega$)}, which is assumed
+% to be atomic, to return a value which is distributed uniformly at random over coin-flip domain
+% $\Omega = \{0, 1, 2,..., s-1\}$.
 
 \textbf{Schedule}.
 In the standard shared memory model, each process executes its program by applying
@@ -146,20 +148,20 @@ shared memory operations (\texttt{read()}, \texttt{write(x)}, \texttt{CAS(x,y)},
 as determined by their program. Operation executions of concurrent processes
 can be interleaved arbitrarily.
 
-A \emph{schedule} with \emph{length} $k$ is represented by a sequence of process ids
-$$p = (p_0, p_1, p_2,..., p_{k-1})$$ where $k \in [0, \infty)$ and for each $i \in [0, k-1]$,
+A \emph{schedule} with \emph{length} $k$ is represented by a sequence of process IDs
+$$p = (p_0, p_1, p_2,..., p_{k-1})$$ where $k \in \{1, 2, 3, ...\}$ and for each $i \in \{0, 1, ..., k-1\}$,
 $p_i \in \mathcal{P}$.
 
-Let a schedule $p = (p_0, p_1, p_2,..., p_{k-1})$.
+Consider a schedule $p = (p_0, p_1, p_2,..., p_{k-1})$.
 A history $H$ is said to \emph{observe} schedule $p$ if the number of events in $H$ is $k$,
-and for each integer $i \in [0, k-1]$, the $i$-th event is applied by process $p_i$.
+and for each integer $i \in \{0, 1, ..., k-1\}$, the $i$-th event is applied by process $p_i$.
 
 \textbf{Adversary}.
-In randomized algorithm, the random choices processes make can influence the schedule.
-To model the worst-case possible way that the system can be influenced by the random choices,
+In a randomized algorithm, the random choices processes make can influence the schedule.
+To model the worst possible way that the system can be influenced by the random choices,
 schedules are assumed to be generated by an adversarial scheduler, called the \emph{adversary}.
 
-Mathematically, an adversary is defined as a mapping\cite{golab2011linearizable}:
+Mathematically, an adversary is defined as a mapping \cite{golab2011linearizable}:
 \begin{center}
 $\mathcal{A} :  \Omega^{\infty} \to \mathcal{P}^{\infty}$
 \end{center}
@@ -171,7 +173,7 @@ processes apply events as dictated by algorithm $\mathcal{M}$, and history
 $H_{\mathcal{M}, \mathcal{A}, \overrightarrow{\rm c}}$
 observes the schedule $\mathcal{A(\overrightarrow{\rm c})}$ and the coin flip vector $\overrightarrow{\rm c}$.
 
-There are several adversary models with different strengths\cite{DBLP:journals/corr/cs-DS-0209014}.
+There are several adversary models with different strengths \cite{DBLP:journals/corr/cs-DS-0209014}.
 In our thesis, we only conside the \emph{adaptive adversary}.
 
 Informally, the adaptive adversary makes scheduling
@@ -179,14 +181,14 @@ decisions as follows: At any point, it can see the entire history up to that poi
 This includes all coin-flip operations and their return values up to that point. Depending on this,
 the adversary decides which process takes the next step.
 
-Adversary $\mathcal{A}$ is \emph{adaptive for algorithm $\mathcal{M}$}\cite{golab2011linearizable}
+Adversary $\mathcal{A}$ is \emph{adaptive for algorithm $\mathcal{M}$} \cite{golab2011linearizable}
 if, for any two coin-flip
 vectors $\overrightarrow{\rm c} \in \Omega^{\infty}$ and $\overrightarrow{\rm d} \in \Omega^{\infty}$ that have a common prefix
 of length $k$ (i.e, the first $k$ elements of $\overrightarrow{\rm c}$ and $\overrightarrow{\rm d}$ are the same), then we have
 $$H_{\mathcal{M},\mathcal{A}, \overrightarrow{\rm c}}[k+1] = H_{\mathcal{M},\mathcal{A}, \overrightarrow{\rm d}}[k+1]$$
 In this case, we say adversary $\mathcal{A}$ is an \emph{adaptive adversary}.
 
-From the above definition, we can see an adaptive adversary can not use
+From the above definition, we can see an adaptive adversary cannot use
 future coin flips to make current scheduling decisions.
 
 \section{The Dynamic Task Alloction Problem}
@@ -196,7 +198,7 @@ future coin flips to make current scheduling decisions.
 \subsection{Task}
 Performing a task can be be any execution performed by a single
 process in constant time and the tasks are assumed to satisfy the following three
-properties\cite{georgiou2007all}:
+properties \cite{georgiou2007all}:
 \emph{Similarity}: The execution consume equal or comparable resources.
 \emph{Independence}: One execution is independent of any of the others.
 \emph{Idempotence}: Tasks could be performed more than one time.
@@ -209,20 +211,20 @@ then we say a task is \emph{available}. When the
 state of that register is flipped to $1$, we say that task is \emph{performed}.
 
 Each array cell \texttt{tasks}$[i]$, where
-integer $i \in [0, \infty)$ is defined as a \emph{memory location} (or just \emph{location}) and denoted as $M$.
+integer $i \in \{0, 1, 2, ...\}$ is defined as a \emph{memory location} (or just \emph{location}) and denoted as $M$.
 We say there is an available task \emph{associated} with location $M$ (or at $M$)
 if the register at location $M$ is in state $0$.
 Otherwise, we say there is no task at $M$ if the register is in state $1$.
 
 Each task has a unique identifier from set
-$\mathcal{L} = [m] = \{\ell_0, \ell_1, \ell_2,..., \ell_m\}$, where $m \in [0, \infty)$.
-A simple unique task identifier scheme is provided by\cite{alistarh2014dynamic}.
+$\mathcal{L} = [m] = \{0, 1, ..., m\}$, where integer $m \in \{0, 1, 2, ...\}$.
+A simple unique task identifier scheme is provided by \cite{alistarh2014dynamic}.
 
 Informally, \emph{performing} a task is the execution that flipping the state of a register at some location from
 $0$ to $1$. If the above value $m$ is fixed and the $m$ tasks are available initially,
 and the execution ends when all tasks are performed, then we get the so-called \emph{static} version of task allocation problem,
 i.e, write-all problem as follws: Given a zero-valued array of $m$ elements and $n$ processes,
-write value $1$ into each array cell in the presence of adversity\cite{kanellakis1992efficient}.
+write value $1$ into each array cell in the presence of adversity \cite{kanellakis1992efficient}.
 
 In this thesis, we consider the \emph{dynamic} version of task allocation, i.e, Given $n$
 asynchronous processes that cooperate to perform tasks, while tasks are \emph{inserted}
