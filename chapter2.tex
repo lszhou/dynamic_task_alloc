@@ -193,93 +193,96 @@ future coin flips to make current scheduling decisions.
 
 \section{The Dynamic Task Alloction Problem}
 
-% * \emph{define what is task? what is perform a task and insert a task?}
-
 \subsection{Task}
-Performing a task can be be any execution performed by a single
-process in constant time and the tasks are assumed to satisfy the following three
-properties \cite{georgiou2007all}:
-\emph{Similarity}: The execution consume equal or comparable resources.
-\emph{Independence}: One execution is independent of any of the others.
-\emph{Idempotence}: Tasks could be performed more than one time.
+% Performing a task can be be any execution performed by a single
+% process in constant time and the tasks are assumed to satisfy the following three
+% properties \cite{georgiou2007all}:
+% \emph{Similarity}: The execution consume equal or comparable resources.
+% \emph{Independence}: One execution is independent of any of the others.
+% \emph{Idempotence}: Tasks could be performed more than one time.
 
-For simplicity, in our thesis, \emph{tasks} are abstracted and defined as zero-valued shared registers
-in an array, denoted as \texttt{tasks}$[ ]$.
+A \emph{task} is a computation which is assumed to be performed by a single process in constant time\cite{georgiou2007all}.
+In this thesis, we consider a set of tasks $\mathcal{L} = [m] = \{0, 1, ..., m\}$, where integer $m \in \{0, 1, 2, ...\}$.
 
-The state of each register is either $0$ or $1$. When a register is in state $0$,
-then we say a task is \emph{available}. When the
-state of that register is flipped to $1$, we say that task is \emph{performed}.
+For simplicity, in our thesis, we consider the tasks as follows:
 
-Each array cell \texttt{tasks}$[i]$, where
-integer $i \in \{0, 1, 2, ...\}$ is defined as a \emph{memory location} (or just \emph{location}) and denoted as $M$.
-We say there is an available task \emph{associated} with location $M$ (or at $M$)
-if the register at location $M$ is in state $0$.
-Otherwise, we say there is no task at $M$ if the register is in state $1$.
+Give an array of registers which is denoted as \texttt{arr}$[]$. The state of each register is either $\perp$ or $0$ or $1$.
+A task is the computation that flipping the state of a register from $0$ to $1$. We denote the computation
+flipping the state of register \texttt{arr}$[i]$ from $0$ to $1$
+as $\ell_i$, , where integer $i \in \{0, 1, 2, ...\}$ and $\ell_i \in \mathcal{L}$
 
-Each task has a unique identifier from set
-$\mathcal{L} = [m] = \{0, 1, ..., m\}$, where integer $m \in \{0, 1, 2, ...\}$.
-A simple unique task identifier scheme is provided by \cite{alistarh2014dynamic}.
-
-Informally, \emph{performing} a task is the execution that flipping the state of a register at some location from
-$0$ to $1$. If the above value $m$ is fixed and the $m$ tasks are available initially,
-and the execution ends when all tasks are performed, then we get the so-called \emph{static} version of task allocation problem,
+If the above value $m$ is fixed and all $m$ registers are all initialized with value $0$ and the execution ends
+when all registers are flipped to $1$, then we get the so-called \emph{static} version of task allocation problem,
 i.e, write-all problem as follws: Given a zero-valued array of $m$ elements and $n$ processes,
 write value $1$ into each array cell in the presence of adversity \cite{kanellakis1992efficient}.
+
+Each array cell \texttt{arr}$[i]$ is defined as a \emph{memory location} (or just \emph{location}) and denoted as $M$.
+We say there is a task available at location $M$ if the register \texttt{arr}$[i]$ is in state $0$.
+When there exists a register in \texttt{arr} is in state $0$, then we say a task is \emph{available}.
+When the state of that register is flipped to $1$, then we say the task is \emph{performed}.
+If the state of register \texttt{arr}$[i]$ is $\perp$, then we say, there is no task there.
 
 In this thesis, we consider the \emph{dynamic} version of task allocation, i.e, Given $n$
 asynchronous processes that cooperate to perform tasks, while tasks are \emph{inserted}
 dynamically by the adversary during the execution, where \emph{inserting} a task is definied to be
-the execution that flipping the state of a register from state $1$ back to $0$.
-When the state of the register at location $M$
-is flipped from $1$ to $0$, we also say a new task is \emph{inserted to locaton} $M$.
-
-Since the state of the register at location $M$ can be flipped from $0$ to $1$ and from $1$ back to $0$
-several times, thus we say one location $M$ can be associated with multiple tasks over time.
+the execution that flipping the state of a register from its initial state $\perp$ to $0$.
+When the state of the register at location $M$ is flipped from $\perp$ to $0$, we also say a new task is \emph{inserted to locaton} $M$.
 
 Now we specify the dynamic task alloction problem in terms of a type DTA, and the properties
 that an implementation of type DTA must satisfy.
+
+% Since the state of the register at location $M$ can be flipped from $0$ to $1$ and from $1$ back to $0$
+% several times, thus we say one location $M$ can be associated with multiple tasks over time.
+% \emph{tasks} are abstracted and defined as zero-valued shared registers
+% in an array, denoted as \texttt{tasks}$[ ]$.
+%
+% The state of each register is either $0$ or $1$.
+
+% Each task has a unique identifier from set
+% $\mathcal{L} = [m] = \{0, 1, ..., m\}$, where integer $m \in \{0, 1, 2, ...\}$.
+% A simple unique task identifier scheme is provided by \cite{alistarh2014dynamic}.
+
+% Informally, \emph{performing} a task is the execution that flipping the state of a register at some location from
+% $0$ to $1$. If the above value $m$ is fixed and the $m$ tasks are available initially,
+% and the execution ends when all tasks are performed, then we get the so-called \emph{static} version of task allocation problem,
+% i.e, write-all problem as follws: Given a zero-valued array of $m$ elements and $n$ processes,
+% write value $1$ into each array cell in the presence of adversity \cite{kanellakis1992efficient}.
 
 \subsection{The Type DTA}
 
 The type DTA supports two types of operations, \texttt{DoTask()} and
 \texttt{InsertTask(}$\ell$\texttt{)}, where $\ell$ is the task identifier.
 
-
 \textbf{Operation DoTask()}.
-The aim of operation \texttt{DoTask()} is to perform a task associated with location $M$ by calling
-a special atomic operation \texttt{TryTask(}$M$\texttt{)} which is assumed to exist.
+The aim of operation \texttt{DoTask()} is to perform a task at location $M$ (i.e, the computation flipping the state of register \texttt{arr}$[i]$ from $0$ to $1$) by calling
+atomic operation \texttt{TryTask(}$M$\texttt{)} which is assumed to exist.
 
-Task $\ell$ can be performed atomically by a process by calling \texttt{TryTask(}$M$\texttt{)} operation
-with argument $M$ which is the memory location associated with task $\ell$. Out of several processes
+Task $\ell$ can be performed atomically by a process by calling \texttt{TryTask(}$M$\texttt{)}
+with argument $M$, where $M$ is the memory location that task $\ell$ inserted to. Out of several processes
 calling \texttt{TryTask(}$M$\texttt{)}, only the first one receives notification $success$ and the identifier $\ell$ of
 that task, while all the others only receive $failure$.
 
 Every \texttt{DoTask()} operation may perform several \texttt{TryTask(}$M$\texttt{)}
 operations. However, only one of them will succeed. Once one \texttt{TryTask(}$M$\texttt{)} succeeds, then
 task identifier $\ell$ will be returned by \texttt{DoTask()}.
-If there is no task could be performed, i.e, the state of each task is $1$,
-then operation \texttt{DoTask()} returns $\perp$.
-
+If there is no available task, then operation \texttt{DoTask()} returns $\perp$.
 
 \textbf{Operation InsertTask($\ell$)}.
 The goal of \texttt{InsertTask(}$\ell$\texttt{)} operation is to insert task $\ell$ to location $M$
-also by calling a special atomic operation \texttt{PutTask(}$M,\ell$\texttt{)}.
+by calling atomic operation \texttt{PutTask(}$M,\ell$\texttt{)} which is assumed to exist.
 
-Task $\ell$ can be
-associated with memory location $M$ atomically by calling \texttt{PutTask(}$M,\ell$\texttt{)} operation.
-\texttt{PutTask(}$M,\ell$\texttt{)} returns $success$ if task $\ell$ is associated with $M$,
-and returns $failure$ if location $M$ was already associated with another task.
+Task $\ell$ can be inserted to memory location $M$ atomically by calling \texttt{PutTask(}$M,\ell$\texttt{)}.
+\texttt{PutTask(}$M,\ell$\texttt{)} returns $success$ if task $\ell$ is inserted to $M$,
+and returns $failure$ if there is a task has been inserted to location $M$, i.e, there is a successful \texttt{PutTask(}$M,\ell'$\texttt{)} operation
+before \texttt{PutTask(}$M,\ell$\texttt{)} operation in the linearization order.
 
-Several \texttt{PutTask(}$M,\ell$\texttt{)} operations may be executed but only one of them will succeed.
-\texttt{PutTask(}$M,\ell$\texttt{)} fails if location $M$ has been associated with another task in state $1$.
-Once one \texttt{TryTask(}$M$\texttt{)} succeeds, then task $\ell$ is available on location $M$ and $success$
+
+Every \texttt{InsertTask(}$\ell$\texttt{)} operation may perform several \texttt{PutTask} operations.
+However, only one of them will succeed. Once one \texttt{PutTask(}$M,\ell$\texttt{)} succeeds, then task $\ell$ is available on location $M$ and $success$
 notification is returned by \texttt{InsertTask(}$\ell$\texttt{)} operation.
 
-Similarly, atomic operations \texttt{PutTask(}$M,\ell$\texttt{)} it assumed to be contained in \texttt{InsertTask(}$\ell$\texttt{)}
-operation.
-
-A task is performed if its identifier has been returned by a process after calling \texttt{DoTask()}.
-A task $\ell$ is available at location $M$ if $success$ is returned by a process
+Thus, a task is performed if its identifier is returned by a process after calling \texttt{DoTask()}.
+and task $\ell$ is available at location $M$ if $success$ is returned by a process
 after calling \texttt{InsertTask(}$\ell$\texttt{)}, but is not performed yet.
 
 \textbf{Properties}.
