@@ -137,11 +137,6 @@ for any integer $i \in \{0, 1, 2, ...\}$, the $i$-th coin-flip operation in $H$ 
 For a history $H$ that contains $k$ coin-flip operations, we use $H[k]$ to denote the prefix of $H$
 that ends with the $k$-th invocation of a coin-flip operation. If fewer than $k$ coin-flips occur during H, then $H[k]$ denotes $H$.
 
-% % put this paragraph later when using it
-% In the following discussion, we use operation \texttt{random($\Omega$)}, which is assumed
-% to be atomic, to return a value which is distributed uniformly at random over coin-flip domain
-% $\Omega = \{0, 1, 2,..., s-1\}$.
-
 \textbf{Schedule}.
 In the standard shared memory model, each process executes its program by applying
 shared memory operations (\texttt{read()}, \texttt{write(x)}, \texttt{CAS(x,y)}, etc) on objects,
@@ -192,12 +187,7 @@ From the above definition, we can see an adaptive adversary cannot use
 future coin flips to make current scheduling decisions.
 
 \section{The Dynamic Task Alloction Problem}
-% Performing a task can be be any execution performed by a single
-% process in constant time and the tasks are assumed to satisfy the following three
-% properties \cite{georgiou2007all}:
-% \emph{Similarity}: The execution consume equal or comparable resources.
-% \emph{Independence}: One execution is independent of any of the others.
-% \emph{Idempotence}: Tasks could be performed more than one time.
+
 \subsection{Task}
 
 A \emph{task} is a computation which is assumed to be performed by a single process in constant time\cite{georgiou2007all}.
@@ -211,26 +201,28 @@ We assume that each task $\ell$ to be performed is associated with a \emph{locat
 in the data structure. Over time, one memory location can be associated with multiple tasks.
 
 \textbf{Operation TryTask}.
-The task $\ell$ can be performed atomically by a process by calling a special
-\texttt{TryTask(}$M$\texttt{)} operation where $M$ is the location task $\ell$
+
+A process can perform a task $\ell$ atomically by calling a special
+\texttt{TryTask(}$M$\texttt{)} operation where $M$ is a location task $\ell$
 associated with.
 
-Out of several processes calling \texttt{TryTask(}$M$\texttt{)} concurrently,
-only the first one receives \emph{success} and the identifier $\ell$ of the
-task, whereas all the others receive a \emph{failure} notification.
-This ensures that only a single process may actually perform
-the task.
+If the location $M$ is associated with a task $\ell$, then notification \emph{success} will be returned.
+Otherwise, if no task is associated with location $M$, then \emph{failure} will be returned by \texttt{TryTask(}$M$\texttt{)}.
+
+% Out of several processes calling \texttt{TryTask(}$M$\texttt{)} concurrently,
+% only the first one receives \emph{success} and the identifier $\ell$ of the
+% task, whereas all the others receive a \emph{failure} notification.
+% This ensures that only a single process may actually perform
+% the task.
 
 \textbf{Operation PutTask}.
-The task $\ell$ can be associated with a memory location $M$ in the data structure
-atomically by a process by calling a special \texttt{PutTask(}$M,\ell$\texttt{)} operation.
 
-If location $M$ is not associated with any other task, out of several processes calling
-\texttt{PutTask(}$M,\ell$\texttt{)} concurrently,
-only the first one receives notification \emph{success}, whereas all the others receive \emph{failure}.
+A process can associate a task $\ell$ with a menory location $M$ in the data structure
+atomically by calling a special \texttt{PutTask(}$M,\ell$\texttt{)} operation.
 
-If location $M$ is
-already associated with another task $\ell'$, then $failure$ is returned by all \texttt{PutTask(}$M,\ell$\texttt{)} calls.
+If location $M$ is not associated with any other task, then \texttt{PutTask(}$M,\ell$\texttt{)} will return \emph{success}.
+Otherwise, if location $M$ is already associated with another task $\ell'$, then $failure$ is returned
+by \texttt{PutTask(}$M,\ell$\texttt{)} call.
 
 \subsection{The Type DTA}
 
