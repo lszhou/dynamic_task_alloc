@@ -231,22 +231,28 @@ and returns the identifier of that task, while the \texttt{InsertTask(}$\ell$\te
 $\ell$ with a location in the data structure to be performed.
 
 \textbf{Operation DoTask()}.
-The aim of operation \texttt{DoTask()} is to find a task in the data structure and perform the task by calling
-atomic operation \texttt{TryTask(}$M$\texttt{)}.
+The aim of operation \texttt{DoTask()} is to find a location $M$ which is associated with a task
+$\ell$ in the data structure and then perform task $\ell$ by calling atomic operation \texttt{TryTask(}$M$\texttt{)}.
 
 Every \texttt{DoTask()} operation may perform several \texttt{TryTask} operation with different locations as the
 arguments. However, only one of them will succeed. Once one \texttt{TryTask(}$M$\texttt{)} succeeds, then
 task identifier $\ell$ will be returned by \texttt{DoTask()}. If there is no task in the data structure,
 then \texttt{DoTask()} returns $\perp$.
 
-A task is said to be \emph{performed} by a process if the process has completed a \texttt{DoTask()} call.
+A task $\ell$ is said to be \emph{performed} by a process if the process has completed a \texttt{DoTask()} call
+which returns the task identifier $\ell$.
 
 \textbf{Operation InsertTask($\ell$)}.
 The goal of \texttt{InsertTask(}$\ell$\texttt{)} operation is to find a location $M$ in the data structure and
 associates task $\ell$ with $M$ by calling atomic operation \texttt{PutTask(}$M,\ell$\texttt{)}.
 
 Every \texttt{InsertTask(}$\ell$\texttt{)} operation may perform several \texttt{PutTask} operations with
-different locations as the arguments. However, only one of them will succeed.
+different locations as the arguments. Operation \texttt{InsertTask(}$\ell$\texttt{)} terminates once one of the
+\texttt{PutTask} operations succeeds. Otherwise, \texttt{InsertTask(}$\ell$\texttt{)} never terminates and keeps
+calling \texttt{PutTask} operations repeatedly.
+
+% However, only one of them will succeed. (this is the progress property, should not be descirped here)
+
 Once one \texttt{PutTask(}$M,\ell$\texttt{)} succeeds, then $success$
 is returned by \texttt{InsertTask(}$\ell$\texttt{)} operation.
 
