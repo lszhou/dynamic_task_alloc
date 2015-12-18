@@ -8,11 +8,12 @@
 \BOOKMARK [1][-]{section.2.2}{Base Objects}{chapter.2}% 8
 \BOOKMARK [1][-]{section.2.3}{Adversary Models for Randomized Algorithms}{chapter.2}% 9
 \BOOKMARK [1][-]{section.2.4}{The Dynamic Task Alloction Problem}{chapter.2}% 10
-\BOOKMARK [2][-]{subsection.2.4.1}{The Type DTA}{section.2.4}% 11
-\BOOKMARK [0][-]{chapter.3}{Dynamic Task Allocation Object}{}% 12
-\BOOKMARK [0][-]{chapter.4}{Correctness Proof}{}% 13
-\BOOKMARK [1][-]{section.4.1}{Correctness}{chapter.4}% 14
-\BOOKMARK [2][-]{subsection.4.1.1}{Analysis and Proofs}{section.4.1}% 15
-\BOOKMARK [1][-]{section.4.2}{Performance}{chapter.4}% 16
-\BOOKMARK [2][-]{subsection.4.2.1}{DoTask Analysis}{section.4.2}% 17
-\BOOKMARK [2][-]{subsection.4.2.2}{InsertTask Analysis}{section.4.2}% 18
+\BOOKMARK [2][-]{subsection.2.4.1}{Task}{section.2.4}% 11
+\BOOKMARK [2][-]{subsection.2.4.2}{The Type DTA}{section.2.4}% 12
+\BOOKMARK [0][-]{chapter.3}{Dynamic Task Allocation Object}{}% 13
+\BOOKMARK [0][-]{chapter.4}{Correctness Proof}{}% 14
+\BOOKMARK [1][-]{section.4.1}{Correctness}{chapter.4}% 15
+\BOOKMARK [2][-]{subsection.4.1.1}{Analysis and Proofs}{section.4.1}% 16
+\BOOKMARK [1][-]{section.4.2}{Performance}{chapter.4}% 17
+\BOOKMARK [2][-]{subsection.4.2.1}{DoTask Analysis}{section.4.2}% 18
+\BOOKMARK [2][-]{subsection.4.2.2}{InsertTask Analysis}{section.4.2}% 19

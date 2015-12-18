@@ -198,22 +198,49 @@ future coin flips to make current scheduling decisions.
 % \emph{Similarity}: The execution consume equal or comparable resources.
 % \emph{Independence}: One execution is independent of any of the others.
 % \emph{Idempotence}: Tasks could be performed more than one time.
+\subsection{Task}
 
 A \emph{task} is a computation which is assumed to be performed by a single process in constant time\cite{georgiou2007all}.
 In this thesis, we consider a set of tasks $\mathcal{L} = [m] = \{0, 1, ..., m\}$, where integer $m \in \{0, 1, 2, ...\}$.
 
-Now we specify the dynamic task alloction problem in terms of a type DTA, and the properties
-that an implementation of type DTA must satisfy.
+In this section, we are going to specify the dynamic task alloction problem in terms of a type DTA, and the properties
+that an implementation of type DTA must satisfy. But before that, we firstly fix an interface by which processes could
+perform a task, or insert a new task to data structure.
+
+We assume that each task $\ell$ to be performed is associated with a \emph{location} $M$
+in the data structure. Over time, one memory location can be associated with multiple tasks.
+
+\textbf{Operation TryTask}.
+The task $\ell$ can be performed atomically by a process by calling a special
+\texttt{TryTask(}$M$\texttt{)} operation where $M$ is the location task $\ell$
+associated with.
+
+Out of several processes calling \texttt{TryTask(}$M$\texttt{)} concurrently,
+only one receives \emph{success} and the identifier $\ell$ of the
+task, whereas all the others receive a \emph{failure} notification.
+This ensures that only a single process may actually perform
+the task.
+
+\textbf{Operation PutTask}.
+The task $\ell$ can be associated with a memory location $M$ in the data structure
+atomically by a process by calling a special \texttt{PutTask(}$M,\ell$\texttt{)} operation.
+
+If location $M$ is not associated with any other task, out of several processes calling
+\texttt{PutTask(}$M,\ell$\texttt{)} concurrently,
+only one of them receives \emph{success}, whereas all the others receive \emph{failure}.
+
+If location $M$ is
+already associated with another task $\ell'$, then $failure$ is returned for all \texttt{PutTask(}$M,\ell$\texttt{)} calls.
 
 \subsection{The Type DTA}
 
-Our type DTA supports two types of operations, \texttt{DoTask()} and
-\texttt{InsertTask(}$\ell$\texttt{)}, where $\ell$ is the task identifier.
+Our type DTA supports two types of operations. The \texttt{DoTask()} operation performes a new task
+and returns the identifier of that task, while the \texttt{InsertTask(}$\ell$\texttt{)} operation inserts task
+$\ell$ to the data structure to be performed.
 
 \textbf{Operation DoTask()}.
 The aim of operation \texttt{DoTask()} is to find a task in the data structure and perform the task by calling
-atomic operation \texttt{TryTask(}$M$\texttt{)} which is assumed to exist, where $M$ is the place in the data structure where
-task $ell$ located. i.e, task $\ell$ located at $M$ can be performed atomically by a process by calling \texttt{TryTask(}$M$\texttt{)}.
+atomic operation \texttt{TryTask(}$M$\texttt{)}.
 
 Out of several processes
 calling \texttt{TryTask(}$M$\texttt{)}, only the first one receives notification $success$ and the identifier $\ell$ of
@@ -230,18 +257,13 @@ A task is said to be \emph{performed} by a process if the process has completed 
 The goal of \texttt{InsertTask(}$\ell$\texttt{)} operation is to find a location $M$ in the shared data structure and
 insert task $\ell$ by calling atomic operation \texttt{PutTask(}$M,\ell$\texttt{)} which is assumed to exist.
 
-Task $\ell$ can be inserted to location $M$ atomically by calling \texttt{PutTask(}$M,\ell$\texttt{)}.
-\texttt{PutTask(}$M,\ell$\texttt{)} returns $success$ if task $\ell$ is inserted to $M$,
-and returns $failure$ if there is a task has been inserted to location $M$,
-i.e, there is a successful \texttt{PutTask(}$M,\ell'$\texttt{)} operation
-before \texttt{PutTask(}$M,\ell$\texttt{)} operation in the linearization order.
-
 Every \texttt{InsertTask(}$\ell$\texttt{)} operation may perform several \texttt{PutTask} operations.
-However, only one of them will succeed. Once one \texttt{PutTask(}$M,\ell$\texttt{)} succeeds, then task $\ell$ is available on location $M$ and $success$
-notification is returned by \texttt{InsertTask(}$\ell$\texttt{)} operation.
+However, only one of them will succeed. Once one \texttt{PutTask(}$M,\ell$\texttt{)} succeeds, then $success$
+is returned by \texttt{InsertTask(}$\ell$\texttt{)} operation.
 
-A task $\ell$ is said \emph{available} or \emph{inserted} by a process if the process has
-completed the \texttt{InsertTask(}$\ell$\texttt{)} call, but task $\ell$ has not been performed yet.
+We say task $\ell$ is associated with a memory location or inserted into the data structure or task $\ell$
+is \emph{available} to perform if a process has completed the \texttt{InsertTask(}$\ell$\texttt{)} call,
+but task $\ell$ has not been performed yet.
 
 \textbf{Properties}.
 An algorithm that accesses an instance of an object of type DTA must satisfy the following:
