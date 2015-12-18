@@ -216,7 +216,7 @@ The task $\ell$ can be performed atomically by a process by calling a special
 associated with.
 
 Out of several processes calling \texttt{TryTask(}$M$\texttt{)} concurrently,
-only one receives \emph{success} and the identifier $\ell$ of the
+only the first one receives \emph{success} and the identifier $\ell$ of the
 task, whereas all the others receive a \emph{failure} notification.
 This ensures that only a single process may actually perform
 the task.
@@ -227,38 +227,35 @@ atomically by a process by calling a special \texttt{PutTask(}$M,\ell$\texttt{)}
 
 If location $M$ is not associated with any other task, out of several processes calling
 \texttt{PutTask(}$M,\ell$\texttt{)} concurrently,
-only one of them receives \emph{success}, whereas all the others receive \emph{failure}.
+only the first one receives notification \emph{success}, whereas all the others receive \emph{failure}.
 
 If location $M$ is
-already associated with another task $\ell'$, then $failure$ is returned for all \texttt{PutTask(}$M,\ell$\texttt{)} calls.
+already associated with another task $\ell'$, then $failure$ is returned by all \texttt{PutTask(}$M,\ell$\texttt{)} calls.
 
 \subsection{The Type DTA}
 
-Our type DTA supports two types of operations. The \texttt{DoTask()} operation performes a new task
-and returns the identifier of that task, while the \texttt{InsertTask(}$\ell$\texttt{)} operation inserts task
-$\ell$ to the data structure to be performed.
+The type DTA supports two types of operations. The \texttt{DoTask()} operation performes a new task
+and returns the identifier of that task, while the \texttt{InsertTask(}$\ell$\texttt{)} operation associates task
+$\ell$ with a location in the data structure to be performed.
 
 \textbf{Operation DoTask()}.
 The aim of operation \texttt{DoTask()} is to find a task in the data structure and perform the task by calling
 atomic operation \texttt{TryTask(}$M$\texttt{)}.
 
-Out of several processes
-calling \texttt{TryTask(}$M$\texttt{)}, only the first one receives notification $success$ and the identifier $\ell$ of
-that task, while all the others only receive $failure$.
-
-Every \texttt{DoTask()} operation may perform several \texttt{TryTask(}$M$\texttt{)}
-operations. However, only one of them will succeed. Once one \texttt{TryTask(}$M$\texttt{)} succeeds, then
+Every \texttt{DoTask()} operation may perform several \texttt{TryTask} operation with different locations as the
+arguments. However, only one of them will succeed. Once one \texttt{TryTask(}$M$\texttt{)} succeeds, then
 task identifier $\ell$ will be returned by \texttt{DoTask()}. If there is no task in the data structure,
 then \texttt{DoTask()} returns $\perp$.
 
 A task is said to be \emph{performed} by a process if the process has completed a \texttt{DoTask()} call.
 
 \textbf{Operation InsertTask($\ell$)}.
-The goal of \texttt{InsertTask(}$\ell$\texttt{)} operation is to find a location $M$ in the shared data structure and
-insert task $\ell$ by calling atomic operation \texttt{PutTask(}$M,\ell$\texttt{)} which is assumed to exist.
+The goal of \texttt{InsertTask(}$\ell$\texttt{)} operation is to find a location $M$ in the data structure and
+associates task $\ell$ with $M$ by calling atomic operation \texttt{PutTask(}$M,\ell$\texttt{)}.
 
-Every \texttt{InsertTask(}$\ell$\texttt{)} operation may perform several \texttt{PutTask} operations.
-However, only one of them will succeed. Once one \texttt{PutTask(}$M,\ell$\texttt{)} succeeds, then $success$
+Every \texttt{InsertTask(}$\ell$\texttt{)} operation may perform several \texttt{PutTask} operations with
+different locations as the arguments. However, only one of them will succeed.
+Once one \texttt{PutTask(}$M,\ell$\texttt{)} succeeds, then $success$
 is returned by \texttt{InsertTask(}$\ell$\texttt{)} operation.
 
 We say task $\ell$ is associated with a memory location or inserted into the data structure or task $\ell$
