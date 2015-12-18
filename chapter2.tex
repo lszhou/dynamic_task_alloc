@@ -200,8 +200,7 @@ perform a task, or insert a new task to data structure.
 We assume that each task $\ell$ to be performed is associated with a \emph{location} $M$
 in the data structure. Over time, one memory location can be associated with multiple tasks.
 
-\textbf{Operation TryTask}.
-
+\textbf{Operation TryTask($M$)}.
 A process can perform a task $\ell$ atomically by calling a special
 \texttt{TryTask(}$M$\texttt{)} operation where $M$ is a location task $\ell$
 associated with.
@@ -215,8 +214,7 @@ Otherwise, if no task is associated with location $M$, then \emph{failure} will 
 % This ensures that only a single process may actually perform
 % the task.
 
-\textbf{Operation PutTask}.
-
+\textbf{Operation PutTask($M,\ell$)}.
 A process can associate a task $\ell$ with a menory location $M$ in the data structure
 atomically by calling a special \texttt{PutTask(}$M,\ell$\texttt{)} operation.
 
@@ -257,6 +255,8 @@ calling \texttt{PutTask} operations repeatedly.
 We say task $\ell$ is associated with a memory location $M$ or inserted into the data structure or task $\ell$
 is \emph{available} to perform if a process has completed the \texttt{InsertTask(}$\ell$\texttt{)} call and the location
 $M$ is returned, but task $\ell$ has not been performed yet.
+
+
 
 % \textbf{Properties}.
 % An algorithm that accesses an instance of an object of type DTA must satisfy the following:
