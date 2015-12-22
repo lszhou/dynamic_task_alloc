@@ -204,31 +204,28 @@ future coin flips to make current scheduling decisions.
 \subsection{Task}
 
 A \emph{task} is a computation which is assumed to be performed by a single process in constant time\cite{georgiou2007all}.
-In this thesis, we consider a set of tasks $\mathcal{L} = [m] = \{0, 1, ..., m\}$, where integer $m \in \{0, 1, 2, ...\}$.
+In this thesis, we consider a set of tasks, denoted as $\mathcal{L} = [m] = \{0, 1, ..., m\}$, where integer $m \in \{0, 1, 2, ...\}$.
 
-In this section, we are going to specify the dynamic task alloction problem in terms of a type DTA, and the properties
+We assume that each task $\ell \in \mathcal{L}$ to be performed is associated with a \emph{location} $M$
+in the data structure. Over time, one location can be associated with multiple tasks.
+
+In this section, we are going to specify the dynamic task alloction problem in terms of a type DTA which
+suports two types of operations \texttt{DoTask} and \texttt{InsertTask}, and the properties
 that an implementation of type DTA must satisfy. But before that, we firstly fix an interface by which processes could
 perform a task, or insert a new task to data structure.
 
-We assume that each task $\ell$ to be performed is associated with a \emph{location} $M$
-in the data structure. Over time, one memory location can be associated with multiple tasks.
-
 \textbf{Operation TryTask($M$)}.
 A process can perform a task $\ell$ atomically by calling a special
-\texttt{TryTask(}$M$\texttt{)} operation where $M$ is a location task $\ell$
-associated with.
+\texttt{TryTask(}$M$\texttt{)} operation where $M$ is a location which task $\ell$
+is associated with.
 
-If the location $M$ is associated with a task $\ell$, then notification \emph{success} will be returned.
-Otherwise, if no task is associated with location $M$, then \emph{failure} will be returned by \texttt{TryTask(}$M$\texttt{)}.
-
-% Out of several processes calling \texttt{TryTask(}$M$\texttt{)} concurrently,
-% only the first one receives \emph{success} and the identifier $\ell$ of the
-% task, whereas all the others receive a \emph{failure} notification.
-% This ensures that only a single process may actually perform
-% the task.
+If the location $M$ is associated with a task $\ell$, then notification \emph{success} will be returned
+by \texttt{TryTask(}$M$\texttt{)}.
+Otherwise, if there is no task associated with location $M$, then \emph{failure} will be
+returned.
 
 \textbf{Operation PutTask($M,\ell$)}.
-A process can associate a task $\ell$ with a menory location $M$ in the data structure
+A process can associate a task $\ell$ with a location $M$ in the data structure
 atomically by calling a special \texttt{PutTask(}$M,\ell$\texttt{)} operation.
 
 If location $M$ is not associated with any other task, then \texttt{PutTask(}$M,\ell$\texttt{)} will return \emph{success}.
@@ -265,7 +262,7 @@ different locations as the arguments. Operation \texttt{InsertTask(}$\ell$\textt
 Otherwise, \texttt{InsertTask(}$\ell$\texttt{)} never terminates and keeps
 calling \texttt{PutTask} operations repeatedly.
 
-We say task $\ell$ is associated with a memory location $M$ or inserted into the data structure or task $\ell$
+We say task $\ell$ is associated with a location $M$ or inserted into the data structure or task $\ell$
 is \emph{available} to perform if a process has completed the \texttt{InsertTask(}$\ell$\texttt{)} call and the location
 $M$ is returned, but task $\ell$ has not been performed yet.
 
