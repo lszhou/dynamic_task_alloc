@@ -48,25 +48,31 @@ In the following discussion, we suppose in a history $H$, the situation that an 
 $(invocation, p_i, obj_p, opt_0, t_0)$ is followed immediately by another invocation event\\
 $(invocation, p_j, obj_q, opt_1, t_1)$ where $i = j$ and $p = q$ will not happen.
 
-Response event $(response, p_j, obj_q, rsp, t_1)$ \emph{matches} invocation event $(invocation, p_i, obj_p, opt, t_0)$
+We say response event $(response, p_j, obj_q, rsp, t_1)$ \emph{matches} invocation event\\
+$(invocation, p_i, obj_p, opt, t_0)$
 in history $H$, if the two events are applied by the same process to the same object, i.e, $i = j$ and $p = q$.
 In this case, the response event is also called the $matching$ response of the invocation event.
 
 An \emph{operation execution} in $H$ is a pair $oe$ = (INV, RSP) consisting of an invocation event INV
 and its matching response event RSP, or just an invocation event INV with no matching response event,
 denoted as $oe$ = (INV, $null$).
+
 In the latter case, we say the operation execution is \emph{pending}. In the former case, we say the operation
-execution is \emph{complete}. A history $H$ is \emph{complete} if all operation executions in $H$ are \emph{complete},
-otherwise, it is \emph{incomplete}. If events INV and RSP are applied by process $p$, then we say
+execution is \emph{complete}.
+
+A history $H$ is \emph{complete} if all operation executions in $H$ are \emph{complete}.
+Otherwise, it is \emph{incomplete}.
+
+If events INV and RSP are applied by process $p$, then we say
 operation execution $oe$ = (INV, RSP) is \emph{performed} by process $p$. Thus, two operation
 executions performed by the same process on the same project will not interleave in a history $H$.
 
 We say that an operation $opt$ is \emph{atomic} in history $H$, if $opt$'s invocation event is either the last event in
 $H$, or else is followed immediately in $H$ by a matching response event.
 
-History $H'$ is an extension of history $H$ if $H$ is a prefix of $H'$.
-History $H'$ is a \emph{completion} of history $H$ if $H'$ contains all the
-events in $H$ and $H'$ is an extension of $H$, and each operation execution in $H'$ is complete.
+If history $H$ is a prefix of history $H'$, then we say history $H'$ is an extension of $H$.
+History $H'$ is a \emph{completion} of history $H$ if $H'$ contains all events in $H$ and
+$H'$ is an extension of $H$, and each operation execution in $H'$ is complete.
 
 $H|obj$ of history $H$ is the subsequence of all
 invocation and response events in $H$ on object $obj$. If all invocation and response
@@ -92,9 +98,13 @@ in the sequential specification of $obj$.
 
 \textbf{Linearization}.
 A history $H$ \emph{linearizes} to a sequential history $S$, if and only if $S$ satisfies the
-following conditions: (1) $S$ and any completion of $H$ have the same operation executions, (2) sequential history $S$ is
-valid, and (3) there is a mapping from each time interval $I_{oe}$ to a time point $t_{oe} \in I_{oe}$, such
-that the sequential history $S$ is obtained by sorting the operations in $H$ based on their $t_{oe}$ values.
+following conditions:
+\begin{itemize}[leftmargin=1cm]
+  \item $S$ and any completion of $H$ have the same operation executions,
+  \item sequential history $S$ is valid, and
+  \item there is a mapping from each time interval $I_{oe}$ to a time point $t_{oe} \in I_{oe}$, such
+  that the sequential history $S$ is obtained by sorting the operations in $H$ based on their $t_{oe}$ values.
+\end{itemize}
 
 A history is \emph{linearizable} if and only if $H$ linearizes to some sequential history $S$. In this case,
 $S$ is called the \emph{linearization} of $H$. For each operation $opt$ in history $H$, we call time point $t_{oe}$, which is
@@ -109,13 +119,17 @@ most modern architectures support either read-write registers and CAS objects \c
 
 \textbf{Read-Write Register}.
 An object that supports only \texttt{read()} and \texttt{write(x)} operations is called
-a read-write register (or just \emph{register}). Operation \texttt{read()} returns the current state of register and
+a read-write register (or just \emph{register}).
+
+Operation \texttt{read()} returns the current state of register and
 leaves the state unchanged. Operation \texttt{write(x)} changes the state of the register to $x$ and returns nothing.
 If the set of states that can be stored in the register is unbounded then we say the register is \emph{unbounded register};
 otherwise the register is \emph{bounded register}.
 
 \textbf{CAS Object}. An object that supports \texttt{read()} and \texttt{CAS(x,y)} operations is called compare-and-swap (CAS) object.
-Operation \texttt{read()} is the same as defined above. Operation \texttt{CAS(x,y)} changes the state of
+
+Operation \texttt{read()} returns the current state of CAS object, and
+leaves the state unchanged, while operation \texttt{CAS(x,y)} changes the state of
 the object if and only if the current state is equal to $x$ and then operation \texttt{CAS(x,y)} succeeds, and the state is changed
 to $y$ and $true$ is returned. Otherwise, operation \texttt{CAS(x,y)} fails, the current state remains unchanged and
 $false$ is returned.
@@ -177,8 +191,7 @@ This includes all coin-flip operations and their return values up to that point.
 the adversary decides which process takes the next step.
 
 Adversary $\mathcal{A}$ is \emph{adaptive for algorithm $\mathcal{M}$} \cite{golab2011linearizable}
-if, for any two coin-flip
-vectors $\overrightarrow{\rm c} \in \Omega^{\infty}$ and $\overrightarrow{\rm d} \in \Omega^{\infty}$ that have a common prefix
+if, for any two coin-flip vectors $\overrightarrow{\rm c} \in \Omega^{\infty}$ and $\overrightarrow{\rm d} \in \Omega^{\infty}$ that have a common prefix
 of length $k$ (i.e, the first $k$ elements of $\overrightarrow{\rm c}$ and $\overrightarrow{\rm d}$ are the same), then we have
 $$H_{\mathcal{M},\mathcal{A}, \overrightarrow{\rm c}}[k+1] = H_{\mathcal{M},\mathcal{A}, \overrightarrow{\rm d}}[k+1]$$
 In this case, we say adversary $\mathcal{A}$ is an \emph{adaptive adversary}.
@@ -255,8 +268,6 @@ calling \texttt{PutTask} operations repeatedly.
 We say task $\ell$ is associated with a memory location $M$ or inserted into the data structure or task $\ell$
 is \emph{available} to perform if a process has completed the \texttt{InsertTask(}$\ell$\texttt{)} call and the location
 $M$ is returned, but task $\ell$ has not been performed yet.
-
-
 
 % \textbf{Properties}.
 % An algorithm that accesses an instance of an object of type DTA must satisfy the following:
