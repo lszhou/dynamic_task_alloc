@@ -204,7 +204,8 @@ future coin flips to make current scheduling decisions.
 \subsection{Task}
 
 A \emph{task} is a computation which is assumed to be performed by a single process in constant time\cite{georgiou2007all}.
-In this thesis, we consider a set of tasks, denoted as $\mathcal{L} = [m] = \{0, 1, ..., m\}$, where integer $m \in \{0, 1, 2, ...\}$.
+In this thesis, we consider a finite or infinite set of tasks, denoted as $\mathcal{L} = [m] = \{0, 1, ..., m-1\}$,
+where $m \in \{0, 1, 2, ...\}$.
 
 We assume that each task $\ell \in \mathcal{L}$ to be performed is associated with a \emph{location} $M$
 in the data structure. Over time, one location can be associated with multiple tasks.
