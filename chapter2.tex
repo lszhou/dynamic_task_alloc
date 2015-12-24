@@ -220,6 +220,7 @@ A process can perform a task $\ell$ atomically by calling a special
 \texttt{TryTask(}$M$\texttt{)} operation where $M$ is a location which task $\ell$
 is associated with.
 
+
 If the location $M$ is associated with a task $\ell$, then notification \emph{success} will be returned
 by \texttt{TryTask(}$M$\texttt{)}.
 Otherwise, if there is no task associated with location $M$, then \emph{failure} will be
