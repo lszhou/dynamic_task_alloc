@@ -240,10 +240,10 @@ $\ell$ with a location in the data structure to be performed. Now we describe th
 as follows.
 
 \textbf{Operation DoTask()}.
-The aim of operation \texttt{DoTask()} is to find a location $M$ which is associated with a task
+The aim of the operation \texttt{DoTask()} is to find a location $M$ which is associated with a task
 $\ell$ in the data structure and then perform task $\ell$ by calling the atomic operation \texttt{TryTask(}$M$\texttt{)}.
 
-Every \texttt{DoTask()} operation may perform several \texttt{TryTask} operation with different locations as the
+Every \texttt{DoTask()} operation may perform several \texttt{TryTask} operations with different locations as the
 arguments. Once a \texttt{TryTask} operation succeeds, \texttt{DoTask()} terminates and
 the task identifier $\ell$ is returned. Otherwise, \texttt{DoTask()} never terminates and keeps calling
 \texttt{TryTask(}$M$\texttt{)} repeatedly. If there is no task in the data structure,
@@ -253,11 +253,11 @@ A task $\ell$ is said to be \emph{performed} by a process if the process has com
 which returns the task identifier $\ell$.
 
 \textbf{Operation InsertTask($\ell$)}.
-The goal of \texttt{InsertTask(}$\ell$\texttt{)} operation is to find a location $M$ in the data structure and
-associates task $\ell$ with $M$ by calling the atomic operation \texttt{PutTask(}$M,\ell$\texttt{)}.
+The goal of the \texttt{InsertTask(}$\ell$\texttt{)} operation is to find a location $M$ in the data structure and
+associates task $\ell$ with $M$ by executing operation \texttt{PutTask(}$M,\ell$\texttt{)}.
 
 Every \texttt{InsertTask(}$\ell$\texttt{)} operation may perform several \texttt{PutTask} operations with
-different locations as the arguments. Operation \texttt{InsertTask(}$\ell$\texttt{)} terminates once one of the
+different locations as the arguments. Operation \texttt{InsertTask(}$\ell$\texttt{)} terminates once a
 \texttt{PutTask} operations succeeds and then location $M$ will be returned by \texttt{InsertTask(}$\ell$\texttt{)}.
 Otherwise, \texttt{InsertTask(}$\ell$\texttt{)} never terminates and keeps
 calling \texttt{PutTask} operations repeatedly.
@@ -265,6 +265,8 @@ calling \texttt{PutTask} operations repeatedly.
 We say task $\ell$ is associated with a location $M$ or inserted into the data structure or task $\ell$
 is \emph{available} to perform if a process has completed the \texttt{InsertTask(}$\ell$\texttt{)} call and the location
 $M$ is returned, but task $\ell$ has not been performed yet.
+
+\subsection{Progress Conditions}
 
 % \textbf{Properties}.
 % An algorithm that accesses an instance of an object of type DTA must satisfy the following:
