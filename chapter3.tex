@@ -1,5 +1,5 @@
 %--------------------CHAPTER 3-----------------------------
-\chapter{Dynamic Task Allocation Object}
+\chapter{Data Structure and Implementation}
 
 % Some questions need to be answered?
 % (1) In this thesis, what is the shared memory system Architecture, CC or DSM. (Pareek_MSc_15, Wojciech_201011_PhD_thesis_17)
@@ -19,8 +19,7 @@
 
 
 \section*{Data Structure}
-\section*{The Implementation of DTA}
-\section*{Correctness Proof}
+\section*{The Implementation of Type DTA}
 
 \begin{algorithm}
 \caption{\texttt{DoTask()}}
@@ -217,28 +216,28 @@
 %\end{algorithmic}
 %\end{algorithm}
 
-\chapter{Correctness Proof}
-\section{Correctness}
-The standard correctness condition for shared memory algorithms is linearizability, which was introduced by Herlihy and Wing in 1990 \cite{Herlihy:1990:LCC:78969.78972}. The intuition of linearizability is that real-time behavior of method calls must be preserved, i.e, if one method call precedes another, then the earlier call must have taken effect before the later one. By contrast, if two method calls overlap, we are free to order them in any convenient way since the order is ambiguous. Informally, a concurrent object is linearizable if each method call appears to take effect instantaneously at some moment between its invocation and response.
-
-\subsection{Analysis and Proofs}
-
-By the definitions in Subsection 3.1.1, one way to show an object $obj$ is linearizable is to prove every history $H$ of $obj$ is linearizable. Thus, we need to identify for each \texttt{DoTask} and \texttt{InsertTask} operation $op$ (i.e, interval $I_H(op)$) in $H$ a linearization point $t_H(op)$, and prove that the sequential history $S$ obtained by sorting these operations according to their $t_H(op)$ satisfies the sequential specification  $S_{obj}$  of $obj$.
-
-We notice that each complete \texttt{DoTask} or \texttt{InsertTask} operation can be associated with a unique task array slot based on the task it removed or inserted. Additionally, the removal and insertion count are both monotonically increasing. Thus, we could associate the node counts with operations which have been propagated to that node.
-
-Now we define ``an operation is counted at a node" recursively to formalize the operation propagation.
-
-A \texttt{DoTask} operation is counted at leaf $v$ when the removal count of $v$ is updated with the index of the task array slot where the performed task is located. Symmetrically, an \texttt{InsertTask} operation is counted at $v$ when the insertion count of $v$ is updated with the index of the task array slot where the inserted task is located.
-
-Now we only define \texttt{DoTask} operation is counted at an inner node $v$ because counting an \texttt{InsertTask} operation is symmetric as well.
-
-Recall that the removal count of $v$ is updated though CAS operation (line 6, method 3). Actually there could be more than one operations updating the count with the same value. We linearize all such CAS operations, which update the removal count of $v$ with the same value $y$. We say for all these operations, only the first one in the linearization order counts the corresponding \texttt{DoTask} operation. In another word, a \texttt{DoTask} operation is counted at an inner node $v$ as soon as the CAS updating operation that counts the \texttt{DoTask} is linearized. Based this definition, no operation will be counted twice at a node.
-
-Please note that, the CAS operation counting the \texttt{DoTask} at node $v$ is not necessary performed by the \texttt{DoTask} operation itself, i.e, suppose process $p$ executes a \texttt{DoTask} operation and has successfully performed task $\ell$ at certain leaf. Then the CAS operation counting this $p.DoTask()$ at node $v$ could be a different process $q$ as long as $q$ updates the removal count first in the linearization order.
-
-Given the above concepts and properties, we could prove the following result:
-(under work...almost done)
+% \chapter{Correctness Proof}
+% \section{Correctness}
+% The standard correctness condition for shared memory algorithms is linearizability, which was introduced by Herlihy and Wing in 1990 \cite{Herlihy:1990:LCC:78969.78972}. The intuition of linearizability is that real-time behavior of method calls must be preserved, i.e, if one method call precedes another, then the earlier call must have taken effect before the later one. By contrast, if two method calls overlap, we are free to order them in any convenient way since the order is ambiguous. Informally, a concurrent object is linearizable if each method call appears to take effect instantaneously at some moment between its invocation and response.
+%
+% \subsection{Analysis and Proofs}
+%
+% By the definitions in Subsection 3.1.1, one way to show an object $obj$ is linearizable is to prove every history $H$ of $obj$ is linearizable. Thus, we need to identify for each \texttt{DoTask} and \texttt{InsertTask} operation $op$ (i.e, interval $I_H(op)$) in $H$ a linearization point $t_H(op)$, and prove that the sequential history $S$ obtained by sorting these operations according to their $t_H(op)$ satisfies the sequential specification  $S_{obj}$  of $obj$.
+%
+% We notice that each complete \texttt{DoTask} or \texttt{InsertTask} operation can be associated with a unique task array slot based on the task it removed or inserted. Additionally, the removal and insertion count are both monotonically increasing. Thus, we could associate the node counts with operations which have been propagated to that node.
+%
+% Now we define ``an operation is counted at a node" recursively to formalize the operation propagation.
+%
+% A \texttt{DoTask} operation is counted at leaf $v$ when the removal count of $v$ is updated with the index of the task array slot where the performed task is located. Symmetrically, an \texttt{InsertTask} operation is counted at $v$ when the insertion count of $v$ is updated with the index of the task array slot where the inserted task is located.
+%
+% Now we only define \texttt{DoTask} operation is counted at an inner node $v$ because counting an \texttt{InsertTask} operation is symmetric as well.
+%
+% Recall that the removal count of $v$ is updated though CAS operation (line 6, method 3). Actually there could be more than one operations updating the count with the same value. We linearize all such CAS operations, which update the removal count of $v$ with the same value $y$. We say for all these operations, only the first one in the linearization order counts the corresponding \texttt{DoTask} operation. In another word, a \texttt{DoTask} operation is counted at an inner node $v$ as soon as the CAS updating operation that counts the \texttt{DoTask} is linearized. Based this definition, no operation will be counted twice at a node.
+%
+% Please note that, the CAS operation counting the \texttt{DoTask} at node $v$ is not necessary performed by the \texttt{DoTask} operation itself, i.e, suppose process $p$ executes a \texttt{DoTask} operation and has successfully performed task $\ell$ at certain leaf. Then the CAS operation counting this $p.DoTask()$ at node $v$ could be a different process $q$ as long as $q$ updates the removal count first in the linearization order.
+%
+% Given the above concepts and properties, we could prove the following result:
+% (under work...almost done)
 %\begin{lem}
 %Let $v$ be a tree node, \\
 %(1) If $(x, y)$ is the return value of $v.read( )$, then there exists a set of $x$ \texttt{InsertTask} operations and a set of $y$ \texttt{DoTask} operation that have been counted at node $v$ by the end of the execution of $v.read( )$.\\
