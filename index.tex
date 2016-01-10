@@ -2,13 +2,15 @@
 
 \usepackage{amsthm}
 \newtheorem{lem}{Lemma}
-%\usepackage[parfill]{parskip}
+\newtheorem*{definition}{Definition}
+\newtheorem{condition}{Condition}
+
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.5\baselineskip}
 \usepackage[linesnumbered, boxed,commentsnumbered, ruled, noresetcount]{algorithm2e}
 \renewcommand{\listalgorithmcfname}{List of Algorithms}
 \renewcommand{\algorithmcfname}{Method}
-\newtheorem*{definition}{Definition}
+
 \usepackage[letterpaper,top=1in, bottom= 1in, left= 1in, right= 1in]{geometry}
 %\usepackage{fancyhdr}
 \usepackage{amsmath}
@@ -20,6 +22,8 @@
 %\fancyhead[RO,LE]{\thepage}
 \usepackage{hyperref}
 \usepackage{qtree}
+
+
 % \title{Title of Thesis \\ \bigskip Second Thesis Title Line }
 \title{Dynamic Task Alloction in Asynchronous Shared Memory}
 %

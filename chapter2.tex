@@ -266,7 +266,17 @@ We say task $\ell$ is associated with a location $M$ or inserted into the data s
 is \emph{available} to perform if a process has completed the \texttt{InsertTask(}$\ell$\texttt{)} call and the location
 $M$ is returned, but task $\ell$ has not been performed yet.
 
+With the above sequential specification, we can see an algorithm that access an instance of an object of type DTA
+must satisfy the following properties: evey performed task must be inserted (\emph{validity}) and each task is performed
+exactly once (\emph{uniqueness}).
+
 \subsection{Progress Conditions}
+
+\begin{condition}
+Every inserted task is eventually performed.
+\end{condition}
+
+nonblocking --> lock-freedom --> wait-freedom
 
 % \textbf{Properties}.
 % An algorithm that accesses an instance of an object of type DTA must satisfy the following:
