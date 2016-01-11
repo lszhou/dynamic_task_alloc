@@ -19,6 +19,28 @@
 
 
 \section*{Data Structure}
+The main data structure we are using for dynamic task allocation is a binary tree with unbounded number of leaves,
+where each leaf is either empty or associated with a task that is available to perform during the execution.
+
+Each tree node contains a CAS object whose state a pair of \emph{counts}, denoted as $(x, y)$.
+The first count $x$ is called the \emph{insert count}, which tracks the number of tasks successfully inserted in
+the subtree. The second count $y$ is called the \emph{remove count}, which tracks the number of tasks successfully removed
+from the subtree.
+
+From chapter 2, we say a task $\ell$ is inserted in the subtree and available to perform if a process has completed
+\texttt{InsertTask(}$\ell$\texttt{)} call and the location $M$ is returned, but task $\ell$ has not been performed yet, and
+a task $\ell$ is said to be \emph{performed} by a process if the process has completed a \texttt{DoTask()} call
+which returns the task identifier $\ell$. Thus, for the CAS object $(x, y)$ of node $v$ in the tree,
+the count $x$ counts the total number of successful \texttt{InsertTask} operations
+executed in the subtree rooted at $v$, and  the count $y$ counts the total number of successful \texttt{DoTask} operations
+executed in the subtree rooted at $v$.
+
+
+
+
+
+
+
 \section*{The Implementation of Type DTA}
 
 \begin{algorithm}

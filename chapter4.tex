@@ -1,5 +1,5 @@
 
-\chapter{Analysis}
+\chapter{Correctness and Performance}
 
 \section{Correctness Proof}
 By the definitions in Subsection 3.1.1, one way to show an object $obj$ is linearizable is to prove every history $H$ of $obj$ is linearizable. Thus, we need to identify for each \texttt{DoTask} and \texttt{InsertTask} operation $op$ (i.e, interval $I_H(op)$) in $H$ a linearization point $t_H(op)$, and prove that the sequential history $S$ obtained by sorting these operations according to their $t_H(op)$ satisfies the sequential specification  $S_{obj}$  of $obj$.
