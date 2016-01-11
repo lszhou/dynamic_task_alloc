@@ -8,6 +8,13 @@
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.5\baselineskip}
 \usepackage[linesnumbered, boxed,commentsnumbered, ruled, noresetcount]{algorithm2e}
+
+\usepackage{hyperref}
+\makeatletter
+\newcommand{\removelatexerror}{\let\@latex@error\@gobble}
+\makeatother
+
+
 \renewcommand{\listalgorithmcfname}{List of Algorithms}
 \renewcommand{\algorithmcfname}{Method}
 

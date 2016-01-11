@@ -18,14 +18,14 @@
 % (For this reason, we speak of processes and processors interchangeably.)
 
 
-\section*{Data Structure}
+\section{Data Structure}
 The main data structure we are using for dynamic task allocation is a binary tree with unbounded number of leaves,
 where each leaf is either empty or associated with a task that is available to perform during the execution.
 
 Each tree node contains a CAS object whose state a pair of \emph{counts}, denoted as $(x, y)$.
 The first count $x$ is called the \emph{insert count}, which tracks the number of tasks successfully inserted in
-the subtree. The second count $y$ is called the \emph{remove count}, which tracks the number of tasks successfully removed
-from the subtree.
+the subtree. The second count $y$ is called the \emph{perform count}, which tracks the number of tasks successfully
+performed in the subtree.
 
 From chapter 2, we say a task $\ell$ is inserted in the subtree and available to perform if a process has completed
 \texttt{InsertTask(}$\ell$\texttt{)} call and the location $M$ is returned, but task $\ell$ has not been performed yet, and
@@ -35,15 +35,22 @@ the count $x$ counts the total number of successful \texttt{InsertTask} operatio
 executed in the subtree rooted at $v$, and  the count $y$ counts the total number of successful \texttt{DoTask} operations
 executed in the subtree rooted at $v$.
 
+%modify the definition of \emph{space}
 
+For each node $v$, We call the difference $u = (x - y)$ the \emph{surplus} and denote it by $u_v$ and define the value $2^h - u_v$
+the \emph{space} at node $v$, where $h$ is the height of node $v$. If a process reads the state
+if CAS object of node $v$ as $(x ,y)$, then the surplus $u$ is the number of available tasks left in the subtree rooted at $v$,
+since the there have been $x$ tasks inserted and $y$ tasks performed and the space $2^h - u_v$ is the number of tasks that can still be
+inserted in the subtree rooted at node $v$.
 
+% add initial configuration of the binary tree
 
+\section{The Implementation of Type DTA}
 
+The implementation for the \texttt{DoTask} operation is given in Figure 3.1.
 
-
-\section*{The Implementation of Type DTA}
-
-\begin{algorithm}
+\begin{figure}[h]
+\begin{algorithm}[H]
 \caption{\texttt{DoTask()}}
 \While {$true$}{
    $v \leftarrow root$;\\
@@ -86,49 +93,13 @@ executed in the subtree rooted at $v$.
     }
 }
 \end{algorithm}
-
-%\begin{algorithm}
-%\caption{DoTask()}               %����
-%\label{alg1}                         %�����㷨�������������ط�����
-%\begin{algorithmic}[1]
-%\WHILE {(true)}
-%   \STATE $v \leftarrow root$\\
-%   \IF {($v.surplus() \leq 0$)}
-%   \RETURN $\perp$
-%   \ENDIF \\
-%   \vspace{3mm}
-%   /* Descent */
-%   \WHILE {$v$ is not a leaf}
-%       \STATE $(x_L, y_L) \leftarrow v.left.read()$\\
-%       \STATE $(x_R, y_R) \leftarrow v.right.read()$\\
-%       \STATE $s_L \leftarrow min(x_L-y_L, 2^{height(v)})$ \\
-%       \STATE $s_R \leftarrow min(x_R-y_R, 2^{height(v)})$ \\
-%       \STATE $r \leftarrow random(0,1)$
-%       \IF {$((s_L+s_R)=0)$}
-%           \STATE Mark-up($v$)
-%       \ELSIF {($r<s_L/(s_L+s_R)$)}
-%           \STATE $v \leftarrow v.left$
-%       \ELSE
-%           \STATE $v \leftarrow v.rght$
-%       \ENDIF
-%   \ENDWHILE
-%   \vspace{3mm}\\
-%   /* $v$ is a leaf */
-%   \STATE $(x,y) \leftarrow v.read()$
-%   \STATE $(flag, l)$ $\leftarrow$ $v$.TryTask(task$[y+1]$)
-%   \STATE $v$.CAS$((x, y), (x, y+1))$    // Update Insertion Count
-%   \STATE $v \leftarrow v.parent$
-%   \STATE Mark-up($v$)
-%   \IF {$flag$ = success}
-%       \RETURN $\ell$
-%   \ENDIF
-%\ENDWHILE
-%\end{algorithmic}
-%\end{algorithm}
+\caption{DoTask}
+\end{figure}
 
 
 
-\begin{algorithm}
+\begin{figure}[h]
+\begin{algorithm}[H]
 \caption{\texttt{InsertTask(}$\ell$\texttt{)}}
 \While{$true$}{
     $v \leftarrow root$\;
@@ -167,48 +138,10 @@ executed in the subtree rooted at $v$.
     }
 }
 \end{algorithm}
+\caption{InsertTask}
 
 
-
-%\begin{algorithm}
-%\caption{Insert(task $\ell$)}               %����
-%\label{alg2}                         %�����㷨�������������ط�����
-%\begin{algorithmic}[1]
-%\WHILE {(true)}
-%   \STATE $v \leftarrow root$\\
-%   \vspace{3mm}
-%   /* Descent */
-%   \WHILE {($v$ is not a leaf)}
-%       \STATE $(x_L, y_L) \leftarrow v.left.read()$\\
-%       \STATE $(x_R, y_R) \leftarrow v.right.read()$\\
-%       \STATE $s_L \leftarrow min(x_L-y_L, 2^{height(v)})$ \\
-%       \STATE $s_R \leftarrow min(x_R-y_R, 2^{height(v)})$ \\
-%       \STATE $r \leftarrow random(0,1)$
-%       \IF {($(s_L+s_R) = 0$)}
-%           \STATE Mark-up($v$)
-%       \ELSIF {($r < s_L/(s_L + s_R)$)}
-%           \STATE $v \leftarrow v.left$
-%       \ELSE
-%           \STATE $v \leftarrow v.rght$
-%       \ENDIF
-%   \ENDWHILE
-%   \vspace{3mm}\\
-%   /* $v$ is a leaf */
-%   \STATE $(x,y) \leftarrow v.read()$
-%   \STATE $flag$ $\leftarrow$ $v$.PutTask(task$[x+1]$, $\ell$)
-%   \STATE $v$.CAS$((x,y), (x+1,y))$ // Update Insertion Count
-%   \STATE $v \leftarrow v.parent$
-%   \STATE Mark-up($v$)
-%   \IF {($flag$ = success)}
-%       \RETURN $success$
-%   \ENDIF
-%\ENDWHILE
-%\end{algorithmic}
-%\end{algorithm}
-
-
-
-\begin{algorithm}
+\begin{algorithm}[H]
 \caption{\texttt{Mark-up}($v$)}
 \If{$v$ is not $null$}{
     \For {($i=0; i<2; i++$)}{
@@ -219,21 +152,5 @@ executed in the subtree rooted at $v$.
     }
 }
 \end{algorithm}
-
-
-
-%
-%\begin{algorithm}
-%\caption{Mark-up($v$)}               %����
-%\label{alg3}                         %�����㷨�������������ط�����
-%\begin{algorithmic}[1]
-%\IF{($v$ is not Null)}
-%    \FOR {($i=0; i<2; i++$)}
-%    \STATE $(x, y) \leftarrow v.read()$
-%    \STATE $(x_L, y_L) \leftarrow v.left.read()$
-%    \STATE $(x_R, y_R) \leftarrow v.right.read()$
-%    \STATE $v$.CAS$((x,y), (max(x, x_L + x_R), max(y, y_L + y_R))$\\
-%    \ENDFOR
-%\ENDIF
-%\end{algorithmic}
-%\end{algorithm}
+\caption{MarkUp}
+\end{figure}

@@ -266,7 +266,7 @@ We say task $\ell$ is associated with a location $M$ or inserted into the data s
 is \emph{available} to perform if a process has completed the \texttt{InsertTask(}$\ell$\texttt{)} call and the location
 $M$ is returned, but task $\ell$ has not been performed yet.
 
-With the above sequential specification, we can see an algorithm that access an instance of an object of type DTA
+With the above sequential specification, we can see an algorithm that access an object of type DTA
 must satisfy property \emph{validity}, i.e, evey performed task must be inserted. Because out of several
 \texttt{TryTask(}$M$\texttt{)} calls, only the first one will success and all the others will return failure, the properity
 \emph{uniqueness}, i.e, each task is performed exactly once, is also satisfied.
@@ -285,40 +285,3 @@ nonblocking Lock-freedom
 
 % nonblocking --> lock-freedom --> wait-freedom
 % starvation-freedom
-
-% \textbf{Properties}.
-% An algorithm that accesses an instance of an object of type DTA must satisfy the following:
-%
-% \emph{Validity}. If a \texttt{DoTask()} operation returns $\ell$, then before the
-% \texttt{DoTask()} operation, an \texttt{InsertTask(}$\ell$\texttt{)} was executed and returned $success$.
-%
-% \emph{Uniqueness}. Each task is performed at most once, i.e, for each task $\ell$, at most one \texttt{DoTask()}
-% operation returns $\ell$.
-%
-% In addition, the property that every inserted task is eventually performed is also a desired progress property
-% of the implementation of type DTA.
-
-%
-% For simplicity, in our thesis, we consider the tasks as follows:
-%
-% Give an array of registers which is denoted as \texttt{arr}$[]$. The state of each register is either $\perp$ or $0$ or $1$.
-% A task is the computation that flipping the state of a register from $0$ to $1$. We denote the computation
-% flipping the state of register \texttt{arr}$[i]$ from $0$ to $1$
-% as $\ell_i$, , where integer $i \in \{0, 1, 2, ...\}$ and $\ell_i \in \mathcal{L}$
-%
-% If the above value $m$ is fixed and all $m$ registers are all initialized with value $0$ and the execution ends
-% when all registers are flipped to $1$, then we get the so-called \emph{static} version of task allocation problem,
-% i.e, write-all problem as follws: Given a zero-valued array of $m$ elements and $n$ processes,
-% write value $1$ into each array cell in the presence of adversity \cite{kanellakis1992efficient}.
-%
-% Each array cell \texttt{arr}$[i]$ is defined as a \emph{memory location} (or just \emph{location}) and denoted as $M$.
-% We say there is a task available at location $M$ if the register \texttt{arr}$[i]$ is in state $0$.
-% When there exists a register in \texttt{arr} is in state $0$, then we say a task is \emph{available}.
-% When the state of that register is flipped to $1$, then we say the task is \emph{performed}.
-% If the state of register \texttt{arr}$[i]$ is $\perp$, then we say, there is no task there.
-%
-% In this thesis, we consider the \emph{dynamic} version of task allocation, i.e, Given $n$
-% asynchronous processes that cooperate to perform tasks, while tasks are \emph{inserted}
-% dynamically by the adversary during the execution, where \emph{inserting} a task is definied to be
-% the execution that flipping the state of a register from its initial state $\perp$ to $0$.
-% When the state of the register at location $M$ is flipped from $\perp$ to $0$, we also say a new task is \emph{inserted to locaton} $M$.
