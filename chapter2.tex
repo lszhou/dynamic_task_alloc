@@ -267,19 +267,24 @@ is \emph{available} to perform if a process has completed the \texttt{InsertTask
 $M$ is returned, but task $\ell$ has not been performed yet.
 
 With the above sequential specification, we can see an algorithm that access an instance of an object of type DTA
-must satisfy the following properties: evey performed task must be inserted (\emph{validity}) and each task is performed
-exactly once (\emph{uniqueness}).
+must satisfy property \emph{validity}, i.e, evey performed task must be inserted. Because out of several
+\texttt{TryTask(}$M$\texttt{)} calls, only the first one will success and all the others will return failure, the properity
+\emph{uniqueness}, i.e, each task is performed exactly once, is also satisfied.
 
 \subsection{Progress Conditions}
 
-Besides the above validity and uniqueness, the following progress properities are also desired. 
+Besides the above validity and uniqueness, the following progress properities are also desired.
 
 \begin{condition}
 Every inserted task is eventually performed.
 \end{condition}
 
-nonblocking --> lock-freedom --> wait-freedom
-starvation-freedom
+\begin{condition}
+nonblocking Lock-freedom
+\end{condition}
+
+% nonblocking --> lock-freedom --> wait-freedom
+% starvation-freedom
 
 % \textbf{Properties}.
 % An algorithm that accesses an instance of an object of type DTA must satisfy the following:
@@ -292,7 +297,6 @@ starvation-freedom
 %
 % In addition, the property that every inserted task is eventually performed is also a desired progress property
 % of the implementation of type DTA.
-
 
 %
 % For simplicity, in our thesis, we consider the tasks as follows:
