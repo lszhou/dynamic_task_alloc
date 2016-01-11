@@ -272,11 +272,14 @@ exactly once (\emph{uniqueness}).
 
 \subsection{Progress Conditions}
 
+Besides the above validity and uniqueness, the following progress properities are also desired. 
+
 \begin{condition}
 Every inserted task is eventually performed.
 \end{condition}
 
 nonblocking --> lock-freedom --> wait-freedom
+starvation-freedom
 
 % \textbf{Properties}.
 % An algorithm that accesses an instance of an object of type DTA must satisfy the following:
